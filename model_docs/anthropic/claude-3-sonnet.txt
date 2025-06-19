@@ -1,0 +1,32 @@
+Model: Claude 3 Sonnet
+Provider: Anthropic
+Release: March 2024
+
+Claude 3 Sonnet offers an excellent balance of capability and cost, providing strong performance across a wide range of tasks while being more affordable than Opus. Ideal for most production use cases.
+
+Key Capabilities:
+- Strong reasoning and analysis
+- Good creative writing abilities
+- Reliable code generation
+- Balanced performance across tasks
+- Good instruction following
+- Ethical and safe responses
+
+Technical Specifications:
+- Context window: 200k tokens
+- Training cutoff: April 2024
+- Response speed: Fast (~400ms)
+- Cost: $3/1M input tokens, $15/1M output tokens
+
+Best Use Cases:
+- General-purpose text generation
+- Content creation and editing
+- Code development and review
+- Customer service applications
+- Educational assistance
+- Business analysis and reporting
+
+Limitations:
+- Less capable than Opus for complex reasoning
+- May require more specific prompting
+- Moderate performance on highly specialized tasks 

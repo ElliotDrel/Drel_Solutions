@@ -21,8 +21,8 @@ A comprehensive tool for comparing and selecting AI models from multiple provide
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/drel-solutions/ai-model-selector.git
-cd ai-model-selector
+git clone https://github.com/drel-solutions/modeladvisor.git
+cd modeladvisor
 ```
 
 2. Install dependencies:

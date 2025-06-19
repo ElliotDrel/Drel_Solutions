@@ -21,8 +21,8 @@ const Navigation = () => {
                 <button onClick={() => setIsDropdownOpen(!isDropdownOpen)} className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors flex items-center">
                   Solutions <ChevronDown className="ml-1 h-4 w-4" />
                 </button>
-                {isDropdownOpen && <div className="absolute top-full left-0 mt-1 w-48 bg-white rounded-md shadow-lg border border-gray-200 z-50">
-                    <a href="/model-advisor" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Model Advisor</a>
+                {isDropdownOpen && <div className="absolute top-full left-0 mt-1 w-56 bg-white rounded-md shadow-lg border border-gray-200 z-50">
+                    <a href="/modeladvisor" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Model Advisor</a>
                   </div>}              </div>
               <Link to="/contact">
                 <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2">Let's Talk</Button>
@@ -41,7 +41,7 @@ const Navigation = () => {
             <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-200">
               <a href="#home" className="block text-gray-700 hover:text-blue-600 px-3 py-2 text-base font-medium">Home</a>
               <a href="/about" className="block text-gray-700 hover:text-blue-600 px-3 py-2 text-base font-medium">About</a>
-              <a href="/model-advisor" className="block text-gray-700 hover:text-blue-600 px-3 py-2 text-base font-medium">Model Advisor</a>
+              <a href="/modeladvisor" className="block text-gray-700 hover:text-blue-600 px-3 py-2 text-base font-medium">Model Advisor</a>
               <div className="pt-2">
                 <Link to="/contact">
                   <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">Let's Talk</Button>
@@ -66,7 +66,7 @@ const HeroSection = () => {
                 <span className="block mt-2 font-semibold text-gray-800">Spend less. Do more. Breathe easier.</span>
               </p>
             </div>
-            <div className="pt-4">
+            <div className="pt-8">
               <Link to="/contact">
                 <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg rounded-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105">Start Saving TIME and MONEY!</Button>
               </Link>
@@ -225,12 +225,13 @@ const CoreValuesSection = () => {
                 <h3 className="text-xl font-semibold text-gray-900">{value.title}</h3>
                 <p className="text-gray-600">{value.description}</p>
               </div>)}          </div>
-          
-          <div className="pt-20">            <div className="bg-blue-600 text-white py-16 px-8 rounded-2xl">              <div className="text-center space-y-10">
+            <div className="pt-20">            <div className="bg-blue-600 text-white py-16 px-8 rounded-2xl">              <div className="text-center space-y-8">
                 <h3 className="text-3xl lg:text-4xl font-bold">Ready to offload the busywork and focus on what REALLY matters?</h3>
-                <Link to="/contact">
-                  <Button className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 text-lg rounded-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105">Start Saving TIME and MONEY!</Button>
-                </Link>
+                <div className="pt-4">
+                  <Link to="/contact">
+                    <Button className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 text-lg rounded-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105">Start Saving TIME and MONEY!</Button>
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

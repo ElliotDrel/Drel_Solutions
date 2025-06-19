@@ -33,7 +33,7 @@ const Navigation = () => {
                 </button>
                 {isDropdownOpen && (
                   <div className="absolute top-full left-0 mt-1 w-48 bg-white rounded-md shadow-lg border border-gray-200 z-50">
-                    <a href="/model-advisor" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Model Advisor</a>
+                    <a href="/modeladvisor" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Model Advisor</a>
                   </div>
                 )}
               </div>
@@ -57,7 +57,7 @@ const Navigation = () => {
             <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-200">
               <Link to="/" className="block text-gray-700 hover:text-blue-600 px-3 py-2 text-base font-medium">Home</Link>
               <Link to="/about" className="block text-gray-700 hover:text-blue-600 px-3 py-2 text-base font-medium">About</Link>
-              <a href="/model-advisor" className="block text-gray-700 hover:text-blue-600 px-3 py-2 text-base font-medium">Model Advisor</a>
+              <a href="/modeladvisor" className="block text-gray-700 hover:text-blue-600 px-3 py-2 text-base font-medium">Model Advisor</a>
               <div className="pt-2">
                 <Link to="/contact">
                   <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">Let's Talk</Button>

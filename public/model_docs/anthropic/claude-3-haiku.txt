@@ -1,0 +1,33 @@
+Model: Claude 3 Haiku
+Provider: Anthropic
+Release: March 2024
+
+Claude 3 Haiku is Anthropic's fastest and most cost-effective model, optimized for quick responses and high-volume applications while maintaining good quality and safety standards.
+
+Key Capabilities:
+- Very fast response times
+- Cost-effective processing
+- Good basic reasoning
+- Reliable text generation
+- Safe and helpful responses
+- Efficient resource usage
+
+Technical Specifications:
+- Context window: 200k tokens
+- Training cutoff: April 2024
+- Response speed: Very fast (~200ms)
+- Cost: $0.25/1M input tokens, $1.25/1M output tokens
+
+Best Use Cases:
+- High-volume applications
+- Real-time chat and customer service
+- Quick content generation
+- Simple analysis and summarization
+- Cost-sensitive applications
+- Fast prototyping and development
+
+Limitations:
+- Less sophisticated reasoning than larger models
+- May struggle with complex tasks
+- Limited creative capabilities
+- Basic performance on specialized domains 

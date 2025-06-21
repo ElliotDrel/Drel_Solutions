@@ -426,58 +426,6 @@ const ModelAdvisor = () => {
     setShowRecommendations(false);
 
     try {
-      // Temporary mock data for testing - replace with actual API call when backend is ready
-      const mockRecommendations = [
-        {
-          rank: 1,
-          name: "GPT-4",
-          provider: "OpenAI",
-          why: "Exceptional reasoning capabilities and comprehensive understanding make it ideal for complex problem-solving tasks.",
-          when: "Use for advanced analysis, complex reasoning, creative writing, and multi-step problem solving.",
-          rationale: "Ranks first due to superior performance across diverse tasks and excellent instruction following."
-        },
-        {
-          rank: 2,
-          name: "Claude-3 Sonnet",
-          provider: "Anthropic",
-          why: "Strong analytical capabilities with excellent safety features and nuanced understanding.",
-          when: "Perfect for research, analysis, and tasks requiring careful consideration of ethics and safety.",
-          rationale: "Second place for balanced performance, safety consciousness, and reliable output quality."
-        },
-        {
-          rank: 3,
-          name: "GPT-4o",
-          provider: "OpenAI",
-          why: "Optimized for speed while maintaining high quality, excellent for real-time applications.",
-          when: "Ideal for interactive applications, chatbots, and scenarios requiring quick responses.",
-          rationale: "Third for combining speed with quality, though slightly less capable than GPT-4 for complex tasks."
-        },
-        {
-          rank: 4,
-          name: "Claude-3 Haiku",
-          provider: "Anthropic",
-          why: "Fast and efficient while maintaining good performance, cost-effective for high-volume tasks.",
-          when: "Best for simple queries, content generation, and applications with budget constraints.",
-          rationale: "Fourth place for speed and cost-effectiveness, suitable for straightforward tasks."
-        },
-        {
-          rank: 5,
-          name: "Gemini Pro 1.5",
-          provider: "Google",
-          why: "Large context window and good multimodal capabilities, excellent for document analysis.",
-          when: "Use for long document processing, analysis of large datasets, and multimodal tasks.",
-          rationale: "Fifth for specialized capabilities like large context handling and document processing."
-        }
-      ];
-
-      // Simulate API delay for realistic experience
-      await new Promise(resolve => setTimeout(resolve, 2000));
-
-      setRecommendations(mockRecommendations);
-      setShowRecommendations(true);
-      
-      // TODO: Replace with actual API call when backend is ready:
-      /*
       const response = await fetch('/api/model_search', {
         method: 'POST',
         headers: {
@@ -495,7 +443,6 @@ const ModelAdvisor = () => {
       const data = await response.json();
       setRecommendations(data.recommendations);
       setShowRecommendations(true);
-      */
     } catch (error) {
       console.error('Search error:', error);
       setSearchError(

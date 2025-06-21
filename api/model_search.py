@@ -1,15 +1,13 @@
 """
 Model Recommendation API
 
-Simple FastAPI backend that uses OpenAI to recommend AI models based on user queries.
+Simple Vercel serverless function that uses OpenAI to recommend AI models based on user queries.
 """
 
-from fastapi import FastAPI, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
-from typing import List, Dict, Optional
+from http.server import BaseHTTPRequestHandler
+import json
 import logging
-import uvicorn
+from typing import List, Dict
 
 from .services.openai_service import get_openai_service
 
@@ -17,83 +15,64 @@ from .services.openai_service import get_openai_service
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Initialize FastAPI app
-app = FastAPI(
-    title="Model Recommendation API",
-    description="Find the perfect AI model for your task",
-    version="2.0.0"
-)
-
-# Configure CORS
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # In production, specify actual origins
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-# Request/Response models
-class ModelSearchRequest(BaseModel):
-    query: str
-
-class ModelRecommendation(BaseModel):
-    rank: int
-    name: str
-    provider: str
-    why: str
-    when: str
-    rationale: str
-
-class ModelSearchResponse(BaseModel):
-    recommendations: List[ModelRecommendation]
-
 # Initialize services
 openai_service = get_openai_service()
 
-@app.get("/")
-async def model_search_info():
-    """Model search endpoint information."""
-    return {
-        "endpoint": "Model Search API",
-        "method": "POST",
-        "description": "Send a query to get AI model recommendations",
-        "version": "2.0.0"
-    }
+class handler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        """Handle GET requests - return API info"""
+        self.send_response(200)
+        self.send_header('Content-Type', 'application/json')
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.end_headers()
+        
+        response = {
+            "endpoint": "Model Search API",
+            "method": "POST",
+            "description": "Send a query to get AI model recommendations",
+            "version": "2.0.0"
+        }
+        self.wfile.write(json.dumps(response).encode())
 
-@app.post("/", response_model=ModelSearchResponse)
-async def search_models(request: ModelSearchRequest):
-    """
-    Search for AI models based on user query.
-    
-    This endpoint:
-    1. Takes a natural language query
-    2. Sends it to OpenAI along with all model documentation
-    3. Returns top 5 model recommendations with explanations
-    """
-    try:
-        if not request.query or not request.query.strip():
-            raise HTTPException(status_code=400, detail="Query cannot be empty")
-        
-        logger.info(f"Model search request: {request.query[:100]}...")
-        
-        # Get recommendations from OpenAI
-        result = await openai_service.get_model_recommendations(request.query)
-        
-        # Convert to response model
-        recommendations = [
-            ModelRecommendation(**rec) for rec in result["recommendations"]
-        ]
-        
-        return ModelSearchResponse(recommendations=recommendations)
-        
-    except ValueError as e:
-        logger.error(f"Validation error: {e}")
-        raise HTTPException(status_code=400, detail=str(e))
-    except Exception as e:
-        logger.error(f"Search error: {e}")
-        raise HTTPException(status_code=500, detail="Failed to get model recommendations")
+    def do_POST(self):
+        """Handle POST requests - process model search"""
+        try:
+            # Read request body
+            content_length = int(self.headers.get('Content-Length', 0))
+            post_data = self.rfile.read(content_length)
+            request_data = json.loads(post_data.decode('utf-8'))
+            
+            # Validate request
+            query = request_data.get('query', '').strip()
+            if not query:
+                self.send_error(400, "Query cannot be empty")
+                return
+            
+            logger.info(f"Model search request: {query[:100]}...")
+            
+            # Get recommendations from OpenAI
+            import asyncio
+            result = asyncio.run(openai_service.get_model_recommendations(query))
+            
+            # Send successful response
+            self.send_response(200)
+            self.send_header('Content-Type', 'application/json')
+            self.send_header('Access-Control-Allow-Origin', '*')
+            self.end_headers()
+            
+            self.wfile.write(json.dumps(result).encode())
+            
+        except ValueError as e:
+            logger.error(f"Validation error: {e}")
+            self.send_error(400, str(e))
+        except Exception as e:
+            logger.error(f"Search error: {e}")
+            self.send_error(500, "Failed to get model recommendations")
 
-# Remove the following block for serverless deployment
-# if __name__ == "__main__":
-#     uvicorn.run(app, host="0.0.0.0", port=3298) 
+    def do_OPTIONS(self):
+        """Handle CORS preflight requests"""
+        self.send_response(200)
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+        self.end_headers() 

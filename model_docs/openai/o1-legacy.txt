@@ -1,0 +1,32 @@
+Model: o1 and o1 Pro
+Provider: OpenAI
+Release: Earlier (retained for compatibility)
+
+Earlier reasoning models retained for backward compatibility.
+
+Key Capabilities:
+- Basic reasoning capabilities
+- Code generation and analysis
+- Mathematical problem solving
+- Lower-cost reasoning option
+- Backward compatibility support
+
+Technical Specifications:
+- Context window: 128K tokens
+- Knowledge cutoff: Earlier than current models
+- Response speed: Variable
+- Cost: Lowest price in the reasoning line (below GPT 3.5 Turbo)
+
+Best Use Cases (Legacy Warning):
+- The only use cases for these models are legacy processes that cannot be updated to newer, smarter, and better models
+- DO NOT USE, instead choose o4 Mini, o3, or o3 Pro
+- Only for existing systems that cannot be migrated
+- Backward compatibility for legacy applications
+
+Limitations:
+- Lower accuracy compared to newer reasoning models
+- Limited documentation and support
+- No future upgrades or improvements planned
+- Superseded by o3 and o4 series
+- Reduced capabilities compared to current models
+- Not recommended for new development 

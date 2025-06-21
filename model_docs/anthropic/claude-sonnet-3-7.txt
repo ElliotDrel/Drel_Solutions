@@ -1,0 +1,33 @@
+Model: Claude Sonnet 3.7
+Provider: Anthropic
+Release: Current
+
+Incremental upgrade of Sonnet 3.5 with better instruction following.
+
+Key Capabilities:
+- Two hundred K token context
+- Improved instruction following over 3.5
+- Enhanced performance and reliability
+- Better task completion accuracy
+- Stable and consistent responses
+- Good general-purpose capabilities
+
+Technical Specifications:
+- Context window: 200K tokens
+- Knowledge cutoff: Current
+- Response speed: Fast
+- Cost: Same as Sonnet 4 for input, slightly discounted output
+
+Best Use Cases:
+- Mid-tier chatbots and conversational AI
+- Workflow automation and processing
+- Content generation and editing
+- General business applications
+- Educational assistance
+- Customer support applications
+
+Limitations:
+- Lacks vision support capabilities
+- Not as advanced as Sonnet 4
+- Limited multimodal processing  
+- Transitional model between generations 

@@ -1,33 +1,31 @@
-Model: Claude 3 Haiku
+Model: Claude Haiku 3 (Legacy)
 Provider: Anthropic
-Release: March 2024
+Release: March 2024 (Legacy)
 
-Claude 3 Haiku is Anthropic's fastest and most cost-effective model, optimized for quick responses and high-volume applications while maintaining good quality and safety standards.
+Legacy Claude 3 Haiku model kept for backward compatibility.
 
 Key Capabilities:
-- Very fast response times
-- Cost-effective processing
-- Good basic reasoning
-- Reliable text generation
-- Safe and helpful responses
-- Efficient resource usage
+- Ultra-fast response times
+- Cost-effective for high-volume use
+- Good for simple tasks and quick queries
+- Reliable basic text processing
+- Legacy system compatibility
 
 Technical Specifications:
-- Context window: 200k tokens
-- Training cutoff: April 2024
-- Response speed: Very fast (~200ms)
-- Cost: $0.25/1M input tokens, $1.25/1M output tokens
+- Context window: 100K tokens
+- Knowledge cutoff: April 2024
+- Response speed: Ultra-fast
+- Cost: Legacy pricing structure
 
-Best Use Cases:
-- High-volume applications
-- Real-time chat and customer service
-- Quick content generation
-- Simple analysis and summarization
-- Cost-sensitive applications
-- Fast prototyping and development
+Best Use Cases (Legacy Warning):
+- Only valid for legacy systems that cannot migrate to Haiku 3.5
+- DO NOT USE, migrate to Haiku 3.5 for better performance and cost
+- Existing integrations requiring immediate compatibility
+- Systems scheduled for migration to newer models
 
 Limitations:
-- Less sophisticated reasoning than larger models
-- May struggle with complex tasks
-- Limited creative capabilities
-- Basic performance on specialized domains 
+- 100K context limit (vs standard in newer models)
+- Superseded by Haiku 3.5
+- Limited future support and updates
+- Not recommended for new development projects
+- Reduced capabilities compared to current generation 

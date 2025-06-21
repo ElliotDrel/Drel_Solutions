@@ -1,0 +1,32 @@
+Model: Claude Opus 3, Claude Sonnet 3, Claude Haiku 3
+Provider: Anthropic
+Release: Earlier (legacy models)
+
+Older Claude 3 models kept for backward compatibility.
+
+Key Capabilities:
+- Basic Claude 3 generation capabilities
+- Text processing and generation
+- Legacy system compatibility
+- Stable performance for existing integrations
+- Backward compatibility support
+
+Technical Specifications:
+- Context window: 100K tokens
+- Knowledge cutoff: Earlier cutoff
+- Response speed: Variable by model variant
+- Cost: Legacy pricing structure
+
+Best Use Cases (Legacy Warning):
+- Only valid for legacy systems that cannot migrate to version 4 models
+- DO NOT USE, migrate to Sonnet 4 or Haiku 3.5 for better accuracy and lower cost
+- Existing integrations requiring immediate compatibility
+- Systems scheduled for migration to newer models
+
+Limitations:
+- 100K context limit (vs 200K in newer models)
+- No vision capabilities
+- Lower benchmarks than current generation
+- Superseded by Claude 4 series
+- Limited future support and updates
+- Not recommended for new development projects 

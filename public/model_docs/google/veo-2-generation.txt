@@ -1,0 +1,34 @@
+Model: Veo 2 Generation
+Provider: Google (Vertex AI)
+Release: Current
+
+Text-to-video model up to 720p at 24 FPS.
+
+Key Capabilities:
+- Text-to-video generation
+- 720p resolution output
+- 24 FPS video generation
+- Narrative video creation
+- Scene composition
+- Motion and timing control
+
+Technical Specifications:
+- Output format: 720p video at 24 FPS
+- Processing speed: Variable by length and complexity
+- Cost: Billed per video generation
+- Quality: 720p HD resolution
+
+Best Use Cases:
+- Social media clips and content
+- Storyboards and previsualization
+- Educational video content
+- Marketing video materials
+- Content creation for platforms
+- Prototype video concepts
+
+Limitations:
+- Resolution limited to 720p
+- 24 FPS maximum frame rate
+- No higher resolution options
+- Limited to shorter video clips
+- May require multiple iterations for desired results 

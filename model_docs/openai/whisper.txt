@@ -1,0 +1,34 @@
+Model: Whisper
+Provider: OpenAI
+Release: Current (stable)
+
+Large-scale speech-to-text model with multilingual coverage.
+
+Key Capabilities:
+- Multilingual speech recognition
+- High-accuracy transcription
+- Robust to accents and dialects
+- Noise-resistant processing  
+- Real-time and batch processing
+- Multiple language support (50+ languages)
+
+Technical Specifications:
+- Input format: Audio files (various formats)
+- Processing speed: Real-time capable
+- Cost: $1.50 per audio minute equivalent in tokens
+- Accuracy: High across multiple languages
+
+Best Use Cases:
+- Meeting transcription and note-taking
+- Video captioning and subtitles
+- Multilingual content transcription
+- Accessibility applications
+- Voice-to-text conversion
+- Podcast and interview transcription
+
+Limitations:
+- Background noise can reduce accuracy
+- Performance varies by language and accent
+- May struggle with highly technical terminology
+- Requires clear audio for optimal results
+- Processing cost scales with audio length 

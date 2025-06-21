@@ -1,33 +1,32 @@
-Model: Claude 3 Opus
+Model: Claude Opus 3 (Legacy)
 Provider: Anthropic
-Release: March 2024
+Release: March 2024 (Legacy)
 
-Claude 3 Opus is Anthropic's most capable model, offering exceptional performance on complex reasoning tasks, creative writing, and detailed analysis. Known for its thoughtful and nuanced responses.
+Legacy Claude 3 Opus model kept for backward compatibility.
 
 Key Capabilities:
-- Superior reasoning and analytical thinking
-- Exceptional creative writing abilities
-- Strong ethical considerations and safety
-- Detailed and nuanced responses
-- Excellent instruction following
-- High-quality code generation and review
+- Superior reasoning and problem-solving (for its generation)
+- Advanced creative writing and analysis
+- Strong coding and mathematical abilities
+- Legacy system compatibility
+- Backward compatibility support
 
 Technical Specifications:
-- Context window: 200k tokens
-- Training cutoff: April 2024
-- Response speed: Moderate (~600ms)
-- Cost: $15/1M input tokens, $75/1M output tokens
+- Context window: 100K tokens
+- Knowledge cutoff: April 2024
+- Response speed: Moderate
+- Cost: Legacy pricing structure
 
-Best Use Cases:
-- Complex analysis and research tasks
-- Creative writing and content creation
-- Detailed code review and architecture design
-- Strategic planning and decision support
-- Educational content development
-- Tasks requiring careful reasoning and ethics
+Best Use Cases (Legacy Warning):
+- Only valid for legacy systems that cannot migrate to Opus 4
+- DO NOT USE, migrate to Opus 4 for better accuracy and capabilities
+- Existing integrations requiring immediate compatibility
+- Systems scheduled for migration to newer models
 
 Limitations:
-- Highest cost among Claude models
-- Slower response times
-- May be overly cautious in some scenarios
-- Conservative approach to certain topics 
+- 100K context limit (vs 200K in Opus 4)
+- No vision capabilities compared to Opus 4
+- Superseded by Opus 4
+- Limited future support and updates
+- Not recommended for new development projects
+- Reduced capabilities compared to current generation 

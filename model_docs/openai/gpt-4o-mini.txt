@@ -1,0 +1,33 @@
+Model: GPT 4o Mini
+Provider: OpenAI
+Release: July 2024
+
+Low-cost vision-enabled model that scores above eighty percent on MMLU while keeping latency low.
+
+Key Capabilities:
+- One hundred twenty-eight K token context
+- Fast multimodal responses
+- Vision processing capabilities
+- Strong performance on academic benchmarks
+- Efficient text and image processing
+- Cost-effective multimodal applications
+
+Technical Specifications:
+- Context window: 128K tokens
+- Knowledge cutoff: April 2024
+- Response speed: Fast
+- Cost: $0.15/1M input tokens, $0.60/1M output tokens
+
+Best Use Cases:
+- Mass-scale chat applications
+- Medium-sized coding projects
+- Long memory agents
+- Image analysis and description
+- Educational applications
+- Customer service with visual components
+
+Limitations:
+- No native audio output
+- Smaller context window than newer models
+- Less advanced reasoning than GPT 4.1 family
+- Limited audio processing capabilities 

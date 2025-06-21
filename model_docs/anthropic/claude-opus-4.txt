@@ -1,0 +1,34 @@
+Model: Claude Opus 4
+Provider: Anthropic
+Release: May 2025
+
+Most capable Anthropic model, topping engineering and reasoning benchmarks.
+
+Key Capabilities:
+- Two hundred K token context
+- Vision input support
+- Superior reasoning and analysis
+- Top-tier engineering performance
+- Complex problem-solving abilities
+- Advanced multimodal processing
+
+Technical Specifications:
+- Context window: 200K tokens
+- Knowledge cutoff: Latest available
+- Response speed: Moderate (optimized for accuracy)
+- Cost: $15/1M input tokens, $75/1M output tokens
+
+Best Use Cases:
+- Deep research and analysis
+- Complex coding and software architecture
+- Legal drafting and document analysis
+- Advanced academic research
+- High-stakes decision making
+- Complex reasoning tasks requiring highest accuracy
+
+Limitations:
+- Highest cost in Claude family
+- May be overkill for simple tasks
+- Higher latency due to complexity
+- Resource-intensive processing
+- Premium pricing for premium capabilities 

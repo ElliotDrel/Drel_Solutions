@@ -1,0 +1,34 @@
+Model: Imagen 4 Ultra Generation Preview
+Provider: Google (Vertex AI)
+Release: Preview
+
+Highest quality mode in Imagen 4 line, tuned for cinematic visuals.
+
+Key Capabilities:
+- Cinematic quality visual generation
+- Highest fidelity in the Imagen 4 line
+- Advanced artistic controls
+- Professional-grade image quality
+- Cinematic rendering capabilities
+- Premium visual output
+
+Technical Specifications:
+- Output format: Ultra-high resolution images
+- Processing speed: Slower (optimized for quality)
+- Cost: Preview pricing (premium tier)
+- Quality: Cinematic/professional grade
+
+Best Use Cases:
+- High-end creative production
+- Cinematic and film production
+- Professional photography simulation
+- Premium marketing materials
+- Art and design exhibitions
+- High-quality print media
+
+Limitations:
+- Longer generation times for quality
+- Higher cost than other tiers
+- Preview access limitations
+- May require significant processing time
+- Limited to preview users with special access 

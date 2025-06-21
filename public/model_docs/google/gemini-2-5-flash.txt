@@ -1,0 +1,33 @@
+Model: Gemini 2.5 Flash
+Provider: Google (Vertex AI)
+Release: May 2025
+
+Speed-optimised sibling of Gemini 2.5 Pro.
+
+Key Capabilities:
+- One million token context
+- Fast processing and response times
+- Multimodal input support
+- Cost-effective for high-volume usage
+- Optimized for speed and efficiency
+- Real-time application support
+
+Technical Specifications:
+- Context window: 1M tokens
+- Knowledge cutoff: Latest available
+- Response speed: Fast (optimized for speed)
+- Cost: $0.30/1M input tokens, $2.50/1M output tokens
+
+Best Use Cases:
+- Streaming chat at scale
+- Real-time applications
+- High-volume processing
+- Interactive multimodal applications
+- Cost-sensitive deployments
+- Production chat applications
+
+Limitations:
+- Slightly lower reasoning than Pro version
+- Speed optimization may impact accuracy
+- Less suitable for complex analysis tasks
+- Balanced for speed over depth 

@@ -1,0 +1,34 @@
+Model: Claude Haiku 3.5
+Provider: Anthropic
+Release: Current
+
+Fastest, cheapest Claude model optimized for speed and efficiency.
+
+Key Capabilities:
+- Very fast response times
+- Cost-effective processing
+- Efficient for high-volume applications
+- Good basic reasoning capabilities
+- Reliable for simple to moderate tasks
+- Optimized for speed over complexity
+
+Technical Specifications:
+- Context window: Standard
+- Knowledge cutoff: Current
+- Response speed: Very fast
+- Cost: $0.80/1M input tokens, $4/1M output tokens
+
+Best Use Cases:
+- Real-time assistance applications
+- Quick summarisation tasks
+- High-volume chat applications
+- Simple content generation
+- Basic analysis and processing
+- Cost-sensitive applications requiring speed
+
+Limitations:
+- Limited context reasoning capabilities
+- Not suitable for complex analysis
+- Reduced capabilities compared to Sonnet/Opus
+- Best for straightforward, well-defined tasks
+- May require more specific prompting 

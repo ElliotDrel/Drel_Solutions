@@ -1,0 +1,33 @@
+Model: Claude Sonnet 4
+Provider: Anthropic
+Release: Current
+
+Balanced performance and cost offering excellent capabilities across various tasks.
+
+Key Capabilities:
+- Two hundred K token context
+- Strong reasoning and analysis
+- Balanced performance across tasks
+- Cost-effective premium performance
+- Reliable instruction following
+- Versatile problem-solving
+
+Technical Specifications:
+- Context window: 200K tokens
+- Knowledge cutoff: Current
+- Response speed: Fast
+- Cost: $3/1M input tokens, $15/1M output tokens
+
+Best Use Cases:
+- Customer service agents
+- Analytical dashboards and reporting
+- Content creation and editing
+- General-purpose AI applications
+- Business process automation
+- Educational and training applications
+
+Limitations:
+- Lower peak accuracy than Opus 4
+- May struggle with highly specialized tasks
+- Not optimized for specific domains
+- Balanced rather than specialized performance 

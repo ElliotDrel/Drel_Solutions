@@ -1,0 +1,29 @@
+Model: GPT 4.5 Preview
+Provider: OpenAI
+Release: February 2025
+
+Research preview that bridged GPT 4o and GPT 4.1, now scheduled for retirement on 14 July 2025.
+
+Key Capabilities:
+- Improved knowledge cutoff and reasoning vs GPT 4o
+- Enhanced performance over GPT 4o
+- Bridging capabilities between model generations
+- Better instruction following than GPT 4o
+
+Technical Specifications:
+- Context window: 256K tokens
+- Knowledge cutoff: Enhanced beyond GPT 4o
+- Response speed: Moderate
+- Cost: Same pricing as GPT 4o at launch
+
+Best Use Cases (Legacy Warning):
+- The only use cases for this model are legacy processes that cannot transition before the retirement date
+- DO NOT USE, instead migrate to GPT 4.1 Mini or GPT 4.1
+- Only for existing implementations that cannot be updated before July 14, 2025
+
+Limitations:
+- Will be removed from the API on July 14, 2025
+- No long-term support available
+- Superseded by GPT 4.1 family
+- Not recommended for new projects
+- Limited future compatibility 

@@ -17,15 +17,30 @@ test.describe('Homepage', () => {
     await expect(page.locator('#home').getByRole('button', { name: 'Start Saving TIME and MONEY!' })).toBeVisible();
   });
 
-  test('should display navigation with logo and menu items', async ({ page }) => {
+  test('should display navigation with logo and menu items', async ({ page, isMobile }) => {
     // Check logo - be more specific to get the navigation logo
     await expect(page.getByRole('navigation').getByAltText('Drel Solutions Logo')).toBeVisible();
     await expect(page.getByRole('navigation').getByText('Drel Solutions')).toBeVisible();
     
-    // Check navigation items (desktop) - use first() to get desktop nav items
-    await expect(page.getByRole('navigation').getByText('Home').first()).toBeVisible();
-    await expect(page.getByRole('navigation').getByText('About').first()).toBeVisible();
-    await expect(page.getByRole('navigation').getByText('Solutions').first()).toBeVisible();
+    if (isMobile) {
+      // On mobile, check that the mobile menu button exists instead of navigation items
+      await expect(page.getByRole('button').first()).toBeVisible(); // Hamburger menu button
+      
+      // Optionally, we can open the mobile menu and check the items are there
+      const menuButton = page.getByRole('button').first();
+      await menuButton.click();
+      await page.waitForTimeout(300); // Wait for menu animation
+      
+      // Now check mobile menu items are visible
+      await expect(page.locator('.md\\:hidden').getByText('Home')).toBeVisible();
+      await expect(page.locator('.md\\:hidden').getByText('About')).toBeVisible();
+      await expect(page.locator('.md\\:hidden').getByText('Model Advisor')).toBeVisible();
+    } else {
+      // Check navigation items (desktop) - use first() to get desktop nav items
+      await expect(page.getByRole('navigation').getByText('Home').first()).toBeVisible();
+      await expect(page.getByRole('navigation').getByText('About').first()).toBeVisible();
+      await expect(page.getByRole('navigation').getByText('Solutions').first()).toBeVisible();
+    }
   });
 
   test('should display AI dashboard mockup with metrics', async ({ page }) => {

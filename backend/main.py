@@ -60,7 +60,7 @@ async def root():
         "version": "2.0.0"
     }
 
-@app.post("/api/model-search", response_model=ModelSearchResponse)
+@app.post("/api/model_search", response_model=ModelSearchResponse)
 async def search_models(request: ModelSearchRequest):
     """
     Search for AI models based on user query.

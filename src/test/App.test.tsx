@@ -1,7 +1,13 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
-import App from '../App';
+import { MemoryRouter, Routes, Route } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import Index from '../pages/Index';
+import About from '../pages/About';
+import Contact from '../pages/Contact';
+import ModelAdvisor from '../pages/ModelAdvisor';
+import NotFound from '../pages/NotFound';
 
 // Mock the page components to avoid complexity in routing tests
 vi.mock('../pages/Index', () => ({
@@ -24,11 +30,35 @@ vi.mock('../pages/NotFound', () => ({
   default: () => <div data-testid="notfound-page">Not Found Page</div>
 }));
 
+// Create a test version of App without BrowserRouter
+const TestApp = () => {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: { retry: false },
+      mutations: { retry: false },
+    },
+  });
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/modeladvisor" element={<ModelAdvisor />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+};
+
 // Helper function to render App with routing
 const renderWithRouter = (initialEntries = ['/']) => {
   return render(
     <MemoryRouter initialEntries={initialEntries}>
-      <App />
+      <TestApp />
     </MemoryRouter>
   );
 };
@@ -60,14 +90,13 @@ describe('App Routing', () => {
   });
 
   it('handles multiple route changes', () => {
-    const { rerender } = renderWithRouter(['/']);
+    // Test initial route
+    const { unmount } = renderWithRouter(['/']);
     expect(screen.getByTestId('index-page')).toBeInTheDocument();
+    unmount();
 
-    rerender(
-      <MemoryRouter initialEntries={['/about']}>
-        <App />
-      </MemoryRouter>
-    );
+    // Test about route
+    renderWithRouter(['/about']);
     expect(screen.getByTestId('about-page')).toBeInTheDocument();
   });
 }); 

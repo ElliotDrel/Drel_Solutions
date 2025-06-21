@@ -70,7 +70,7 @@ const About = () => {
 
   useEffect(() => {
     // Load the description from the text file
-    fetch('/src/content/drel-solutions-description.txt')
+    fetch('/drel-solutions-description.txt')
       .then(response => response.text())
       .then(text => setDrelDescription(text))
       .catch(error => {

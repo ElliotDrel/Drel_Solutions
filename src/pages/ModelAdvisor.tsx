@@ -426,7 +426,7 @@ const ModelAdvisor = () => {
     setShowRecommendations(false);
 
     try {
-      const response = await fetch('http://localhost:3298/api/model-search', {
+      const response = await fetch('/api/model-search', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

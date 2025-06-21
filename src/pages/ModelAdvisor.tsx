@@ -124,7 +124,13 @@ const LoadingAnimation = () => {
   }, []);
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center">
+    <div 
+      className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center"
+      role="dialog"
+      aria-labelledby="loading-title"
+      aria-describedby="loading-description"
+      aria-modal="true"
+    >
       <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 p-8 max-w-md w-full mx-4">
         <div className="text-center space-y-6">
           {/* Main AI thinking animation */}
@@ -154,10 +160,10 @@ const LoadingAnimation = () => {
 
           {/* AI thinking header */}
           <div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">
+            <h3 id="loading-title" className="text-xl font-bold text-gray-900 mb-2">
               AI is Thinking{dots}
             </h3>
-            <p className="text-gray-600 text-sm">
+            <p id="loading-description" className="text-gray-600 text-sm">
               Our advanced AI is analyzing your requirements to find the perfect model recommendations.
             </p>
           </div>
@@ -320,20 +326,20 @@ const ModelAdvisor = () => {
   const [isSearching, setIsSearching] = useState(false);
   const [searchError, setSearchError] = useState<string | null>(null);
   const [showRecommendations, setShowRecommendations] = useState(false);
+  
+  // New state for show more functionality
+  const [showAllModels, setShowAllModels] = useState(false);
 
   useEffect(() => {
     const loadModels = async () => {
       try {
-        const modelFiles = [
-          { path: '/model_docs/openai/gpt-4.txt', provider: 'OpenAI' },
-          { path: '/model_docs/openai/gpt-4o.txt', provider: 'OpenAI' },
-          { path: '/model_docs/anthropic/claude-3-sonnet.txt', provider: 'Anthropic' },
-          { path: '/model_docs/anthropic/claude-3-opus.txt', provider: 'Anthropic' },
-          { path: '/model_docs/anthropic/claude-3-haiku.txt', provider: 'Anthropic' },
-          { path: '/model_docs/google/gemini-pro-1.5.txt', provider: 'Google' },
-          { path: '/model_docs/google/gemini-nano-1.txt', provider: 'Google' }
-        ];
-
+        // Load the model index file
+        const indexResponse = await fetch('/model_docs/index.json');
+        if (!indexResponse.ok) {
+          throw new Error('Failed to load model index');
+        }
+        
+        const { models: modelFiles } = await indexResponse.json();
         const modelData: ModelInfo[] = [];
 
         for (const file of modelFiles) {
@@ -413,6 +419,8 @@ const ModelAdvisor = () => {
         model.provider.toLowerCase() === selectedProvider.toLowerCase()
       ));
     }
+    // Reset show more state when provider changes
+    setShowAllModels(false);
   }, [selectedProvider, models]);
 
   const handleSearch = async () => {
@@ -426,7 +434,7 @@ const ModelAdvisor = () => {
     setShowRecommendations(false);
 
     try {
-      const response = await fetch('http://localhost:3298/api/model-search', {
+      const response = await fetch('/api/model_search', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -653,11 +661,43 @@ const ModelAdvisor = () => {
                 </div>
 
                 {/* Models Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {filteredModels.map((model, index) => (
+                <div className="models-grid-section grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {(showAllModels ? filteredModels : filteredModels.slice(0, 6)).map((model, index) => (
                     <ModelCard key={`${model.provider}-${model.name}-${index}`} model={model} />
                   ))}
                 </div>
+
+                {/* Show More/Less Button */}
+                {filteredModels.length > 6 && (
+                  <div className="flex justify-center mt-8">
+                    <Button 
+                      onClick={() => {
+                        setShowAllModels(!showAllModels);
+                        // Scroll to models section when showing less
+                        if (showAllModels) {
+                          const modelsSection = document.querySelector('.models-grid-section');
+                          if (modelsSection) {
+                            modelsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                          }
+                        }
+                      }}
+                      variant="outline" 
+                      className="px-8 py-3 text-lg font-medium border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition-all duration-200"
+                    >
+                      {showAllModels ? (
+                        <>
+                          Show Less Models
+                          <ChevronDown className="ml-2 h-5 w-5 transform rotate-180" />
+                        </>
+                      ) : (
+                        <>
+                          Show More Models ({filteredModels.length - 6} more)
+                          <ChevronDown className="ml-2 h-5 w-5" />
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                )}
 
                 {filteredModels.length === 0 && !loading && (
                   <div className="text-center py-12">

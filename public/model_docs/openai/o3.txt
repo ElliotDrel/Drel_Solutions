@@ -1,0 +1,33 @@
+Model: o3
+Provider: OpenAI
+Release: April 2025
+
+Highest reasoning model in the OpenAI catalogue, designed for math, science, and code.
+
+Key Capabilities:
+- Two hundred K token context
+- Top scores on SWE-bench and GSM-Hard
+- Advanced mathematical reasoning
+- Superior coding capabilities
+- Complex problem-solving abilities
+- Scientific analysis and computation
+
+Technical Specifications:
+- Context window: 200K tokens
+- Knowledge cutoff: Latest available
+- Response speed: Moderate (optimized for accuracy)
+- Cost: $2.00/1M input tokens, $8.00/1M output tokens
+
+Best Use Cases:
+- Autonomous agents requiring deep reasoning
+- Complex data analysis and interpretation
+- Advanced copilots for development
+- Mathematical problem solving
+- Scientific research assistance
+- Code optimization and debugging
+
+Limitations:
+- Higher latency than o4 Mini
+- More expensive than general-purpose models
+- May be overkill for simple tasks
+- Requires careful prompt engineering for optimal results 

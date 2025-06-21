@@ -1,0 +1,34 @@
+Model: TTS
+Provider: OpenAI
+Release: Current
+
+High-quality text-to-speech engine with multiple voices.
+
+Key Capabilities:
+- High-quality voice synthesis
+- Multiple voice options
+- Natural-sounding speech
+- Customizable speech parameters
+- Real-time audio generation
+- Consistent voice quality
+
+Technical Specifications:
+- Output format: High-quality audio
+- Processing speed: Real-time generation
+- Cost: $0.02 per thousand characters
+- Voice options: Multiple available
+
+Best Use Cases:
+- Voice assistants and conversational AI
+- Audiobook creation and narration
+- Accessibility applications
+- Educational content delivery
+- Interactive voice response systems
+- Podcast and media production
+
+Limitations:
+- Limited custom voice cloning capabilities  
+- Voice selection is predefined
+- May not capture all emotional nuances
+- Cost scales with text length
+- Limited fine-tuning options for specific voices 

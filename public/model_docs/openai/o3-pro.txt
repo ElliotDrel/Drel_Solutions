@@ -1,0 +1,34 @@
+Model: o3 Pro
+Provider: OpenAI
+Release: April 2025
+
+Enterprise-tuned version of o3 with higher rate limits and priority capacity. Pricing matches the base o3 model.
+
+Key Capabilities:
+- Elevated throughput and rate limits
+- Identical reasoning quality to o3
+- Priority access to compute resources
+- Enterprise-grade reliability
+- Burst capacity handling
+- Advanced reasoning capabilities
+
+Technical Specifications:
+- Context window: 200K tokens
+- Knowledge cutoff: Latest available
+- Response speed: Moderate with priority processing
+- Cost: $2.00/1M input tokens, $8.00/1M output tokens
+
+Best Use Cases:
+- Large-scale production workloads needing burst capacity
+- Enterprise applications requiring high throughput
+- Mission-critical reasoning systems
+- High-volume autonomous agent deployments
+- Research institutions with intensive compute needs
+- Production systems requiring guaranteed availability
+
+Limitations:
+- Access limited to Pro-tier organisations
+- Requires enterprise-level account
+- Same reasoning capabilities as base o3
+- Higher infrastructure requirements
+- May have waiting lists for access 

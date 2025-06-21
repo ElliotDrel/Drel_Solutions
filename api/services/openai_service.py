@@ -11,7 +11,6 @@ import asyncio
 import logging
 from typing import List, Dict, Optional
 from pathlib import Path
-from dotenv import load_dotenv
 
 try:
     import openai
@@ -19,13 +18,8 @@ except ImportError as e:
     logging.error(f"Missing OpenAI dependency: {e}")
     raise
 
-# Load environment variables from .env file in root directory
-root_dir = Path(__file__).parent.parent.parent
-env_path = root_dir / ".env"
-# Load with UTF-8-sig encoding to handle BOM
-load_dotenv(dotenv_path=env_path, encoding='utf-8-sig')
-
 # OpenAI Configuration Variables
+# In serverless environment, read directly from environment variables
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 MODEL_NAME = "gpt-4.1"  # Using GPT-4 Turbo
 TEMPERATURE = 0.3
@@ -127,60 +121,63 @@ class OpenAIService:
                 "content": f"User task: {user_query}"
             })
             
-            # Define JSON schema for structured response
-            response_schema = {
-                "name": "recommend_models",
-                "description": "Recommend the top 5 AI models for the given task",
-                "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "recommendations": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "rank": {
-                                        "type": "integer",
-                                        "description": "Ranking position (1 through 5)"
+            # Define tools schema for structured response
+            tools = [{
+                "type": "function",
+                "function": {
+                    "name": "recommend_models",
+                    "description": "Recommend the top 5 AI models for the given task",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "recommendations": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "rank": {
+                                            "type": "integer",
+                                            "description": "Ranking position (1 through 5)"
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "description": "Model name"
+                                        },
+                                        "provider": {
+                                            "type": "string",
+                                            "description": "Model provider (openai, anthropic, google, etc.)"
+                                        },
+                                        "why": {
+                                            "type": "string",
+                                            "description": "Why this model fits the task"
+                                        },
+                                        "when": {
+                                            "type": "string",
+                                            "description": "When to use this model"
+                                        },
+                                        "rationale": {
+                                            "type": "string",
+                                            "description": "Why it ranks at this position"
+                                        }
                                     },
-                                    "name": {
-                                        "type": "string",
-                                        "description": "Model name"
-                                    },
-                                    "provider": {
-                                        "type": "string",
-                                        "description": "Model provider (openai, anthropic, google, etc.)"
-                                    },
-                                    "why": {
-                                        "type": "string",
-                                        "description": "Why this model fits the task"
-                                    },
-                                    "when": {
-                                        "type": "string",
-                                        "description": "When to use this model"
-                                    },
-                                    "rationale": {
-                                        "type": "string",
-                                        "description": "Why it ranks at this position"
-                                    }
+                                    "required": ["rank", "name", "provider", "why", "when", "rationale"]
                                 },
-                                "required": ["rank", "name", "provider", "why", "when", "rationale"]
-                            },
-                            "minItems": 5,
-                            "maxItems": 5
-                        }
-                    },
-                    "required": ["recommendations"]
+                                "minItems": 5,
+                                "maxItems": 5
+                            }
+                        },
+                        "required": ["recommendations"]
+                    }
                 }
-            }
+            }]
             
             # Make API call
             response = await asyncio.to_thread(
                 self.client.chat.completions.create,
                 model=MODEL_NAME,
                 messages=messages,
-                functions=[response_schema],
-                function_call={"name": "recommend_models"},
+                tools=tools,
+                tool_choice={"type": "function", "function": {"name": "recommend_models"}},
                 temperature=TEMPERATURE,
                 max_tokens=MAX_TOKENS,
                 top_p=TOP_P,
@@ -188,12 +185,12 @@ class OpenAIService:
                 presence_penalty=PRESENCE_PENALTY
             )
             
-            # Parse the function call response
-            function_call = response.choices[0].message.function_call
-            if not function_call:
-                raise ValueError("No function call in response")
+            # Parse the tool call response
+            tool_call = response.choices[0].message.tool_calls[0]
+            if not tool_call:
+                raise ValueError("No tool call in response")
             
-            result = json.loads(function_call.arguments)
+            result = json.loads(tool_call.function.arguments)
             
             # Validate response structure
             if "recommendations" not in result:

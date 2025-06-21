@@ -1,0 +1,34 @@
+Model: o4 Mini High
+Provider: OpenAI
+Release: April 2025
+
+Higher precision variant of o4 Mini, tuned for peak coding accuracy.
+
+Key Capabilities:
+- One million token context
+- Top SWE-bench score within Mini tier
+- Enhanced coding precision
+- Large context handling
+- Superior code generation and debugging
+- Production-ready code quality
+
+Technical Specifications:
+- Context window: 1M tokens
+- Knowledge cutoff: Latest available
+- Response speed: Moderate (optimized for accuracy)
+- Cost: 10% premium over o4 Mini (approximately $1.21/1M input, $4.84/1M output)
+
+Best Use Cases:
+- Code generation that must match production standards
+- Large codebase analysis and optimization
+- Critical software development projects
+- Code review and quality assurance
+- Complex debugging and troubleshooting
+- Enterprise software development
+
+Limitations:
+- Preview access only (limited availability)
+- Higher cost than standard o4 Mini
+- May have access restrictions
+- Focused primarily on coding tasks
+- Not optimized for general reasoning 

@@ -1,0 +1,33 @@
+Model: GPT 4.1 Nano
+Provider: OpenAI
+Release: April 2025
+
+Fastest and least expensive member of the GPT 4.1 family, tuned for auto-complete and tagging tasks.
+
+Key Capabilities:
+- One million token context
+- Very low latency
+- Optimized for classification and tagging
+- Efficient bulk processing
+- Fast response times
+- Cost-effective for high-volume applications
+
+Technical Specifications:
+- Context window: 1M tokens
+- Knowledge cutoff: June 2024
+- Response speed: Very fast (low latency)
+- Cost: $0.10/1M input tokens, $0.40/1M output tokens
+
+Best Use Cases:
+- Predictive typing and auto-completion
+- Content moderation at scale
+- Bulk classification tasks
+- Real-time tagging systems
+- High-volume data processing
+- Simple NLP tasks requiring speed
+
+Limitations:
+- Reduced reasoning depth compared to larger models
+- Not suitable for complex analysis tasks
+- Limited creative capabilities
+- Best for specific, narrow use cases 

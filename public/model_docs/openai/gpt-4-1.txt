@@ -1,0 +1,32 @@
+Model: GPT 4.1
+Provider: OpenAI
+Release: April 2025
+
+GPT 4.1 is the current flagship multimodal model. It delivers top-tier reasoning, long-context retrieval, and strong coding ability while reducing cost compared with GPT 4o.
+
+Key Capabilities:
+- Processes up to one million tokens of context
+- Handles text, images, audio, and video in the same call
+- High scores on coding and academic benchmarks
+- Advanced reasoning and problem-solving
+- Superior multimodal processing capabilities
+- Long-context retrieval and analysis
+
+Technical Specifications:
+- Context window: 1M tokens
+- Knowledge cutoff: June 2024
+- Response speed: Variable (higher latency than Mini versions)
+- Cost: $2.00/1M input tokens, $8.00/1M output tokens
+
+Best Use Cases:
+- Very large document or code-base analysis
+- High-fidelity research or legal assistants
+- Multimodal tutoring systems
+- Complex reasoning tasks requiring extensive context
+- Advanced coding projects with large codebases
+- Comprehensive document analysis and summarization
+
+Limitations:
+- Higher latency and cost than Mini and Nano versions
+- May be overkill for simple tasks
+- Requires significant compute resources 

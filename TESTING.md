@@ -89,9 +89,12 @@ The testing pipeline runs on:
 - **Manual triggers**: Full test suite
 
 ### Vercel Integration
-- **Build Command**: `npm run test:run && npm run build`
+- **Build Command**: `npm run test:run && npm run build` (runs unit tests then builds)
+- **Test Script**: `npm run test:ci` (runs both unit tests with coverage and e2e tests)
 - **Deployment**: Only proceeds if tests pass
 - **Preview Testing**: E2E tests run against preview URLs
+
+**Note**: The Vercel build command uses `test:run` (unit tests only) for faster builds, while CI uses `test:ci` (full test suite) for comprehensive validation.
 
 ## 📊 Coverage Requirements
 

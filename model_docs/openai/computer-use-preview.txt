@@ -1,0 +1,35 @@
+Model: Computer Use Preview
+Provider: OpenAI
+Release: Preview/Experimental
+
+Experimental model that can control a virtual desktop through natural language.
+
+Key Capabilities:
+- Virtual desktop control
+- Natural language to UI interaction
+- Screen understanding and manipulation
+- Process automation capabilities
+- GUI element recognition
+- Task execution through interface control
+
+Technical Specifications:
+- Environment: Virtual desktop sandbox
+- Access: Preview/research only
+- Response speed: Variable (depends on task complexity)
+- Cost: Preview pricing (experimental)
+
+Best Use Cases:
+- Research in robotic process automation
+- UI testing and automation experiments
+- Desktop workflow prototyping
+- Human-computer interaction research
+- Process automation research
+- Accessibility tool development
+
+Limitations:
+- Preview only with limited access
+- Strict safety limits and restrictions
+- Not suitable for production use
+- Limited to controlled environments
+- Subject to change or discontinuation
+- Requires special permissions for access 

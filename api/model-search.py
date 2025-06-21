@@ -11,7 +11,7 @@ from typing import List, Dict, Optional
 import logging
 import uvicorn
 
-from services.openai_service import get_openai_service
+from .services.openai_service import get_openai_service
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)

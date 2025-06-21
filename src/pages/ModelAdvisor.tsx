@@ -124,7 +124,13 @@ const LoadingAnimation = () => {
   }, []);
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center">
+    <div 
+      className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center"
+      role="dialog"
+      aria-labelledby="loading-title"
+      aria-describedby="loading-description"
+      aria-modal="true"
+    >
       <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 p-8 max-w-md w-full mx-4">
         <div className="text-center space-y-6">
           {/* Main AI thinking animation */}
@@ -154,10 +160,10 @@ const LoadingAnimation = () => {
 
           {/* AI thinking header */}
           <div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">
+            <h3 id="loading-title" className="text-xl font-bold text-gray-900 mb-2">
               AI is Thinking{dots}
             </h3>
-            <p className="text-gray-600 text-sm">
+            <p id="loading-description" className="text-gray-600 text-sm">
               Our advanced AI is analyzing your requirements to find the perfect model recommendations.
             </p>
           </div>

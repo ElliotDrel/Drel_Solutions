@@ -1,0 +1,146 @@
+name: 🧪 Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  unit-tests:
+    name: 🔬 Unit & Integration Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📋 Checkout code
+        uses: actions/checkout@v4
+      
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: 📥 Install dependencies
+        run: npm ci
+      
+      - name: 🔍 Run linting
+        run: npm run lint
+      
+      - name: 🧪 Run unit tests
+        run: npm run test:coverage
+      
+      - name: 📊 Upload coverage reports
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./coverage/lcov.info
+          fail_ci_if_error: false
+
+  e2e-tests:
+    name: 🌐 End-to-End Tests
+    runs-on: ubuntu-latest
+    needs: unit-tests
+    
+    steps:
+      - name: 📋 Checkout code
+        uses: actions/checkout@v4
+      
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: 📥 Install dependencies
+        run: npm ci
+      
+      - name: 🎭 Install Playwright Browsers
+        run: npx playwright install --with-deps
+      
+      - name: 🏗️ Build application
+        run: npm run build
+      
+      - name: 🌐 Run E2E tests
+        run: npm run test:e2e
+        env:
+          CI: true
+          BASE_URL: http://localhost:4173
+      
+      - name: 📤 Upload Playwright Report
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
+
+  # This job runs only on main branch pushes and integrates with Vercel
+  deploy-with-tests:
+    name: 🚀 Deploy with Tests
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    needs: [unit-tests, e2e-tests]
+    
+    steps:
+      - name: 📋 Checkout code
+        uses: actions/checkout@v4
+      
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: 📥 Install dependencies
+        run: npm ci
+      
+      - name: 🧪 Final test run
+        run: npm run test:ci
+        env:
+          CI: true
+      
+      - name: ✅ Tests passed - Ready for deployment
+        run: echo "All tests passed! Deployment can proceed."
+
+  # Optional: Run tests against Vercel preview deployments
+  test-preview:
+    name: 🔍 Test Preview Deployment
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    
+    steps:
+      - name: 📋 Checkout code
+        uses: actions/checkout@v4
+      
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: 📥 Install dependencies
+        run: npm ci
+      
+      - name: 🎭 Install Playwright Browsers
+        run: npx playwright install --with-deps
+      
+      - name: ⏳ Wait for Vercel Preview
+        uses: patrickedqvist/wait-for-vercel-preview@v1.3.1
+        id: waitFor200
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          max_timeout: 300
+      
+      - name: 🌐 Run E2E tests against preview
+        run: npm run test:e2e
+        env:
+          CI: true
+          BASE_URL: ${{ steps.waitFor200.outputs.url }}
+      
+      - name: 📤 Upload test results
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: preview-test-results
+          path: playwright-report/
+          retention-days: 7 

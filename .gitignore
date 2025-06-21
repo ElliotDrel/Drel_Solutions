@@ -24,7 +24,7 @@ dist-ssr
 *.sw?
 .env
 
-# Python
+# Python (basic)
 __pycache__/
 *.py[cod]
 *$py.class
@@ -46,3 +46,11 @@ wheels/
 .installed.cfg
 *.egg
 MANIFEST
+
+# Testing
+coverage/
+test-results/
+playwright-report/
+playwright/.cache/
+*.lcov
+coverage.data

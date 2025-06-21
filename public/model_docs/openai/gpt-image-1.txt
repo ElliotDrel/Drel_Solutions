@@ -1,0 +1,34 @@
+Model: GPT Image 1
+Provider: OpenAI
+Release: Current
+
+Text-to-image generation model.
+
+Key Capabilities:
+- High-fidelity image synthesis
+- Supports style tuning and customization
+- Advanced visual generation
+- Flexible image creation
+- Multiple resolution options
+- Style and aesthetic control
+
+Technical Specifications:
+- Output format: Various image resolutions
+- Response speed: Variable based on complexity
+- Cost: $0.01 to $0.17 per image depending on resolution
+- Image quality: High-fidelity output
+
+Best Use Cases:
+- Marketing assets and promotional materials
+- UI mock-ups and design prototypes
+- Synthetic data generation for training
+- Creative content creation
+- Product visualization
+- Concept art and illustrations
+
+Limitations:
+- No video output capabilities
+- Limited to static images only
+- May require multiple iterations for desired results
+- Cost scales with resolution and complexity
+- Subject to content policy restrictions 

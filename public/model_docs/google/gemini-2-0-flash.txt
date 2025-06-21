@@ -1,0 +1,33 @@
+Model: Gemini 2.0 Flash
+Provider: Google (Vertex AI)
+Release: Current (general availability)
+
+General-availability predecessor to 2.5 Flash.
+
+Key Capabilities:
+- Two hundred K token context
+- Fast processing capabilities
+- Multimodal input support
+- Stable and reliable performance
+- Cost-effective processing
+- Production-ready deployment
+
+Technical Specifications:
+- Context window: 200K tokens
+- Knowledge cutoff: Current
+- Response speed: Fast
+- Cost: $0.15/1M input tokens, $0.60/1M output tokens
+
+Best Use Cases:
+- Moderate-scale chat applications
+- Data extraction and processing
+- General-purpose AI tasks
+- Cost-effective multimodal applications
+- Business process automation
+- Educational applications
+
+Limitations:
+- No million token context capability
+- Limited compared to 2.5 series
+- Smaller context window than newer models
+- Less advanced features than latest generation 

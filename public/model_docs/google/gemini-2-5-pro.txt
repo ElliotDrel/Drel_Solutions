@@ -1,0 +1,33 @@
+Model: Gemini 2.5 Pro
+Provider: Google (Vertex AI)
+Release: May 2025
+
+Flagship multimodal Gemini model with one million token context.
+
+Key Capabilities:
+- Text, image, video, and audio input
+- Grounded search integration
+- One million token context window
+- Advanced multimodal reasoning
+- Enterprise-grade capabilities
+- Comprehensive data processing
+
+Technical Specifications:
+- Context window: 1M tokens
+- Knowledge cutoff: Latest available
+- Response speed: Moderate (optimized for accuracy)
+- Cost: $1.25/1M input tokens (up to 200K), $10/1M output tokens
+
+Best Use Cases:
+- Enterprise knowledge agents
+- Multimodal research and analysis
+- Large document processing
+- Complex reasoning tasks
+- Advanced AI applications
+- Comprehensive data integration
+
+Limitations:
+- Long-context calls above 200K tokens cost more
+- Higher cost for extended context usage
+- May require enterprise-level infrastructure
+- Complex pricing structure for different usage tiers 

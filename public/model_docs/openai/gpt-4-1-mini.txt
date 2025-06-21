@@ -1,0 +1,32 @@
+Model: GPT 4.1 Mini
+Provider: OpenAI
+Release: April 2025
+
+Compact edition of GPT 4.1 that retains most capabilities at a lower price and faster speed.
+
+Key Capabilities:
+- One million token context
+- Near real-time responses
+- Supports all GPT 4.1 modalities
+- Cost-efficient multimodal processing
+- Strong performance across various tasks
+- Fast response times
+
+Technical Specifications:
+- Context window: 1M tokens
+- Knowledge cutoff: June 2024
+- Response speed: Fast (near real-time)
+- Cost: $0.40/1M input tokens, $1.60/1M output tokens
+
+Best Use Cases:
+- High-volume chat or summarisation
+- Cost-sensitive analytics
+- Prototype multimodal apps
+- Production applications requiring fast responses
+- Batch processing of multimodal content
+- Real-time conversational applications
+
+Limitations:
+- Slightly lower peak accuracy than full GPT 4.1
+- May not handle the most complex reasoning tasks as well
+- Reduced capabilities compared to flagship model 

@@ -1,0 +1,32 @@
+Model: Codex Mini Latest
+Provider: OpenAI
+Release: Legacy (derived from o-series)
+
+Small code-completion model derived from o-series.
+
+Key Capabilities:
+- Code completion and suggestions
+- Basic programming assistance
+- IDE integration support
+- Lightweight code generation
+- Auto-completion features
+
+Technical Specifications:
+- Context window: 100K tokens
+- Knowledge cutoff: Earlier than current models
+- Response speed: Fast
+- Cost: Lower than current generation models
+
+Best Use Cases (Legacy Warning):
+- Only suited for legacy IDE integrations that have not yet migrated to GPT 4.1 or o-series coding endpoints
+- DO NOT USE for new projects, adopt o4 Mini High or GPT 4.1 Mini instead
+- Existing integrations that cannot be updated immediately
+- Backward compatibility for legacy development tools
+
+Limitations:
+- Outperformed by GPT 4 family in every coding benchmark
+- Limited compared to current models
+- No longer recommended for new implementations
+- Superseded by o4 Mini High and GPT 4.1 series
+- Reduced accuracy and capabilities
+- Limited future support 

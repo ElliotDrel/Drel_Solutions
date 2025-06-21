@@ -1,0 +1,33 @@
+Model: o4 Mini
+Provider: OpenAI
+Release: April 2025
+
+Cost-efficient reasoning model that rivals o3 on many tasks at half the price.
+
+Key Capabilities:
+- Two hundred K token context
+- Strong coding and mathematical abilities
+- Cost-effective reasoning
+- Competitive performance with o3
+- Efficient processing capabilities
+- Balanced performance and cost
+
+Technical Specifications:
+- Context window: 200K tokens
+- Knowledge cutoff: Latest available
+- Response speed: Fast (faster than o3)
+- Cost: $1.10/1M input tokens, $4.40/1M output tokens
+
+Best Use Cases:
+- Agentic pipelines where cost matters
+- Structured data extraction and analysis
+- Cost-sensitive reasoning applications
+- Production systems requiring reliable performance
+- Batch processing of complex tasks
+- Educational and research applications
+
+Limitations:
+- Slightly weaker vision compared with o3
+- May not handle the most complex reasoning as well as o3
+- Limited compared to flagship reasoning models
+- Not suitable for highest-precision tasks 

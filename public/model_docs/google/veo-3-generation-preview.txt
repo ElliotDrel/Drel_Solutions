@@ -1,0 +1,35 @@
+Model: Veo 3 Generation Preview
+Provider: Google (Vertex AI)
+Release: Preview
+
+Next-generation video model with finer cinematic controls.
+
+Key Capabilities:
+- Advanced cinematic controls
+- Next-generation video quality
+- Fine-grained scene control
+- Professional video production features
+- Enhanced narrative capabilities
+- Advanced motion control
+
+Technical Specifications:
+- Output format: Enhanced video quality
+- Processing speed: Variable (optimized for quality)
+- Cost: Preview pricing (not yet finalized)
+- Quality: Next-generation video
+
+Best Use Cases:
+- High-end creative production
+- Professional video creation
+- Cinematic content development
+- Advanced storytelling applications
+- Premium video marketing
+- Film and media production
+
+Limitations:
+- Allowlist preview with limited access
+- Pricing not yet finalized
+- Requires special permissions
+- Subject to change during preview
+- Limited availability for testing
+- May have waiting lists for access 

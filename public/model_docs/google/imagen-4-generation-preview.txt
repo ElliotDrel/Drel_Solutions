@@ -1,0 +1,34 @@
+Model: Imagen 4 Generation Preview
+Provider: Google (Vertex AI)
+Release: Preview
+
+Latest text-to-image model with higher fidelity than Imagen 3.
+
+Key Capabilities:
+- Depth maps and advanced rendering
+- Style tuning and customization
+- High-fidelity image generation
+- Advanced visual control
+- Enhanced artistic capabilities
+- Improved photorealism
+
+Technical Specifications:
+- Output format: High-resolution images
+- Processing speed: Variable by complexity
+- Cost: Preview pricing (billed per image, exact rate pending)
+- Quality: Enhanced fidelity
+
+Best Use Cases:
+- Marketing creatives and advertising
+- Product rendering and visualization
+- Creative content generation
+- Design prototyping
+- Artistic and creative projects
+- High-quality visual content
+
+Limitations:
+- Preview access with limited availability
+- Subject to change during preview period
+- Pricing structure not yet finalized
+- May have access restrictions
+- Limited to preview users 

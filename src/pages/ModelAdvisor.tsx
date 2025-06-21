@@ -330,16 +330,13 @@ const ModelAdvisor = () => {
   useEffect(() => {
     const loadModels = async () => {
       try {
-        const modelFiles = [
-          { path: '/model_docs/openai/gpt-4.txt', provider: 'OpenAI' },
-          { path: '/model_docs/openai/gpt-4o.txt', provider: 'OpenAI' },
-          { path: '/model_docs/anthropic/claude-3-sonnet.txt', provider: 'Anthropic' },
-          { path: '/model_docs/anthropic/claude-3-opus.txt', provider: 'Anthropic' },
-          { path: '/model_docs/anthropic/claude-3-haiku.txt', provider: 'Anthropic' },
-          { path: '/model_docs/google/gemini-pro-1.5.txt', provider: 'Google' },
-          { path: '/model_docs/google/gemini-nano-1.txt', provider: 'Google' }
-        ];
-
+        // Load the model index file
+        const indexResponse = await fetch('/model_docs/index.json');
+        if (!indexResponse.ok) {
+          throw new Error('Failed to load model index');
+        }
+        
+        const { models: modelFiles } = await indexResponse.json();
         const modelData: ModelInfo[] = [];
 
         for (const file of modelFiles) {

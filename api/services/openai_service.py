@@ -60,7 +60,7 @@ class OpenAIService:
         # Use absolute path to model_docs directory relative to project root
         self.model_docs_path = Path(__file__).parent.parent.parent / "model_docs"
     
-    async def load_all_documents(self) -> Dict[str, str]:
+    async def load_all_documents(self) -> Dict[str, Dict[str, str]]:
         """Load all model documentation files"""
         documents = {}
         
@@ -78,9 +78,16 @@ class OpenAIService:
                 try:
                     with open(model_file, 'r', encoding='utf-8') as f:
                         content = f.read().strip()
-                        key = f"{provider_dir.name}/{model_file.stem}"
-                        documents[key] = content
-                        logger.debug(f"Loaded document: {key}")
+                        
+                        # Extract actual model name from first line
+                        lines = content.split('\n')
+                        model_name = lines[0].replace('Model: ', '').strip() if lines else model_file.stem
+                        
+                        documents[model_name] = {
+                            'content': content,
+                            'provider': provider_dir.name.title()
+                        }
+                        logger.debug(f"Loaded document: {model_name} ({provider_dir.name})")
                 except Exception as e:
                     logger.error(f"Error loading {model_file}: {e}")
         
@@ -102,10 +109,10 @@ class OpenAIService:
             ]
             
             # Add all model documentation as context first
-            for model_name, content in documents.items():
+            for model_name, model_data in documents.items():
                 messages.append({
                     "role": "user",
-                    "content": f"Model Documentation - {model_name}:\n{content}"
+                    "content": f"Model Documentation - {model_name} ({model_data['provider']}):\n{model_data['content']}"
                 })
             
             # Add user query last

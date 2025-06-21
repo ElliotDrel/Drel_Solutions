@@ -96,18 +96,23 @@ class OpenAIService:
             if not documents:
                 raise ValueError("No model documents found")
             
-            # Prepare messages with all model documentation
+            # Prepare messages with all model documentation first, then user query
             messages = [
-                {"role": "system", "content": SYSTEM_PROMPT},
-                {"role": "user", "content": f"User task: {user_query}"}
+                {"role": "system", "content": SYSTEM_PROMPT}
             ]
             
-            # Add all model documentation as context
+            # Add all model documentation as context first
             for model_name, content in documents.items():
                 messages.append({
                     "role": "user",
                     "content": f"Model Documentation - {model_name}:\n{content}"
                 })
+            
+            # Add user query last
+            messages.append({
+                "role": "user", 
+                "content": f"User task: {user_query}"
+            })
             
             # Define tools schema for structured response
             tools = [{

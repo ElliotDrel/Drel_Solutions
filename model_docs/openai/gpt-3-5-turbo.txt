@@ -1,0 +1,35 @@
+Model: GPT 3.5 Turbo
+Provider: OpenAI
+Release: Earlier (stable model)
+
+Stable, low-cost model used widely for chatbots and summarisation.
+
+Key Capabilities:
+- Reliable text generation
+- Basic reasoning and analysis
+- Cost-effective processing
+- Stable performance
+- Good for simple tasks
+- Widely compatible
+
+Technical Specifications:
+- Context window: 16K tokens
+- Knowledge cutoff: Earlier cutoff
+- Response speed: Fast
+- Cost: $0.50/1M input tokens, $1.50/1M output tokens
+
+Best Use Cases:
+- Customer chat applications
+- Text summarization and basic analysis
+- Lightweight analytics
+- Simple content generation
+- Basic educational assistance
+- Low-cost conversational applications
+
+Limitations:
+- Lower advanced reasoning than GPT 4 family
+- Limited context window
+- Older knowledge cutoff
+- Not suitable for complex tasks
+- Limited multimodal capabilities
+- Basic performance compared to newer models 

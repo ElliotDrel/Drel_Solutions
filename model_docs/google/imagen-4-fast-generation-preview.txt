@@ -1,0 +1,34 @@
+Model: Imagen 4 Fast Generation Preview
+Provider: Google (Vertex AI)
+Release: Preview
+
+Latency-optimised variant of Imagen 4 suitable for interactive UIs.
+
+Key Capabilities:
+- Fast image generation for real-time use
+- Interactive UI optimization
+- Reduced latency for better UX
+- Suitable for real-time applications
+- Optimized for speed over maximum quality
+- Interactive design workflows
+
+Technical Specifications:
+- Output format: High-resolution images
+- Processing speed: Fast (optimized for latency)
+- Cost: Preview pricing (billed per image)
+- Quality: High with speed optimization
+
+Best Use Cases:
+- Interactive user interfaces
+- Real-time design applications
+- Rapid prototyping workflows
+- Live creative applications
+- User-facing image generation
+- Interactive design tools
+
+Limitations:
+- Slightly reduced quality versus Ultra tier
+- Preview access limitations
+- May sacrifice some quality for speed
+- Limited to preview users
+- Subject to change during preview period 

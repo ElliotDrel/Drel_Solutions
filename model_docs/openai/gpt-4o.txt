@@ -1,32 +1,32 @@
-Model: GPT-4o
+Model: GPT 4o
 Provider: OpenAI
 Release: May 2024
 
-GPT-4o is OpenAI's flagship multimodal model that can process text, images, and audio in real-time. It represents a significant advancement in AI capabilities with improved reasoning, coding, and multilingual support.
+First GPT model with native audio and video pipelines, enabling real-time, voice-driven interaction.
 
 Key Capabilities:
-- Advanced reasoning and problem-solving
-- Excellent code generation and debugging
-- Superior multilingual performance (50+ languages)
-- Real-time audio and image processing
-- Complex document analysis and summarization
-- Creative writing and content generation
+- Text, image, audio, video inputs
+- Streaming responses
+- One hundred twenty-eight K token context
+- Real-time multimodal processing
+- Advanced voice interaction capabilities
+- Native audio and video processing
 
 Technical Specifications:
-- Context window: 128k tokens
-- Training cutoff: April 2024
-- Response speed: Very fast (~200ms)
-- Cost: $5/1M input tokens, $15/1M output tokens
+- Context window: 128K tokens
+- Knowledge cutoff: May 2024
+- Response speed: Fast with streaming
+- Cost: $5.00/1M input tokens, $20.00/1M output tokens
 
 Best Use Cases:
-- Complex reasoning tasks requiring deep analysis
-- Software development and code review
-- Multilingual content creation and translation
-- Real-time conversational AI applications
-- Document analysis and legal/financial review
-- Creative projects requiring nuanced understanding
+- Voice assistants and conversational AI
+- Multimodal demos and applications
+- Vision-based data extraction
+- Real-time audio processing applications
+- Interactive multimedia experiences
+- Voice-driven user interfaces
 
 Limitations:
-- Higher cost compared to smaller models
-- May be overkill for simple tasks
-- Real-time features require specific API endpoints 
+- Higher cost than GPT 4.1 Mini
+- Smaller context window than newer models
+- Limited compared to GPT 4.1 series capabilities 

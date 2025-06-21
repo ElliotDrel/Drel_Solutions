@@ -1,0 +1,34 @@
+Model: Gemma 3
+Provider: Google (Open-weight)
+Release: Current
+
+Open-weight Google model for private deployment.
+
+Key Capabilities:
+- Supports vision and language processing
+- One hundred twenty-eight K token context
+- Open-weight architecture for customization
+- Private deployment capabilities
+- Fine-tuning support
+- Self-hosted options
+
+Technical Specifications:
+- Context window: 128K tokens
+- Knowledge cutoff: Current
+- Response speed: Variable (depends on infrastructure)
+- Cost: Infrastructure costs only (no API fees)
+
+Best Use Cases:
+- On-premises inference deployments
+- Fine-tuning experiments and research
+- Private data processing
+- Custom model development
+- Research and academic applications
+- Data-sensitive applications requiring privacy
+
+Limitations:
+- Requires user-managed infrastructure
+- Need for technical expertise to deploy
+- Infrastructure costs and maintenance
+- Limited support compared to hosted models
+- Requires significant computational resources 

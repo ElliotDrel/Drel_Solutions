@@ -52,15 +52,16 @@ class ModelSearchResponse(BaseModel):
 openai_service = get_openai_service()
 
 @app.get("/")
-async def root():
-    """Health check endpoint."""
+async def model_search_info():
+    """Model search endpoint information."""
     return {
-        "service": "Model Recommendation API",
-        "status": "healthy",
+        "endpoint": "Model Search API",
+        "method": "POST",
+        "description": "Send a query to get AI model recommendations",
         "version": "2.0.0"
     }
 
-@app.post("/api/model-search", response_model=ModelSearchResponse)
+@app.post("/", response_model=ModelSearchResponse)
 async def search_models(request: ModelSearchRequest):
     """
     Search for AI models based on user query.

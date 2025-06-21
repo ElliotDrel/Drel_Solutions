@@ -13,19 +13,19 @@ test.describe('Homepage', () => {
     // Check hero description
     await expect(page.getByText('We help businesses automate the repetitive')).toBeVisible();
     
-    // Check main CTA button
-    await expect(page.getByRole('button', { name: /Start Saving TIME and MONEY!/i })).toBeVisible();
+    // Check main CTA button - be more specific to get the first one in the hero section
+    await expect(page.locator('#home').getByRole('button', { name: 'Start Saving TIME and MONEY!' })).toBeVisible();
   });
 
   test('should display navigation with logo and menu items', async ({ page }) => {
-    // Check logo
-    await expect(page.getByAltText('Drel Solutions Logo')).toBeVisible();
-    await expect(page.getByText('Drel Solutions')).toBeVisible();
+    // Check logo - be more specific to get the navigation logo
+    await expect(page.getByRole('navigation').getByAltText('Drel Solutions Logo')).toBeVisible();
+    await expect(page.getByRole('navigation').getByText('Drel Solutions')).toBeVisible();
     
-    // Check navigation items (desktop)
-    await expect(page.getByText('Home')).toBeVisible();
-    await expect(page.getByText('About')).toBeVisible();
-    await expect(page.getByText('Solutions')).toBeVisible();
+    // Check navigation items (desktop) - use first() to get desktop nav items
+    await expect(page.getByRole('navigation').getByText('Home').first()).toBeVisible();
+    await expect(page.getByRole('navigation').getByText('About').first()).toBeVisible();
+    await expect(page.getByRole('navigation').getByText('Solutions').first()).toBeVisible();
   });
 
   test('should display AI dashboard mockup with metrics', async ({ page }) => {

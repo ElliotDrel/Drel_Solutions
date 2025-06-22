@@ -90,8 +90,10 @@ test.describe('Model Advisor', () => {
     await searchBox.fill('write an email');
     await expect(searchButton).toBeEnabled();
     
-    // Mock the API response to avoid actual OpenAI calls during testing
+    // Mock the API response with delay to simulate real API call
     await page.route('/api/model_search', async route => {
+      // Add delay to simulate API processing time
+      await new Promise(resolve => setTimeout(resolve, 1000));
       await route.fulfill({
         status: 200,
         contentType: 'application/json',
@@ -146,7 +148,7 @@ test.describe('Model Advisor', () => {
     await searchButton.click();
     
     // Wait for loading animation to appear and disappear
-    await expect(page.getByText('AI is Thinking')).toBeVisible();
+    await expect(page.getByText('AI is Thinking')).toBeVisible({ timeout: 10000 });
     await expect(page.getByText('AI is Thinking')).toBeHidden({ timeout: 20000 });
     
     // Check that recommendations are displayed
@@ -170,8 +172,9 @@ test.describe('Model Advisor', () => {
     // Enter the prompt
     await searchBox.fill('create a Discord bot in Python');
     
-    // Mock the API response
+    // Mock the API response with delay
     await page.route('/api/model_search', async route => {
+      await new Promise(resolve => setTimeout(resolve, 1000));
       await route.fulfill({
         status: 200,
         contentType: 'application/json',
@@ -224,7 +227,7 @@ test.describe('Model Advisor', () => {
     
     // Click search and wait for results
     await searchButton.click();
-    await expect(page.getByText('AI is Thinking')).toBeVisible();
+    await expect(page.getByText('AI is Thinking')).toBeVisible({ timeout: 10000 });
     await expect(page.getByText('AI is Thinking')).toBeHidden({ timeout: 20000 });
     
     // Check results
@@ -242,6 +245,7 @@ test.describe('Model Advisor', () => {
     
     // Mock the API response focusing on cost-effective models
     await page.route('/api/model_search', async route => {
+      await new Promise(resolve => setTimeout(resolve, 1000));
       await route.fulfill({
         status: 200,
         contentType: 'application/json',
@@ -294,7 +298,7 @@ test.describe('Model Advisor', () => {
     
     // Click search and wait for results
     await searchButton.click();
-    await expect(page.getByText('AI is Thinking')).toBeVisible();
+    await expect(page.getByText('AI is Thinking')).toBeVisible({ timeout: 10000 });
     await expect(page.getByText('AI is Thinking')).toBeHidden({ timeout: 20000 });
     
     // Check results focus on cost-effectiveness
@@ -313,6 +317,7 @@ test.describe('Model Advisor', () => {
     
     // Mock the API response focusing on reasoning capabilities
     await page.route('/api/model_search', async route => {
+      await new Promise(resolve => setTimeout(resolve, 1000));
       await route.fulfill({
         status: 200,
         contentType: 'application/json',
@@ -365,7 +370,7 @@ test.describe('Model Advisor', () => {
     
     // Click search and wait for results
     await searchButton.click();
-    await expect(page.getByText('AI is Thinking')).toBeVisible();
+    await expect(page.getByText('AI is Thinking')).toBeVisible({ timeout: 10000 });
     await expect(page.getByText('AI is Thinking')).toBeHidden({ timeout: 20000 });
     
     // Check results focus on reasoning models
@@ -383,6 +388,7 @@ test.describe('Model Advisor', () => {
     await searchBox.fill('test query');
     
     await page.route('/api/model_search', async route => {
+      await new Promise(resolve => setTimeout(resolve, 1000));
       await route.fulfill({
         status: 200,
         contentType: 'application/json',
@@ -434,7 +440,7 @@ test.describe('Model Advisor', () => {
     });
     
     await searchButton.click();
-    await expect(page.getByText('AI is Thinking')).toBeVisible();
+    await expect(page.getByText('AI is Thinking')).toBeVisible({ timeout: 10000 });
     await expect(page.getByText('AI is Thinking')).toBeHidden({ timeout: 20000 });
     
     // Verify recommendations are shown
@@ -459,8 +465,9 @@ test.describe('Model Advisor', () => {
     // Enter a search
     await searchBox.fill('test error handling');
     
-    // Mock API error
+    // Mock API error with delay
     await page.route('/api/model_search', async route => {
+      await new Promise(resolve => setTimeout(resolve, 1000));
       await route.fulfill({
         status: 500,
         contentType: 'application/json',
@@ -469,7 +476,7 @@ test.describe('Model Advisor', () => {
     });
     
     await searchButton.click();
-    await expect(page.getByText('AI is Thinking')).toBeVisible();
+    await expect(page.getByText('AI is Thinking')).toBeVisible({ timeout: 10000 });
     await expect(page.getByText('AI is Thinking')).toBeHidden({ timeout: 20000 });
     
     // Check error message is displayed

@@ -95,22 +95,23 @@ interface ModelRecommendation {
 }
 
 // Add LoadingAnimation component before ModelCard
+// Move messages outside component to avoid dependency warning
+const loadingMessages = [
+  "Analyzing your requirements...",
+  "Comparing model capabilities...",
+  "Evaluating performance metrics...",
+  "Calculating cost-effectiveness...",
+  "Matching use cases...",
+  "Finalizing recommendations..."
+];
+
 const LoadingAnimation = () => {
   const [currentMessage, setCurrentMessage] = useState(0);
   const [dots, setDots] = useState('');
 
-  const messages = [
-    "Analyzing your requirements...",
-    "Comparing model capabilities...",
-    "Evaluating performance metrics...",
-    "Calculating cost-effectiveness...",
-    "Matching use cases...",
-    "Finalizing recommendations..."
-  ];
-
   useEffect(() => {
     const messageInterval = setInterval(() => {
-      setCurrentMessage((prev) => (prev + 1) % messages.length);
+      setCurrentMessage((prev) => (prev + 1) % loadingMessages.length);
     }, 2000);
 
     const dotsInterval = setInterval(() => {
@@ -171,7 +172,7 @@ const LoadingAnimation = () => {
           {/* Cycling messages */}
           <div className="min-h-[24px] flex items-center justify-center">
             <p className="text-blue-600 font-medium text-sm animate-fade-in">
-              {messages[currentMessage]}
+              {loadingMessages[currentMessage]}
             </p>
           </div>
 
@@ -179,7 +180,7 @@ const LoadingAnimation = () => {
           <div className="w-full bg-gray-200 rounded-full h-2">
             <div 
               className="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full transition-all duration-300 animate-pulse"
-              style={{ width: `${((currentMessage + 1) / messages.length) * 100}%` }}
+              style={{ width: `${((currentMessage + 1) / loadingMessages.length) * 100}%` }}
             ></div>
           </div>
 

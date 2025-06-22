@@ -757,5 +757,7 @@ export {
   SidebarRail,
   SidebarSeparator,
   SidebarTrigger,
-  useSidebar,
 }
+
+// Export utility hook separately for external use
+export { useSidebar }

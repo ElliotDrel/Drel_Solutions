@@ -116,7 +116,6 @@ NavigationMenuIndicator.displayName =
   NavigationMenuPrimitive.Indicator.displayName
 
 export {
-  navigationMenuTriggerStyle,
   NavigationMenu,
   NavigationMenuList,
   NavigationMenuItem,
@@ -126,3 +125,6 @@ export {
   NavigationMenuIndicator,
   NavigationMenuViewport,
 }
+
+// Export utility style function separately for external use
+export { navigationMenuTriggerStyle }

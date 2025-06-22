@@ -25,60 +25,68 @@ test.describe('Model Advisor', () => {
 
   test('should filter models by provider using buttons', async ({ page }) => {
     // Wait for models to load
-    await page.waitForSelector('[data-testid="model-card"], .models-grid-section > div', { timeout: 10000 });
+    await page.waitForSelector('[data-testid="model-card"]', { timeout: 10000 });
     
     // Check initial state - should show all models
-    const allModelsButton = page.getByRole('button', { name: 'All Models' });
-    await expect(allModelsButton).toHaveClass(/bg-blue-600/);
+    const allModelsButton = page.getByTestId('filter-all');
+    await expect(allModelsButton).toHaveAttribute('aria-pressed', 'true');
     
     // Count initial models
-    const initialCards = await page.locator('.models-grid-section > div').count();
+    const modelsGrid = page.getByTestId('models-grid');
+    const initialCards = await modelsGrid.locator('[data-testid="model-card"]').count();
     expect(initialCards).toBeGreaterThan(0);
     
     // Test OpenAI filter
-    await page.getByRole('button', { name: 'OpenAI' }).click();
-    await page.waitForTimeout(500); // Wait for filtering
+    const openaiButton = page.getByTestId('filter-openai');
+    await openaiButton.click();
     
-    // Check OpenAI button is active
-    const openaiButton = page.getByRole('button', { name: 'OpenAI' });
-    await expect(openaiButton).toHaveClass(/bg-green-600/);
+    // Wait for the filter to be applied
+    await expect(openaiButton).toHaveAttribute('aria-pressed', 'true');
+    await expect(allModelsButton).toHaveAttribute('aria-pressed', 'false');
     
     // Verify only OpenAI models are shown
-    const openaiCards = await page.locator('.models-grid-section > div').count();
+    await expect(modelsGrid.locator('[data-testid="model-card"]').first()).toBeVisible();
+    const openaiCards = await modelsGrid.locator('[data-testid="model-card"]').count();
     expect(openaiCards).toBeGreaterThan(0);
     
     // Check that visible cards contain OpenAI badge
-    const visibleCards = page.locator('.models-grid-section > div').first();
-    await expect(visibleCards.locator('text=OpenAI')).toBeVisible();
+    const firstCard = modelsGrid.locator('[data-testid="model-card"]').first();
+    await expect(firstCard.locator('[data-testid="badge-openai"]')).toBeVisible();
     
     // Test Anthropic filter
-    await page.getByRole('button', { name: 'Anthropic' }).click();
-    await page.waitForTimeout(500);
+    const anthropicButton = page.getByTestId('filter-anthropic');
+    await anthropicButton.click();
     
-    const anthropicButton = page.getByRole('button', { name: 'Anthropic' });
-    await expect(anthropicButton).toHaveClass(/bg-purple-600/);
+    // Wait for the filter to be applied
+    await expect(anthropicButton).toHaveAttribute('aria-pressed', 'true');
+    await expect(openaiButton).toHaveAttribute('aria-pressed', 'false');
     
     // Verify only Anthropic models are shown
-    const anthropicCards = await page.locator('.models-grid-section > div').count();
+    await expect(modelsGrid.locator('[data-testid="model-card"]').first()).toBeVisible();
+    const anthropicCards = await modelsGrid.locator('[data-testid="model-card"]').count();
     expect(anthropicCards).toBeGreaterThan(0);
     
     // Test Google filter
-    await page.getByRole('button', { name: 'Google' }).click();
-    await page.waitForTimeout(500);
+    const googleButton = page.getByTestId('filter-google');
+    await googleButton.click();
     
-    const googleButton = page.getByRole('button', { name: 'Google' });
-    await expect(googleButton).toHaveClass(/bg-blue-600/);
+    // Wait for the filter to be applied
+    await expect(googleButton).toHaveAttribute('aria-pressed', 'true');
+    await expect(anthropicButton).toHaveAttribute('aria-pressed', 'false');
     
     // Verify only Google models are shown
-    const googleCards = await page.locator('.models-grid-section > div').count();
+    await expect(modelsGrid.locator('[data-testid="model-card"]').first()).toBeVisible();
+    const googleCards = await modelsGrid.locator('[data-testid="model-card"]').count();
     expect(googleCards).toBeGreaterThan(0);
     
     // Test back to All Models
-    await page.getByRole('button', { name: 'All Models' }).click();
-    await page.waitForTimeout(500);
+    await allModelsButton.click();
     
-    await expect(allModelsButton).toHaveClass(/bg-blue-600/);
-    const finalCards = await page.locator('.models-grid-section > div').count();
+    // Wait for the filter to be applied
+    await expect(allModelsButton).toHaveAttribute('aria-pressed', 'true');
+    await expect(googleButton).toHaveAttribute('aria-pressed', 'false');
+    
+    const finalCards = await modelsGrid.locator('[data-testid="model-card"]').count();
     expect(finalCards).toBe(initialCards);
   });
 
@@ -489,10 +497,11 @@ test.describe('Model Advisor', () => {
 
   test('should display model cards with correct information', async ({ page }) => {
     // Wait for models to load
-    await page.waitForSelector('.models-grid-section > div', { timeout: 10000 });
+    await page.waitForSelector('[data-testid="model-card"]', { timeout: 10000 });
     
     // Check that model cards are displayed
-    const modelCards = page.locator('.models-grid-section > div');
+    const modelsGrid = page.getByTestId('models-grid');
+    const modelCards = modelsGrid.locator('[data-testid="model-card"]');
     const cardCount = await modelCards.count();
     expect(cardCount).toBeGreaterThan(0);
     

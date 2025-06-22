@@ -45,7 +45,7 @@ const Navigation = () => {
 
           {/* Mobile menu button */}
           <div className="md:hidden">
-            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-gray-700 hover:text-blue-600 p-2">
+            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-gray-700 hover:text-blue-600 p-2" data-testid="mobile-menu-button">
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
           </div>
@@ -205,14 +205,14 @@ const ModelCard = ({ model }: { model: ModelInfo }) => {
   };
 
   return (
-    <Card className="h-full hover:shadow-lg transition-shadow">
+    <Card className="h-full hover:shadow-lg transition-shadow" data-testid="model-card">
       <CardHeader>
         <div className="flex justify-between items-start">
           <div>
             <CardTitle className="text-xl font-bold">{model.name}</CardTitle>
             <CardDescription className="mt-1">{model.description}</CardDescription>
           </div>
-          <Badge className={getProviderColor(model.provider)}>{model.provider}</Badge>
+          <Badge className={getProviderColor(model.provider)} data-testid={`badge-${model.provider.toLowerCase()}`}>{model.provider}</Badge>
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -620,6 +620,8 @@ const ModelAdvisor = () => {
                   <div className="flex space-x-2 bg-white rounded-lg p-1 shadow-sm border">
                     <button
                       onClick={() => setSelectedProvider('all')}
+                      data-testid="filter-all"
+                      aria-pressed={selectedProvider === 'all'}
                       className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                         selectedProvider === 'all' 
                           ? 'bg-blue-600 text-white' 
@@ -630,6 +632,8 @@ const ModelAdvisor = () => {
                     </button>
                     <button
                       onClick={() => setSelectedProvider('openai')}
+                      data-testid="filter-openai"
+                      aria-pressed={selectedProvider === 'openai'}
                       className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                         selectedProvider === 'openai' 
                           ? 'bg-green-600 text-white' 
@@ -640,6 +644,8 @@ const ModelAdvisor = () => {
                     </button>
                     <button
                       onClick={() => setSelectedProvider('anthropic')}
+                      data-testid="filter-anthropic"
+                      aria-pressed={selectedProvider === 'anthropic'}
                       className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                         selectedProvider === 'anthropic' 
                           ? 'bg-purple-600 text-white' 
@@ -650,6 +656,8 @@ const ModelAdvisor = () => {
                     </button>
                     <button
                       onClick={() => setSelectedProvider('google')}
+                      data-testid="filter-google"
+                      aria-pressed={selectedProvider === 'google'}
                       className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                         selectedProvider === 'google' 
                           ? 'bg-blue-600 text-white' 
@@ -662,7 +670,7 @@ const ModelAdvisor = () => {
                 </div>
 
                 {/* Models Grid */}
-                <div className="models-grid-section grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="models-grid-section grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" data-testid="models-grid">
                   {(showAllModels ? filteredModels : filteredModels.slice(0, 6)).map((model, index) => (
                     <ModelCard key={`${model.provider}-${model.name}-${index}`} model={model} />
                   ))}

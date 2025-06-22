@@ -1,4 +1,4 @@
-# AI Model Selector
+# AI Model Advisor
 
 A comprehensive tool for comparing and selecting AI models from multiple providers including Anthropic, Google, and OpenAI.
 
@@ -46,12 +46,9 @@ npm run build
 ## Project Structure
 
 ```
-├── model selector/
-│   ├── backend/          # Backend services and database
-│   ├── model_docs/       # Documentation for each AI provider
-│   ├── prompts/          # Prompt templates and management
-│   └── src/              # Frontend components and services
-├── src/                  # Main application source
+├── backend/              # Backend services and database
+├── model_docs/           # Documentation for each AI provider
+├── src/                  # Frontend components and services
 └── public/               # Static assets
 ```
 

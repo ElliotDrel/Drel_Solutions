@@ -1,8 +1,8 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, Page } from '@playwright/test';
 
 // NavigationHelper class to encapsulate navigation logic
 class NavigationHelper {
-  constructor(private page: any, private isMobile: boolean) {}
+  constructor(private page: Page, private isMobile: boolean) {}
 
   async openMobileMenu() {
     if (!this.isMobile) return;

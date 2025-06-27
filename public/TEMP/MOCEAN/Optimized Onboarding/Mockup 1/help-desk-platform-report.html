@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOCEANS Help Desk Platform Evaluation Report</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+
+        .quick-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .summary-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #3498db;
+        }
+
+        .summary-card.recommended {
+            border-left-color: #27ae60;
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .summary-card h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .summary-card .metric {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #3498db;
+            margin: 10px 0;
+        }
+
+        .summary-card.recommended .metric {
+            color: #27ae60;
+        }
+
+        .nav-tabs {
+            display: flex;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 5px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-tab {
+            flex: 1;
+            padding: 15px 20px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            color: #7f8c8d;
+        }
+
+        .nav-tab.active {
+            background: #3498db;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .nav-tab:hover:not(.active) {
+            background: rgba(52, 152, 219, 0.1);
+            color: #3498db;
+        }
+
+        .tab-content {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .platform-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .platform-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .platform-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px 30px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .platform-header h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .platform-header .expand-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .platform-header.expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .platform-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .platform-content.expanded {
+            max-height: 2000px;
+        }
+
+        .platform-details {
+            padding: 30px;
+        }
+
+        .feature-grid {
+            display: grid;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border-radius: 8px;
+            background: #f8f9fa;
+            border-left: 4px solid #ddd;
+        }
+
+        .feature-item.need {
+            border-left-color: #e74c3c;
+            background: rgba(231, 76, 60, 0.05);
+        }
+
+        .feature-item.good {
+            border-left-color: #f39c12;
+            background: rgba(243, 156, 18, 0.05);
+        }
+
+        .feature-item.available {
+            border-left-color: #27ae60;
+            background: rgba(39, 174, 96, 0.05);
+        }
+
+        .feature-item.partial {
+            border-left-color: #f39c12;
+            background: rgba(243, 156, 18, 0.05);
+        }
+
+        .feature-item.missing {
+            border-left-color: #e74c3c;
+            background: rgba(231, 76, 60, 0.05);
+        }
+
+        .feature-status {
+            margin-right: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .feature-status.available { color: #27ae60; }
+        .feature-status.partial { color: #f39c12; }
+        .feature-status.missing { color: #e74c3c; }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .comparison-table th {
+            background: #3498db;
+            color: white;
+            font-weight: 600;
+        }
+
+        .comparison-table tr:hover {
+            background: rgba(52, 152, 219, 0.05);
+        }
+
+        .comparison-table .status-cell {
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .status-available { color: #27ae60; }
+        .status-partial { color: #f39c12; }
+        .status-missing { color: #e74c3c; }
+
+        .recommendation-section {
+            background: linear-gradient(135deg, rgba(39, 174, 96, 0.1), rgba(255, 255, 255, 0.95));
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 2px solid #27ae60;
+        }
+
+        .recommendation-section h2 {
+            color: #27ae60;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        .recommendation-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .recommendation-list li {
+            background: rgba(39, 174, 96, 0.1);
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #27ae60;
+        }
+
+        .legend {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 8px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+
+        .pricing-badge {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin: 5px 5px 5px 0;
+        }
+
+        .pricing-badge.free {
+            background: #27ae60;
+        }
+
+        .pricing-badge.paid {
+            background: #e74c3c;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .nav-tabs {
+                flex-direction: column;
+            }
+            
+            .nav-tab {
+                margin: 2px 0;
+            }
+            
+            .legend {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 MOCEANS Help Desk Platform Evaluation</h1>
+            <p>Comprehensive analysis of 4 platforms for optimized onboarding system</p>
+        </div>
+
+        <div class="quick-summary">
+            <div class="summary-card recommended">
+                <h3>🏆 Recommended Solution</h3>
+                <div class="metric">Jira Service Management</div>
+                <p>Best feature coverage for free tier with 3-agent support</p>
+            </div>
+            <div class="summary-card">
+                <h3>📊 Platforms Evaluated</h3>
+                <div class="metric">4</div>
+                <ul style="list-style: disc; padding-left: 20px; margin-top: 10px;">
+                    <li><a href="#" onclick="navigateToPlatform('jira'); return false;" style="color: #3498db; text-decoration: none;">Jira Service Management</a></li>
+                    <li><a href="#" onclick="navigateToPlatform('freshdesk'); return false;" style="color: #3498db; text-decoration: none;">Freshdesk</a></li>
+                    <li><a href="#" onclick="navigateToPlatform('twenty'); return false;" style="color: #3498db; text-decoration: none;">Twenty (Open Source CRM)</a></li>
+                    <li><a href="#" onclick="navigateToPlatform('monday'); return false;" style="color: #3498db; text-decoration: none;">Monday.com</a></li>
+                </ul>
+            </div>
+            <div class="summary-card">
+                <h3>🎯 Critical Features</h3>
+                <div class="metric">8</div>
+                <p>Must-have requirements identified</p>
+            </div>
+            <div class="summary-card">
+                <h3>💰 Free Tier Focus</h3>
+                <div class="metric">$0</div>
+                <p>All evaluations based on free plans</p>
+            </div>
+        </div>
+
+        <div class="nav-tabs">
+            <div class="nav-tab active" onclick="showTab('recommendations')">🎯 Executive Summary</div>
+            <div class="nav-tab" onclick="showTab('platforms')">🔍 Platform Analysis</div>
+            <div class="nav-tab" onclick="showTab('comparison')">📊 Comparison</div>
+        </div>
+
+
+
+        <div id="platforms" class="tab-content">
+            <h2>🔍 Platform Analysis</h2>
+            
+            <div class="platform-card">
+                <div class="platform-header" onclick="togglePlatform('jira')">
+                    <div>
+                        <h3>🥇 Jira Service Management</h3>
+                        <span class="pricing-badge free">FREE FOREVER</span>
+                        <span class="pricing-badge">3 Agents Max</span>
+                        <span class="pricing-badge">2GB Storage</span>
+                        <a href="https://www.atlassian.com/software/jira/service-management" target="_blank" style="color: #ffffff; text-decoration: none; font-size: 0.8em; margin-left: 10px; background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 15px;">🌐 Website</a>
+                    </div>
+                    <span class="expand-icon">▼</span>
+                </div>
+                <div class="platform-content" id="jira-content">
+                    <div class="platform-details">
+                        <h4>📋 Platform Overview</h4>
+                        <p>Atlassian's cloud help-desk solution targeting small teams with a permanently free tier. Includes self-service portal, email channel intake, basic automation, and Confluence-powered knowledge base, all hosted on Atlassian Cloud.</p>
+                        
+                        <h4>🆓 Free Plan Core Features</h4>
+                        <div style="background: rgba(39, 174, 96, 0.1); padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <strong>✅ Automatic Ticket Creation:</strong> Configure dedicated email address that turns incoming messages into requests in service queue<br>
+                            <strong>✅ Auto-Assignment Rules:</strong> No-code automation engine with 500 rule runs monthly for round-robin or criteria-based assignment<br>
+                            <strong>✅ Kanban Board:</strong> Every project includes board and list views for open, in-progress, and done columns<br>
+                            <strong>⚠️ Role-Based Permissions:</strong> Agent and customer roles exist, but work-level security is restricted on free tier<br>
+                            <strong>✅ Basic Slack Integration:</strong> Slack notifications available (alert notifications only, 3,000+ Marketplace apps supported)<br>
+                            <strong>⚠️ SLA Timers:</strong> SLA configuration available, but escalation policies require paid tiers<br>
+                            <strong>⚠️ Email Notifications:</strong> Capped at 100 per day on free tier<br>
+                            <strong>✅ Cloud Hosting:</strong> Fully hosted on Atlassian Cloud (99.9% uptime on higher tiers)<br>
+                            <strong>✅ Built-in Reporting:</strong> Out-of-the-box reports, queue metrics, and project dashboards included
+                        </div>
+
+                        <h4>⚠️ Usage Limits & Restrictions</h4>
+                        <div style="background: rgba(243, 156, 18, 0.1); padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <strong>Automation Limits:</strong><br>
+                            • 500 rule runs per month (pooled across site)<br>
+                            • Maximum 5 concurrent rules executing at any time<br>
+                            • Escalation actions like "notify next user" require paid tiers<br><br>
+                            
+                            <strong>Communication Limits:</strong><br>
+                            • Email notifications stop after 100 emails in 24-hour window<br>
+                            • SMS requires Opsgenie (not available in free)<br>
+                            • Slack limited to basic alert notifications<br><br>
+                            
+                            <strong>Security & Compliance:</strong><br>
+                            • No audit logs on free tier<br>
+                            • No collision detection/agent locking<br>
+                            • Community support only (no business hours support)
+                        </div>
+                        
+                        <h4>✅ Strengths</h4>
+                        <ul>
+                            <li><strong>Best agent capacity:</strong> Supports up to 3 agents (vs 2 for competitors)</li>
+                            <li><strong>Comprehensive free features:</strong> Email-to-ticket, automation, SLA basics, reporting</li>
+                            <li><strong>Proven enterprise platform:</strong> Mature Atlassian ecosystem with extensive marketplace</li>
+                            <li><strong>No expiration:</strong> Free tier is permanent (unlike Freshdesk's 6-month limit)</li>
+                            <li><strong>Scalable architecture:</strong> Can handle growth with clear upgrade path</li>
+                            <li><strong>Integration ecosystem:</strong> 3,000+ marketplace apps available</li>
+                            <li><strong>Knowledge base included:</strong> Confluence-powered self-service portal</li>
+                        </ul>
+                        
+                        <h4>❌ Critical Gaps vs MOCEANS Requirements</h4>
+                        <div style="background: rgba(231, 76, 60, 0.1); padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <strong>🚨 NEED TO HAVE - Missing:</strong><br>
+                            • Agent collision detection/assignment lock<br>
+                            • SMS notifications (requires Opsgenie upgrade)<br>
+                            • Advanced SLA escalation actions<br>
+                            • Granular role permissions (intake vs navigator roles)<br><br>
+                            
+                            <strong>👍 GOOD TO HAVE - Missing:</strong><br>
+                            • Complete audit trail logging<br>
+                            • AI assistant features (requires Premium)<br>
+                            • High-volume automation (500 runs may be limiting)
+                        </div>
+
+                        <h4>💰 Pricing & Upgrade Options</h4>
+                        <div style="background: rgba(52, 152, 219, 0.1); padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <strong>Standard Tier - $19.04/agent/month:</strong><br>
+                            • 5,000 automation runs monthly<br>
+                            • Configurable role permissions<br>
+                            • Full audit logs and change tracking<br>
+                            • 250 GB storage (vs 2GB free)<br>
+                            • Business hours support<br>
+                            • Advanced SLA escalation policies<br><br>
+                            
+                            <strong>Premium Tier - $47.82/agent/month:</strong><br>
+                            • Unlimited storage and automation<br>
+                            • 99.9% uptime SLA guarantee<br>
+                            • AI virtual service agent<br>
+                            • Sandbox environments<br>
+                            • Advanced roadmaps and reporting<br>
+                            • 24/7 priority support
+                        </div>
+
+                        <h4>📊 Fit Assessment for MOCEANS</h4>
+                        <div style="background: rgba(155, 89, 182, 0.1); padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <strong>✅ Immediate Needs Met:</strong> Email ticketing, basic automation, 3-agent capacity, Kanban views, cloud hosting, basic reporting<br><br>
+                            <strong>⚠️ Workarounds Needed:</strong> Manual collision prevention, limited automation volume, basic role management<br><br>
+                            <strong>💡 Growth Strategy:</strong> Start free, upgrade to Standard ($57/month for 3 agents) when audit logs and advanced SLA features become critical
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="platform-card">
+                <div class="platform-header" onclick="togglePlatform('freshdesk')">
+                    <div>
+                        <h3>🎧 Freshdesk</h3>
+                        <span class="pricing-badge" style="background: #f39c12;">FREE (6 MONTHS)</span>
+                        <span class="pricing-badge">2 Agents Max</span>
+                        <span class="pricing-badge">24x5 Support</span>
+                        <a href="https://freshdesk.com/" target="_blank" style="color: #ffffff; text-decoration: none; font-size: 0.8em; margin-left: 10px; background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 15px;">🌐 Website</a>
+                    </div>
+                    <span class="expand-icon">▼</span>
+                </div>
+                <div class="platform-content" id="freshdesk-content">
+                    <div class="platform-details">
+                        <h4>📋 Platform Overview</h4>
+                        <p>Cloud help-desk product from Freshworks targeting small teams. Provides email and social ticketing, knowledge-base tools, and basic reporting in its Free plan. <strong style="color: #e74c3c;">CRITICAL LIMITATION: Free for 6 months only, after which upgrade is required to keep more than included limits.</strong></p>
+                        
+                        <h4>🆓 Free Plan Features (6 Months Only)</h4>
+                        <div style="background: rgba(39, 174, 96, 0.1); padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <strong>✅ Email & Social Ticketing:</strong> Consolidated inbox for multiple channels<br>
+                            <strong>✅ Ticket Dispatch:</strong> Round-robin assignment (only automation available)<br>
+                            <strong>✅ Knowledge Base:</strong> Public articles and self-service portal<br>
+                            <strong>✅ Basic Reporting:</strong> Ticket Trend Report plus out-of-the-box analytics<br>
+                            <strong>✅ Team Collaboration:</strong> Internal notes and collaboration controls<br>
+                            <strong>✅ Data Center Choice:</strong> Choice of data-center region<br>
+                            <strong>✅ Support:</strong> 24x5 email support from Freshdesk team
+                        </div>
+
+                        <h4>❌ What's NOT Included in Free Plan</h4>
+                        <div style="background: rgba(231, 76, 60, 0.1); padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <strong>🚨 CRITICAL MISSING FEATURES for MOCEANS:</strong><br>
+                            • Workflow automations beyond simple dispatch<br>
+                            • SLA policies and escalations<br>
+                            • Multiple business hours or time zones<br>
+                            • Marketplace apps (limited to 5 basic integrations)<br>
+                            • Advanced security (IP whitelisting)<br>
+                            • Slack or SMS notifications<br>
+                            • Agent collision detection<br>
+                            • Custom role definitions<br><br>
+                            
+                            <strong>⏰ TIME LIMITATION:</strong><br>
+                            Free plan expires after 6 months - forced upgrade or migration required
+                        </div>
+                        
+                        <h4>✅ Free Plan Strengths</h4>
+                        <ul>
+                            <li><strong>Zero cost entry:</strong> Allows small teams to test Freshdesk before budget commitment</li>
+                            <li><strong>Multi-channel support:</strong> Email plus social channels covered by default without configuration</li>
+                            <li><strong>Self-service reduction:</strong> Knowledge base reduces agent load through customer self-help</li>
+                            <li><strong>Simple setup:</strong> Quick deployment with minimal configuration needed</li>
+                            <li><strong>Freshworks ecosystem:</strong> Part of comprehensive business software suite</li>
+                        </ul>
+                        
+                        <h4>🚫 Critical Limitations for MOCEANS</h4>
+                        <div style="background: rgba(231, 76, 60, 0.1); padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <strong>🚨 SHOWSTOPPERS:</strong><br>
+                            • Only 2 agents max (inadequate for growth)<br>
+                            • No SLA timers/reminders (marked as "NEED TO HAVE")<br>
+                            • Cannot integrate Slack/SMS for notifications (marked as "NEED TO HAVE")<br>
+                            • No agent collision detection (marked as "NEED TO HAVE")<br>
+                            • 6-month expiration forces expensive upgrade<br><br>
+                            
+                            <strong>⚠️ OPERATIONAL CONSTRAINTS:</strong><br>
+                            • Limited automation (round-robin only)<br>
+                            • Basic role permissions<br>
+                            • No advanced security features<br>
+                            • Restricted marketplace integrations
+                        </div>
+
+                        <h4>💰 Detailed Pricing Structure</h4>
+                        <div style="background: rgba(52, 152, 219, 0.1); padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <strong>Growth Tier - $15/agent/month:</strong><br>
+                            • Automation rules and workflows<br>
+                            • Full marketplace app access<br>
+                            • Customer satisfaction surveys<br>
+                            • Advanced reporting features<br>
+                            • Still lacks SLA management and custom roles<br><br>
+                            
+                            <strong>Pro Tier - $49/agent/month:</strong><br>
+                            • Multiple time zones support<br>
+                            • Custom roles and permissions<br>
+                            • SLA management and escalations ← FIRST tier with NEED TO HAVE features<br>
+                            • Multilingual knowledge base<br>
+                            • Phone support included<br><br>
+                            
+                            <strong>Enterprise Tier - $79/agent/month:</strong><br>
+                            • Skill-based assignment<br>
+                            • Sandbox environments<br>
+                            • Advanced agent shifts<br>
+                            • IP whitelisting and security<br>
+                            • Custom SSL certificates<br><br>
+                            
+                            <strong>Omni Variants - $29+/agent/month:</strong><br>
+                            • Integrated voice, chat, messaging channels<br>
+                            • Single UI for all communication channels<br>
+                            • Advanced routing capabilities
+                        </div>
+
+                        <h4>📊 MOCEANS Requirements Assessment</h4>
+                        <div style="background: rgba(155, 89, 182, 0.1); padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <strong>✅ Requirements Met (Free):</strong><br>
+                            • Basic email ticket capture<br>
+                            • Simple knowledge base<br>
+                            • Core reporting capabilities<br>
+                            • Cloud hosting<br><br>
+                            
+                            <strong>❌ Critical Requirements Missing (Free):</strong><br>
+                            • SLA timers and reminders<br>
+                            • Agent collision detection<br>
+                            • Slack/SMS notifications<br>
+                            • More than 2 agents<br>
+                            • Permanent free access<br><br>
+                            
+                            <strong>💡 Minimum Viable Tier:</strong><br>
+                            Pro tier ($49/agent/month = $147/month for 3 agents) required for essential SLA and role features
+                        </div>
+
+                        <h4>⚖️ Final Assessment</h4>
+                        <div style="background: rgba(231, 76, 60, 0.1); padding: 15px; border-radius: 8px; margin: 10px 0; border-left: 4px solid #e74c3c;">
+                            <strong>NOT RECOMMENDED:</strong> While Freshdesk offers a polished interface and good feature set, the 6-month free limitation combined with missing critical MOCEANS requirements (SLA timers, collision detection, 3+ agents) and expensive upgrade path ($147/month minimum) make it unsuitable for this use case.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="platform-card">
+                <div class="platform-header" onclick="togglePlatform('twenty')">
+                    <div>
+                        <h3>🔓 Twenty (Open Source CRM)</h3>
+                        <span class="pricing-badge free">GPL LICENSE</span>
+                        <span class="pricing-badge">Unlimited Seats</span>
+                        <span class="pricing-badge">Self-Hosted</span>
+                        <a href="https://twenty.com/" target="_blank" style="color: #ffffff; text-decoration: none; font-size: 0.8em; margin-left: 10px; background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 15px;">🌐 Website</a>
+                    </div>
+                    <span class="expand-icon">▼</span>
+                </div>
+                <div class="platform-content" id="twenty-content">
+                    <div class="platform-details">
+                        <h4>📋 Platform Overview</h4>
+                        <p>Open-source CRM released under GPL license with unlimited seats for self-hosting. Modern alternative to traditional CRMs with focus on usability and developer experience. The company offers managed cloud options, but core codebase remains free and unlimited.</p>
+                        
+                        <h4>🆓 Free Core Features (Self-Hosted)</h4>
+                        <div style="background: rgba(39, 174, 96, 0.1); padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <strong>✅ Kanban Pipeline Views:</strong> Drag-and-drop stages matching "Kanban-style column view" requirement<br>
+                            <strong>✅ Table & List Views:</strong> Multiple layout options for data management<br>
+                            <strong>✅ Role-Based Permissions:</strong> Granular user access controls (requires manual configuration)<br>
+                            <strong>✅ Tasks with Assignment:</strong> Task creation, assignment, completion tracking (useful for SLA workarounds)<br>
+                            <strong>✅ Views & Search:</strong> Command menu and keyboard navigation (supports accessibility goals)<br>
+                            <strong>✅ Zapier Integration:</strong> Slack/SMS alerts possible through Zapier workflows<br>
+                            <strong>✅ Self-Host Freedom:</strong> Unlimited users, no vendor lock-in, full source code access
+                        </div>
+
+                        <h4>💸 Cloud SaaS Paywall Features</h4>
+                        <div style="background: rgba(243, 156, 18, 0.1); padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <strong>🔒 Email Sync & Auto-Creation:</strong> Mailbox connection and contact auto-creation (Pro tier only)<br>
+                            <strong>🔒 API Keys & Webhooks:</strong> Critical integration features locked behind Pro subscription<br>
+                            <strong>🔒 Priority Support:</strong> Business-grade support only available in paid tiers<br><br>
+                            
+                            <strong>⚠️ IMPORTANT:</strong> When self-hosting, ALL features are available for free, including email sync and API access
+                        </div>
+                        
+                        <h4>📊 MOCEANS Requirements Assessment</h4>
+                        <div style="background: rgba(155, 89, 182, 0.1); padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <tr style="background: rgba(0,0,0,0.05);">
+                                    <td style="padding: 8px; font-weight: bold;">NEED TO HAVE Features</td>
+                                    <td style="padding: 8px; font-weight: bold;">Status</td>
+                                    <td style="padding: 8px; font-weight: bold;">Implementation</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px;">Auto-assignment rules</td>
+                                    <td style="padding: 8px; color: #f39c12;">❌ No native</td>
+                                    <td style="padding: 8px;">Zapier workflow or custom webhook required</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px;">Role-based permissions</td>
+                                    <td style="padding: 8px; color: #27ae60;">✅ Basic</td>
+                                    <td style="padding: 8px;">Granular "intake vs navigator" needs custom rules</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px;">SLA timers & reminders</td>
+                                    <td style="padding: 8px; color: #e74c3c;">❌ Missing</td>
+                                    <td style="padding: 8px;">Possible via Windmill automation + tasks</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px;">Outbound notifications</td>
+                                    <td style="padding: 8px; color: #f39c12;">⚠️ Partial</td>
+                                    <td style="padding: 8px;">Email built-in, SMS/Slack via Zapier (additional cost)</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px;">Agent collision detection</td>
+                                    <td style="padding: 8px; color: #e74c3c;">❌ Missing</td>
+                                    <td style="padding: 8px;">No locking mechanism documented</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px;">Built-in reporting</td>
+                                    <td style="padding: 8px; color: #e74c3c;">❌ Missing</td>
+                                    <td style="padding: 8px;">Export API required for BI tool integration</td>
+                                </tr>
+                            </table>
+                        </div>
+                        
+                        <h4>✅ Major Strengths</h4>
+                        <ul>
+                            <li><strong>Zero vendor lock-in:</strong> Full source code access under GPL license</li>
+                            <li><strong>Unlimited scaling:</strong> No per-user costs when self-hosted</li>
+                            <li><strong>Modern architecture:</strong> Built with latest technologies and UX patterns</li>
+                            <li><strong>Active development:</strong> Community-driven roadmap with regular releases</li>
+                            <li><strong>API-first design:</strong> Extensive customization possibilities</li>
+                            <li><strong>Keyboard navigation:</strong> Accessibility-focused interface design</li>
+                            <li><strong>Integration ecosystem:</strong> Zapier, Windmill, and custom webhook support</li>
+                        </ul>
+                        
+                        <h4>❌ Critical Limitations for Help Desk Use</h4>
+                        <div style="background: rgba(231, 76, 60, 0.1); padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <strong>🚨 FUNDAMENTAL GAPS:</strong><br>
+                            • No native ticket concepts or workflows<br>
+                            • No built-in SLA timers or escalation logic<br>
+                            • No collision detection or assignment locking<br>
+                            • No help desk analytics or KPI dashboards<br>
+                            • No automated routing or queue management<br><br>
+                            
+                            <strong>🔧 DEVELOPMENT REQUIRED:</strong><br>
+                            • Custom objects for ticket management<br>
+                            • SLA automation via external tools<br>
+                            • Integration development for notifications<br>
+                            • Reporting dashboard creation<br>
+                            • DevOps setup for self-hosting
+                        </div>
+
+                        <h4>💰 Cloud Hosting Options</h4>
+                        <div style="background: rgba(52, 152, 219, 0.1); padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <strong>Pro Plan - $9/user/month:</strong><br>
+                            • Custom objects and fields<br>
+                            • API keys and webhooks<br>
+                            • Email sync and auto-creation<br>
+                            • Hosted infrastructure management<br>
+                            • Standard support included<br><br>
+                            
+                            <strong>Organization Plan - $19/user/month:</strong><br>
+                            • SAML SSO integration<br>
+                            • Priority support access<br>
+                            • Advanced security features<br>
+                            • All Pro features included<br>
+                            • Enterprise-grade compliance<br><br>
+                            
+                            <strong>💡 Cost Comparison:</strong><br>
+                            For 3 agents: $27-57/month vs $0 self-hosted (+ infrastructure costs)
+                        </div>
+
+                        <h4>🛠️ Implementation Considerations</h4>
+                        <div style="background: rgba(155, 89, 182, 0.1); padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <strong>✅ IDEAL SCENARIO:</strong><br>
+                            • Team has development resources<br>
+                            • Need for 4+ agents (cost advantage grows)<br>
+                            • Custom workflow requirements<br>
+                            • Long-term cost optimization priority<br><br>
+                            
+                            <strong>❌ CHALLENGING SCENARIO:</strong><br>
+                            • Need immediate help desk functionality<br>
+                            • Limited technical resources<br>
+                            • Compliance requirements (audit trails)<br>
+                            • Standard help desk workflow expectations<br><br>
+                            
+                            <strong>⚖️ EFFORT vs SAVINGS:</strong><br>
+                            High initial development cost but potential long-term savings for larger teams
+                        </div>
+
+                        <h4>⚖️ Final Assessment for MOCEANS</h4>
+                        <div style="background: rgba(243, 156, 18, 0.1); padding: 15px; border-radius: 8px; margin: 10px 0; border-left: 4px solid #f39c12;">
+                            <strong>CONDITIONAL RECOMMENDATION:</strong> Twenty is only viable if MOCEANS has dedicated development resources and expects to scale beyond 3-4 agents. While it offers unlimited scaling potential and zero licensing costs, it requires significant custom development to meet basic help desk requirements.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="platform-card">
+                <div class="platform-header" onclick="togglePlatform('monday')">
+                    <div>
+                        <h3>📅 Monday.com</h3>
+                        <span class="pricing-badge free">FREE FOREVER</span>
+                        <span class="pricing-badge">2 Users Max</span>
+                        <span class="pricing-badge">500MB Storage</span>
+                        <a href="https://monday.com/" target="_blank" style="color: #ffffff; text-decoration: none; font-size: 0.8em; margin-left: 10px; background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 15px;">🌐 Website</a>
+                    </div>
+                    <span class="expand-icon">▼</span>
+                </div>
+                <div class="platform-content" id="monday-content">
+                    <div class="platform-details">
+                        <h4>📋 Platform Overview</h4>
+                        <p>Cloud-based work management platform offering task tracking, boards, and collaboration tools. Fully hosted solution with modern browser interface addressing cloud-hosted SaaS deployment requirements. <strong style="color: #e74c3c;">SEVERE LIMITATIONS: Heavily restricted free tier blocks essential help desk functionality.</strong></p>
+                        
+                        <h4>🆓 Free Plan Specifications</h4>
+                        <div style="background: rgba(39, 174, 96, 0.1); padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <strong>👥 USER LIMITS:</strong><br>
+                            • Maximum 2 users total (NO guests or viewers allowed)<br>
+                            • Cannot expand without upgrading<br><br>
+                            
+                            <strong>📊 CONTENT LIMITS:</strong><br>
+                            • Maximum 3 boards (can earn up to 1,000 items via referrals)<br>
+                            • 200 items limit per account<br>
+                            • 500 MB storage per account<br><br>
+                            
+                            <strong>✅ AVAILABLE FEATURES:</strong><br>
+                            • Main boards with Kanban, Forms, Files view<br>
+                            • Single-board scope dashboards<br>
+                            • Unlimited collaborative docs (Workdocs)<br>
+                            • ARIA labels and screen reader support<br>
+                            • Basic item activity log (no full audit export)
+                        </div>
+
+                        <h4>🚫 Blocked Features on Free Plan</h4>
+                        <div style="background: rgba(231, 76, 60, 0.1); padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <strong>❌ AUTOMATIONS & INTEGRATIONS:</strong><br>
+                            • NO automations available (blocks auto-assignment, SLA alerts, external integrations)<br>
+                            • NO email-to-ticket creation<br>
+                            • NO Slack, SMS, or external notifications<br>
+                            • NO workflow triggers or rules<br><br>
+                            
+                            <strong>❌ ADVANCED FEATURES:</strong><br>
+                            • NO granular permission sets (only account-level member role)<br>
+                            • NO collision detection (feature exists only in paid Service plan)<br>
+                            • NO advanced columns (Formula, Time-Tracking, Progress)<br>
+                            • NO AI assistant features<br>
+                            • NO multi-board dashboards or advanced reporting
+                        </div>
+                        
+                        <h4>📊 MOCEANS Requirements vs Monday Free</h4>
+                        <div style="background: rgba(155, 89, 182, 0.1); padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <tr style="background: rgba(0,0,0,0.05);">
+                                    <td style="padding: 8px; font-weight: bold;">Required Feature</td>
+                                    <td style="padding: 8px; font-weight: bold;">Free Plan Status</td>
+                                    <td style="padding: 8px; font-weight: bold;">Impact</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px;">Email-to-ticket creation</td>
+                                    <td style="padding: 8px; color: #e74c3c;">❌ BLOCKED</td>
+                                    <td style="padding: 8px;">Requires manual entry</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px;">Auto-assignment rules</td>
+                                    <td style="padding: 8px; color: #e74c3c;">❌ BLOCKED</td>
+                                    <td style="padding: 8px;">Manual assignment only</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px;">SLA timers & reminders</td>
+                                    <td style="padding: 8px; color: #e74c3c;">❌ BLOCKED</td>
+                                    <td style="padding: 8px;">No automation available</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px;">Outbound notifications</td>
+                                    <td style="padding: 8px; color: #e74c3c;">❌ BLOCKED</td>
+                                    <td style="padding: 8px;">No integrations allowed</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px;">Role-based permissions</td>
+                                    <td style="padding: 8px; color: #f39c12;">⚠️ BASIC</td>
+                                    <td style="padding: 8px;">Cannot enforce intake vs admin roles</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px;">Agent collision detection</td>
+                                    <td style="padding: 8px; color: #e74c3c;">❌ MISSING</td>
+                                    <td style="padding: 8px;">Not available in any tier</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px;">Kanban column view</td>
+                                    <td style="padding: 8px; color: #27ae60;">✅ AVAILABLE</td>
+                                    <td style="padding: 8px;">Fully supported</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px;">Screen reader accessibility</td>
+                                    <td style="padding: 8px; color: #27ae60;">✅ AVAILABLE</td>
+                                    <td style="padding: 8px;">ARIA support documented</td>
+                                </tr>
+                            </table>
+                        </div>
+                        
+                        <h4>⚠️ Critical Scale Limitations</h4>
+                        <div style="background: rgba(243, 156, 18, 0.1); padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <strong>📈 GROWTH BLOCKERS:</strong><br>
+                            • 2-user maximum eliminates team expansion<br>
+                            • 3-board limit inadequate for organized workflows<br>
+                            • 200-item cap quickly exhausted with ticket volume<br>
+                            • 500MB storage insufficient for file-heavy support<br><br>
+                            
+                            <strong>🚨 OPERATIONAL IMPACT:</strong><br>
+                            • Manual processes for all ticket handling<br>
+                            • No notification systems for response times<br>
+                            • No integration with existing tools (CILS First, Slack)<br>
+                            • Limited reporting capabilities (single-board dashboards only)
+                        </div>
+                        
+                        <h4>✅ Limited Strengths</h4>
+                        <ul>
+                            <li><strong>Modern interface:</strong> Intuitive, visually appealing design</li>
+                            <li><strong>Accessibility compliance:</strong> Documented screen reader support with ARIA labels</li>
+                            <li><strong>Collaborative docs:</strong> Unlimited Workdocs for knowledge base creation</li>
+                            <li><strong>Kanban support:</strong> Visual task management matching requirement</li>
+                            <li><strong>Permanent free tier:</strong> No expiration (unlike Freshdesk)</li>
+                            <li><strong>Item activity:</strong> Basic change tracking for transparency</li>
+                        </ul>
+
+                        <h4>💰 Upgrade Requirements & Costs</h4>
+                        <div style="background: rgba(52, 152, 219, 0.1); padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <strong>Basic Plan - $9/user/month:</strong><br>
+                            • Unlimited items and unlimited free viewers<br>
+                            • 5GB storage (vs 500MB free)<br>
+                            • Still NO automations or integrations<br><br>
+                            
+                            <strong>Standard Plan - $12/user/month (MINIMUM VIABLE):</strong><br>
+                            • 250 automations per month<br>
+                            • 250 integrations per month<br>
+                            • Guest access for external users<br>
+                            • Timeline and Gantt views<br>
+                            • Required for ANY help desk functionality<br><br>
+                            
+                            <strong>Pro Plan - $19/user/month:</strong><br>
+                            • Private boards and advanced permissions<br>
+                            • Chart view and time tracking<br>
+                            • 25,000 automations per month<br>
+                            • Advanced integrations<br><br>
+                            
+                            <strong>💸 COST REALITY:</strong><br>
+                            Minimum $36/month for 3 users on Standard plan to achieve basic help desk functionality
+                        </div>
+
+                        <h4>🔍 Deep Dive: Why Monday.com Fails for Help Desk</h4>
+                        <div style="background: rgba(231, 76, 60, 0.1); padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <strong>🏗️ ARCHITECTURAL MISMATCH:</strong><br>
+                            Monday.com is designed for project management, not service desk operations. Fundamental concepts like ticket routing, SLA management, and customer communication workflows are not native to the platform.<br><br>
+                            
+                            <strong>📊 VOLUME CONSTRAINTS:</strong><br>
+                            With only 3 boards and 200 items, a busy help desk would exhaust limits within weeks. Each support request becomes an "item," quickly hitting the ceiling.<br><br>
+                            
+                            <strong>🔌 INTEGRATION DEPENDENCY:</strong><br>
+                            All critical help desk functions (email processing, notifications, automation) require paid tier integrations, making the free tier essentially unusable for support operations.
+                        </div>
+
+                        <h4>⚖️ Final Assessment for MOCEANS</h4>
+                        <div style="background: rgba(231, 76, 60, 0.1); padding: 15px; border-radius: 8px; margin: 10px 0; border-left: 4px solid #e74c3c;">
+                            <strong>STRONGLY NOT RECOMMENDED:</strong> Monday.com's free tier is fundamentally incompatible with help desk operations. The 2-user limit, blocked automations/integrations, and volume constraints make it unsuitable even for basic support workflows. The $36/month minimum for meaningful functionality exceeds alternatives like Jira ($0) and offers inferior help desk-specific features.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="comparison" class="tab-content">
+            <h2>📊 Feature Comparison Matrix</h2>
+            
+            <div class="legend">
+                <div class="legend-item">
+                    <span class="status-available">✅</span>
+                    <span>Available</span>
+                </div>
+                <div class="legend-item">
+                    <span class="status-partial">⚠️</span>
+                    <span>Partial/Limited</span>
+                </div>
+                <div class="legend-item">
+                    <span class="status-missing">❌</span>
+                    <span>Missing/Not Available</span>
+                </div>
+            </div>
+
+            <div style="overflow-x: auto;">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th rowspan="2" style="vertical-align: middle;">Feature Category</th>
+                            <th colspan="4" style="text-align: center; background: #2c3e50;">Platform Comparison</th>
+                        </tr>
+                        <tr>
+                            <th style="background: #27ae60;">Jira Free<br><small>Recommended</small></th>
+                            <th style="background: #f39c12;">Freshdesk Free<br><small>6mo limit</small></th>
+                            <th style="background: #9b59b6;">Twenty<br><small>Self-hosted</small></th>
+                            <th style="background: #e74c3c;">Monday Free<br><small>Restricted</small></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: rgba(52, 152, 219, 0.05);">
+                            <td colspan="5" style="font-weight: bold; text-align: center; padding: 10px; background: rgba(52, 152, 219, 0.2);">🚨 NEED TO HAVE FEATURES</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Agent Seats (Max)</strong></td>
+                            <td class="status-cell" style="background: rgba(39, 174, 96, 0.1);"><strong style="color: #27ae60;">3 agents</strong><br><small>Permanent</small></td>
+                            <td class="status-cell" style="background: rgba(243, 156, 18, 0.1);"><strong style="color: #f39c12;">2 agents</strong><br><small>6 months only</small></td>
+                            <td class="status-cell" style="background: rgba(39, 174, 96, 0.1);"><strong style="color: #27ae60;">Unlimited</strong><br><small>DevOps required</small></td>
+                            <td class="status-cell" style="background: rgba(231, 76, 60, 0.1);"><strong style="color: #e74c3c;">2 users</strong><br><small>Hard limit</small></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Email-to-Ticket Creation</strong></td>
+                            <td class="status-cell" style="background: rgba(39, 174, 96, 0.1);"><strong style="color: #27ae60;">✅ Full</strong><br><small>Dedicated address</small></td>
+                            <td class="status-cell" style="background: rgba(39, 174, 96, 0.1);"><strong style="color: #27ae60;">✅ Multi-channel</strong><br><small>Email + social</small></td>
+                            <td class="status-cell" style="background: rgba(243, 156, 18, 0.1);"><strong style="color: #f39c12;">⚠️ Paywall</strong><br><small>Pro tier only</small></td>
+                            <td class="status-cell" style="background: rgba(231, 76, 60, 0.1);"><strong style="color: #e74c3c;">❌ Blocked</strong><br><small>No integrations</small></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Auto-Assignment Rules</strong></td>
+                            <td class="status-cell" style="background: rgba(243, 156, 18, 0.1);"><strong style="color: #f39c12;">⚠️ Capped</strong><br><small>500 rules/month</small></td>
+                            <td class="status-cell" style="background: rgba(39, 174, 96, 0.1);"><strong style="color: #27ae60;">✅ Round Robin</strong><br><small>Basic dispatch</small></td>
+                            <td class="status-cell" style="background: rgba(231, 76, 60, 0.1);"><strong style="color: #e74c3c;">❌ Custom dev</strong><br><small>Zapier/webhook</small></td>
+                            <td class="status-cell" style="background: rgba(231, 76, 60, 0.1);"><strong style="color: #e74c3c;">❌ Blocked</strong><br><small>No automations</small></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Role-Based Permissions</strong></td>
+                            <td class="status-cell" style="background: rgba(243, 156, 18, 0.1);"><strong style="color: #f39c12;">⚠️ Basic</strong><br><small>Agent/customer</small></td>
+                            <td class="status-cell" style="background: rgba(243, 156, 18, 0.1);"><strong style="color: #f39c12;">⚠️ Simple</strong><br><small>Limited roles</small></td>
+                            <td class="status-cell" style="background: rgba(39, 174, 96, 0.1);"><strong style="color: #27ae60;">✅ Granular</strong><br><small>Manual config</small></td>
+                            <td class="status-cell" style="background: rgba(231, 76, 60, 0.1);"><strong style="color: #e74c3c;">❌ Member only</strong><br><small>No granularity</small></td>
+                        </tr>
+                        <tr>
+                            <td><strong>SLA Timers & Reminders</strong></td>
+                            <td class="status-cell" style="background: rgba(243, 156, 18, 0.1);"><strong style="color: #f39c12;">⚠️ Basic</strong><br><small>No escalations</small></td>
+                            <td class="status-cell" style="background: rgba(231, 76, 60, 0.1);"><strong style="color: #e74c3c;">❌ Missing</strong><br><small>Pro tier needed</small></td>
+                            <td class="status-cell" style="background: rgba(231, 76, 60, 0.1);"><strong style="color: #e74c3c;">❌ Custom dev</strong><br><small>Windmill tasks</small></td>
+                            <td class="status-cell" style="background: rgba(231, 76, 60, 0.1);"><strong style="color: #e74c3c;">❌ Blocked</strong><br><small>No automations</small></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Outbound Notifications</strong></td>
+                            <td class="status-cell" style="background: rgba(243, 156, 18, 0.1);"><strong style="color: #f39c12;">⚠️ Limited</strong><br><small>100 emails/day</small></td>
+                            <td class="status-cell" style="background: rgba(231, 76, 60, 0.1);"><strong style="color: #e74c3c;">❌ None</strong><br><small>No Slack/SMS</small></td>
+                            <td class="status-cell" style="background: rgba(243, 156, 18, 0.1);"><strong style="color: #f39c12;">⚠️ Zapier</strong><br><small>Additional cost</small></td>
+                            <td class="status-cell" style="background: rgba(231, 76, 60, 0.1);"><strong style="color: #e74c3c;">❌ Blocked</strong><br><small>No integrations</small></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cloud Hosted SaaS</strong></td>
+                            <td class="status-cell" style="background: rgba(39, 174, 96, 0.1);"><strong style="color: #27ae60;">✅ Full</strong><br><small>Atlassian cloud</small></td>
+                            <td class="status-cell" style="background: rgba(243, 156, 18, 0.1);"><strong style="color: #f39c12;">⚠️ Expires</strong><br><small>6 months only</small></td>
+                            <td class="status-cell" style="background: rgba(231, 76, 60, 0.1);"><strong style="color: #e74c3c;">❌ Self-host</strong><br><small>DevOps burden</small></td>
+                            <td class="status-cell" style="background: rgba(39, 174, 96, 0.1);"><strong style="color: #27ae60;">✅ Full</strong><br><small>Work management</small></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Accessible Interface</strong></td>
+                            <td class="status-cell" style="background: rgba(243, 156, 18, 0.1);"><strong style="color: #f39c12;">⚠️ Unverified</strong><br><small>WCAG aligned</small></td>
+                            <td class="status-cell" style="background: rgba(243, 156, 18, 0.1);"><strong style="color: #f39c12;">⚠️ Unknown</strong><br><small>Not documented</small></td>
+                            <td class="status-cell" style="background: rgba(39, 174, 96, 0.1);"><strong style="color: #27ae60;">✅ Keyboard nav</strong><br><small>Semantic HTML</small></td>
+                            <td class="status-cell" style="background: rgba(39, 174, 96, 0.1);"><strong style="color: #27ae60;">✅ Statement</strong><br><small>ARIA labels</small></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Agent Collision Detection</strong></td>
+                            <td class="status-cell" style="background: rgba(231, 76, 60, 0.1);"><strong style="color: #e74c3c;">❌ Missing</strong><br><small>No locking</small></td>
+                            <td class="status-cell" style="background: rgba(231, 76, 60, 0.1);"><strong style="color: #e74c3c;">❌ Missing</strong><br><small>No locking</small></td>
+                            <td class="status-cell" style="background: rgba(231, 76, 60, 0.1);"><strong style="color: #e74c3c;">❌ Missing</strong><br><small>Not documented</small></td>
+                            <td class="status-cell" style="background: rgba(231, 76, 60, 0.1);"><strong style="color: #e74c3c;">❌ Missing</strong><br><small>Service plan only</small></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Built-in Reporting</strong></td>
+                            <td class="status-cell" style="background: rgba(39, 174, 96, 0.1);"><strong style="color: #27ae60;">✅ Dashboards</strong><br><small>Queue metrics</small></td>
+                            <td class="status-cell" style="background: rgba(39, 174, 96, 0.1);"><strong style="color: #27ae60;">✅ Trend reports</strong><br><small>Basic analytics</small></td>
+                            <td class="status-cell" style="background: rgba(231, 76, 60, 0.1);"><strong style="color: #e74c3c;">❌ Export API</strong><br><small>BI tool needed</small></td>
+                            <td class="status-cell" style="background: rgba(243, 156, 18, 0.1);"><strong style="color: #f39c12;">⚠️ Single board</strong><br><small>Limited scope</small></td>
+                        </tr>
+                        
+                        <tr style="background: rgba(243, 156, 18, 0.05);">
+                            <td colspan="5" style="font-weight: bold; text-align: center; padding: 10px; background: rgba(243, 156, 18, 0.2);">👍 GOOD TO HAVE FEATURES</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Kanban Column View</strong></td>
+                            <td class="status-cell" style="background: rgba(39, 174, 96, 0.1);"><strong style="color: #27ae60;">✅ Native</strong><br><small>Board & list views</small></td>
+                            <td class="status-cell" style="background: rgba(39, 174, 96, 0.1);"><strong style="color: #27ae60;">✅ Native</strong><br><small>Multiple views</small></td>
+                            <td class="status-cell" style="background: rgba(39, 174, 96, 0.1);"><strong style="color: #27ae60;">✅ Pipeline</strong><br><small>Drag-drop stages</small></td>
+                            <td class="status-cell" style="background: rgba(39, 174, 96, 0.1);"><strong style="color: #27ae60;">✅ Native</strong><br><small>Forms, files view</small></td>
+                        </tr>
+                        <tr>
+                            <td><strong>CILS First/Slack Integration</strong></td>
+                            <td class="status-cell" style="background: rgba(39, 174, 96, 0.1);"><strong style="color: #27ae60;">✅ Slack basic</strong><br><small>3000+ apps</small></td>
+                            <td class="status-cell" style="background: rgba(231, 76, 60, 0.1);"><strong style="color: #e74c3c;">❌ Growth tier</strong><br><small>$15/agent needed</small></td>
+                            <td class="status-cell" style="background: rgba(39, 174, 96, 0.1);"><strong style="color: #27ae60;">✅ Zapier</strong><br><small>API possible</small></td>
+                            <td class="status-cell" style="background: rgba(231, 76, 60, 0.1);"><strong style="color: #e74c3c;">❌ Blocked</strong><br><small>No integrations</small></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Complete Audit Trail</strong></td>
+                            <td class="status-cell" style="background: rgba(231, 76, 60, 0.1);"><strong style="color: #e74c3c;">❌ Standard tier</strong><br><small>$19.04/agent</small></td>
+                            <td class="status-cell" style="background: rgba(243, 156, 18, 0.1);"><strong style="color: #f39c12;">⚠️ Limited</strong><br><small>Change log only</small></td>
+                            <td class="status-cell" style="background: rgba(231, 76, 60, 0.1);"><strong style="color: #e74c3c;">❌ Webhook</strong><br><small>External logging</small></td>
+                            <td class="status-cell" style="background: rgba(243, 156, 18, 0.1);"><strong style="color: #f39c12;">⚠️ Item activity</strong><br><small>No full export</small></td>
+                        </tr>
+                        <tr>
+                            <td><strong>AI Assistant</strong></td>
+                            <td class="status-cell" style="background: rgba(231, 76, 60, 0.1);"><strong style="color: #e74c3c;">❌ Premium</strong><br><small>$47.82/agent</small></td>
+                            <td class="status-cell" style="background: rgba(231, 76, 60, 0.1);"><strong style="color: #e74c3c;">❌ Enterprise</strong><br><small>$79/agent</small></td>
+                            <td class="status-cell" style="background: rgba(231, 76, 60, 0.1);"><strong style="color: #e74c3c;">❌ Custom</strong><br><small>External LLM API</small></td>
+                            <td class="status-cell" style="background: rgba(231, 76, 60, 0.1);"><strong style="color: #e74c3c;">❌ Paid tiers</strong><br><small>Add-on features</small></td>
+                        </tr>
+                        
+                        <tr style="background: rgba(155, 89, 182, 0.05);">
+                            <td colspan="5" style="font-weight: bold; text-align: center; padding: 10px; background: rgba(155, 89, 182, 0.2);">💰 COST ANALYSIS</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Free Tier Duration</strong></td>
+                            <td class="status-cell" style="background: rgba(39, 174, 96, 0.1);"><strong style="color: #27ae60;">✅ Permanent</strong><br><small>No expiration</small></td>
+                            <td class="status-cell" style="background: rgba(231, 76, 60, 0.1);"><strong style="color: #e74c3c;">❌ 6 months</strong><br><small>Forced upgrade</small></td>
+                            <td class="status-cell" style="background: rgba(39, 174, 96, 0.1);"><strong style="color: #27ae60;">✅ Permanent</strong><br><small>Self-hosted</small></td>
+                            <td class="status-cell" style="background: rgba(39, 174, 96, 0.1);"><strong style="color: #27ae60;">✅ Permanent</strong><br><small>$0 forever</small></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Minimum Viable Upgrade</strong></td>
+                            <td class="status-cell" style="background: rgba(39, 174, 96, 0.1);"><strong style="color: #27ae60;">Optional</strong><br><small>Standard $57/3 agents</small></td>
+                            <td class="status-cell" style="background: rgba(231, 76, 60, 0.1);"><strong style="color: #e74c3c;">Required</strong><br><small>Pro $147/3 agents</small></td>
+                            <td class="status-cell" style="background: rgba(243, 156, 18, 0.1);"><strong style="color: #f39c12;">Cloud option</strong><br><small>Pro $27/3 agents</small></td>
+                            <td class="status-cell" style="background: rgba(231, 76, 60, 0.1);"><strong style="color: #e74c3c;">Required</strong><br><small>Standard $36/3 agents</small></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="recommendations" class="tab-content active">
+            <div class="recommendation-section">
+                <h2>📋 Key Findings</h2>
+                
+
+
+                <h3>🏆 Platform Performance Summary</h3>
+                <div class="feature-grid">
+                    <div class="feature-item available">
+                        <span class="feature-status available">🥇</span>
+                        <div>
+                            <strong>Jira Service Management: Best Overall Coverage</strong>
+                            <p>Supports 3 agents, email-to-ticket creation, 500 automation rules/month, basic SLA timers, Slack integration, and Kanban boards. Limitations: 100 email notifications/day, no audit trails on free tier</p>
+                        </div>
+                    </div>
+                    <div class="feature-item partial">
+                        <span class="feature-status partial">⚠️</span>
+                        <div>
+                            <strong>Freshdesk: Major Limitations</strong>
+                            <p>Only 2 agents max, no SLA timers, no Slack/SMS notifications, free plan expires after 6 months. Round-robin assignment works but severely restricted upgrade path ($15-49/agent/month)</p>
+                        </div>
+                    </div>
+                    <div class="feature-item partial">
+                        <span class="feature-status partial">🔧</span>
+                        <div>
+                            <strong>Twenty (Open Source): Development Required</strong>
+                            <p>Unlimited agents if self-hosted, modern UI with Kanban, but lacks native ticket concepts, SLA timers, and collision detection. Requires custom development for help desk features</p>
+                        </div>
+                    </div>
+                    <div class="feature-item missing">
+                        <span class="feature-status missing">❌</span>
+                        <div>
+                            <strong>Monday.com: Severely Restricted</strong>
+                            <p>Only 2 users, no automations/integrations, no email-to-ticket, limited to 3 boards and 200 items. Requires $12/user/month minimum for basic functionality</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>💰 Cost Analysis & Upgrade Paths</h3>
+                <div class="feature-grid">
+                    <div class="feature-item available">
+                        <span class="feature-status available">💚</span>
+                        <div>
+                            <strong>Jira: Sustainable Free Tier with Clear Upgrade Path</strong>
+                            <p>Free tier is permanent. Standard upgrade at $19.04/agent/month adds full audit logs, 5,000 automation runs, and advanced role permissions</p>
+                        </div>
+                    </div>
+                    <div class="feature-item missing">
+                        <span class="feature-status missing">💸</span>
+                        <div>
+                            <strong>Other Platforms: Expensive or Expiring Free Tiers</strong>
+                            <p>Freshdesk expires after 6 months, Monday requires paid plan for basic features, Twenty cloud plans start at $9/user/month for API access</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>🚫 Universal Limitations Across All Platforms</h3>
+                <div class="feature-grid">
+                    <div class="feature-item missing">
+                        <span class="feature-status missing">❌</span>
+                        <div>
+                            <strong>No Collision Detection on Any Free Tier</strong>
+                            <p>Critical feature for multi-agent environments completely missing from all evaluated platforms' free offerings</p>
+                        </div>
+                    </div>
+                    <div class="feature-item missing">
+                        <span class="feature-status missing">📋</span>
+                        <div>
+                            <strong>Audit Trails Require Paid Upgrades</strong>
+                            <p>Complete change logging and handler tracking only available on paid tiers across all platforms, potentially impacting compliance requirements</p>
+                        </div>
+                    </div>
+                    <div class="feature-item partial">
+                        <span class="feature-status partial">📱</span>
+                        <div>
+                            <strong>SMS Notifications Generally Unavailable</strong>
+                            <p>Most platforms lack SMS integration on free tiers; outbound notifications primarily limited to email with various caps and restrictions</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>✅ Positive Findings</h3>
+                <div class="feature-grid">
+                    <div class="feature-item available">
+                        <span class="feature-status available">☁️</span>
+                        <div>
+                            <strong>Cloud Hosting Widely Available</strong>
+                            <p>All platforms except Twenty offer SaaS deployment. Jira provides 99.9% uptime SLA on paid tiers</p>
+                        </div>
+                    </div>
+                    <div class="feature-item available">
+                        <span class="feature-status available">♿</span>
+                        <div>
+                            <strong>Accessibility Standards Met</strong>
+                            <p>Screen reader compatibility confirmed across major platforms, with Monday.com specifically highlighting accessibility features</p>
+                        </div>
+                    </div>
+                    <div class="feature-item available">
+                        <span class="feature-status available">📊</span>
+                        <div>
+                            <strong>Kanban Views Universally Supported</strong>
+                            <p>All evaluated platforms provide Kanban-style column views for ticket status management (Open, In Progress, Review, Resolved)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h2>🎯 Final Recommendations</h2>
+                
+                <h3>🥇 Primary Recommendation</h3>
+                <ul class="recommendation-list">
+                    <li>
+                        <strong>Adopt Jira Service Management Free</strong> as the recommended solution. It covers the majority of required features, supports up to three agents without fees, and provides a future-proof upgrade path for more advanced needs such as audit logs and expanded automation.
+                    </li>
+                </ul>
+
+                <h3>🥈 Alternative Consideration</h3>
+                <ul class="recommendation-list">
+                    <li>
+                        <strong>Consider Twenty (self-hosted) only if</strong> your agent count will exceed three and there are in-house development resources available. Unlimited seats could eliminate future licensing costs, but additional work will be needed to add audit logs and SLA features.
+                    </li>
+                </ul>
+
+                <h3>❌ Not Recommended</h3>
+                <ul class="recommendation-list">
+                    <li>
+                        <strong>Do not pursue Freshdesk or Monday free tiers.</strong> Their seat restrictions, missing features (SLA timers, collision detection), and upgrade requirements make them non-viable for a scalable or cost-effective help-desk workflow.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            // Hide all tab contents
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.nav-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to the corresponding tab
+            const targetTab = Array.from(tabs).find(tab => {
+                if (tabName === 'platforms') return tab.textContent.includes('Platform Analysis');
+                if (tabName === 'comparison') return tab.textContent.includes('Comparison');
+                if (tabName === 'recommendations') return tab.textContent.includes('Executive Summary');
+                return false;
+            });
+            if (targetTab) {
+                targetTab.classList.add('active');
+            }
+        }
+
+        function togglePlatform(platformId) {
+            const content = document.getElementById(platformId + '-content');
+            const header = content.previousElementSibling;
+            
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                header.classList.remove('expanded');
+            } else {
+                content.classList.add('expanded');
+                header.classList.add('expanded');
+            }
+        }
+
+        function navigateToPlatform(platformId) {
+            // First, switch to the platforms tab
+            showTab('platforms');
+            
+            // Make sure the platform card is expanded (not just toggled)
+            const content = document.getElementById(platformId + '-content');
+            const header = content.previousElementSibling;
+            
+            if (!content.classList.contains('expanded')) {
+                content.classList.add('expanded');
+                header.classList.add('expanded');
+            }
+            
+            // Wait a bit for the tab transition to complete, then scroll to the platform card
+            setTimeout(() => {
+                const platformCard = content.closest('.platform-card');
+                if (platformCard) {
+                    platformCard.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    
+                    // Add a subtle highlight effect to draw attention
+                    platformCard.style.transition = 'box-shadow 0.5s ease';
+                    platformCard.style.boxShadow = '0 0 20px rgba(52, 152, 219, 0.5)';
+                    
+                    // Remove the highlight after 2 seconds
+                    setTimeout(() => {
+                        platformCard.style.boxShadow = '';
+                    }, 2000);
+                }
+            }, 150);
+        }
+
+        // Initialize - expand all platform cards by default
+        document.addEventListener('DOMContentLoaded', function() {
+            const platformIds = ['jira', 'freshdesk', 'twenty', 'monday'];
+            
+            platformIds.forEach(platformId => {
+                const content = document.getElementById(platformId + '-content');
+                const header = content.previousElementSibling;
+                content.classList.add('expanded');
+                header.classList.add('expanded');
+            });
+        });
+    </script>
+</body>
+</html> 

@@ -9,6 +9,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
+    "types": ["react/jsx-runtime"],
     "noImplicitAny": false,
     "noUnusedParameters": false,
     "skipLibCheck": true,

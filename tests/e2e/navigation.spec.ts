@@ -158,4 +158,21 @@ test.describe('Navigation', () => {
     const scrollY = await page.evaluate(() => window.scrollY);
     expect(scrollY).toBeGreaterThan(100); // Reduced from 500 to be more realistic
   });
+
+  test('should open Blog link in a new tab with correct URL', async ({ page, isMobile, context }) => {
+    await page.goto('/');
+    // Find the Blog link in the navigation
+    const blogLink = isMobile
+      ? page.locator('.md\\:hidden a:has-text("Blog")').first()
+      : page.locator('nav a:has-text("Blog")').first();
+
+    // Intercept new page (tab) opening
+    const [newPage] = await Promise.all([
+      context.waitForEvent('page'),
+      blogLink.click({ button: 'middle' }) // Simulate middle-click (new tab)
+    ]);
+    await newPage.waitForLoadState('domcontentloaded');
+    expect(newPage.url()).toContain('https://drelsolutions.substack.com');
+    await newPage.close();
+  });
 }); 

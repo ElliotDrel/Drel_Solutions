@@ -52,6 +52,34 @@ npm run build
 └── public/               # Static assets
 ```
 
+## Centralized Navigation & Layout
+
+The application uses a centralized navigation bar and layout wrapper for consistent headers and navigation across all pages:
+
+- **Navigation**: Implemented in `src/components/ui/Navigation.tsx`, this component provides a consistent header, navigation links, and a responsive mobile menu. The Blog link opens the Drel Solutions Substack in a new tab.
+- **Layout**: All pages are wrapped in `src/components/Layout.tsx`, which embeds the Navigation component and ensures a unified structure.
+- **/blog Redirect**: The `/blog` route triggers an external redirect to [https://drelsolutions.substack.com/](https://drelsolutions.substack.com/) using a dedicated `ExternalRedirect` component in the router.
+
+### Example Usage
+
+```tsx
+// src/App.tsx
+<Route path="/" element={<Layout><Index /></Layout>} />
+<Route path="/about" element={<Layout><About /></Layout>} />
+<Route path="/blog" element={<ExternalRedirect to="https://drelsolutions.substack.com/" />} />
+```
+
+## Testing
+
+- **Unit Tests**: Located in `src/test/`, using Vitest and React Testing Library. Tests cover navigation rendering, accessibility roles, mobile menu toggling, and external link attributes.
+- **E2E Tests**: Located in `tests/e2e/`, using Playwright. Tests verify navigation consistency and the /blog redirect in a real browser environment.
+- **Run all tests**:
+  ```bash
+  npm run test:run      # Run all unit tests once
+  npm run test:e2e      # Run Playwright E2E tests
+  npm run test:all      # Run all tests (unit + e2e)
+  ```
+
 ## Configuration
 
 Configure your API keys for the various AI providers in your environment variables:

@@ -98,6 +98,7 @@ const Navigation: React.FC = () => {
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="text-gray-700 hover:text-blue-600 p-2"
               aria-label="Toggle menu"
+              data-testid="mobile-menu-button"
             >
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>

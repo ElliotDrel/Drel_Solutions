@@ -10,6 +10,7 @@ import Contact from "./pages/Contact";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 import ModelAdvisor from "./pages/ModelAdvisor";
+import Layout from "@/components/Layout";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,14 @@ const ScrollToTop = () => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
 
+  return null;
+};
+
+// Simple component to redirect to an external URL (e.g., Substack blog)
+const ExternalRedirect = ({ to }: { to: string }) => {
+  useEffect(() => {
+    window.location.replace(to);
+  }, [to]);
   return null;
 };
 
@@ -39,10 +48,11 @@ const App = () => (
       >
         <ScrollToTop />
         <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/modeladvisor" element={<ModelAdvisor />} />
+          <Route path="/" element={<Layout><Index /></Layout>} />
+          <Route path="/about" element={<Layout><About /></Layout>} />
+          <Route path="/contact" element={<Layout><Contact /></Layout>} />
+          <Route path="/modeladvisor" element={<Layout><ModelAdvisor /></Layout>} />
+          <Route path="/blog" element={<ExternalRedirect to="https://drelsolutions.substack.com/" />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

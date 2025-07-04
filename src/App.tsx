@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -26,12 +26,29 @@ const ScrollToTop = () => {
   return null;
 };
 
-// Simple component to redirect to an external URL (e.g., Substack blog)
+// Improved ExternalRedirect: client-only, loading feedback, ARIA
 const ExternalRedirect = ({ to }: { to: string }) => {
+  const [redirecting, setRedirecting] = useState(true);
   useEffect(() => {
-    window.location.replace(to);
+    if (typeof window !== "undefined") {
+      setRedirecting(true);
+      window.location.replace(to);
+    }
   }, [to]);
-  return null;
+  return redirecting ? (
+    <div
+      className="min-h-screen flex items-center justify-center bg-white"
+      role="status"
+      aria-live="polite"
+      aria-label="Redirecting"
+    >
+      <div className="text-center space-y-4">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-2"></div>
+        <p className="text-lg font-medium text-gray-700">Redirecting to external site...</p>
+        <p className="text-sm text-gray-500">If you are not redirected, <a href={to} className="text-blue-600 underline">click here</a>.</p>
+      </div>
+    </div>
+  ) : null;
 };
 
 const App = () => (
@@ -54,7 +71,7 @@ const App = () => (
           <Route path="/modeladvisor" element={<Layout><ModelAdvisor /></Layout>} />
           <Route path="/blog" element={<ExternalRedirect to="https://drelsolutions.substack.com/" />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
+          <Route path="*" element={<Layout><NotFound /></Layout>} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>

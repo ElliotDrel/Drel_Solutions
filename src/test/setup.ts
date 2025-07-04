@@ -13,13 +13,13 @@ class MockIntersectionObserver implements IntersectionObserver {
   readonly rootMargin: string = "0px";
   readonly thresholds: ReadonlyArray<number> = [];
 
-  observe(): void {
+  observe(target: Element): void {
     /* noop */
   }
   disconnect(): void {
     /* noop */
   }
-  unobserve(): void {
+  unobserve(target: Element): void {
     /* noop */
   }
   takeRecords(): IntersectionObserverEntry[] {

@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { DollarSign, Clock, Zap, FileText, Filter, Search, Sparkles, ArrowRight, Brain, Lightbulb, Cpu, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { searchModels } from "@/lib/api";
 
 interface ModelInfo {
   name: string;
@@ -371,28 +372,14 @@ const ModelAdvisor = () => {
     setShowRecommendations(false);
 
     try {
-      const response = await fetch('/api/model_search', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          query: searchQuery
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`Search failed: ${response.status} ${response.statusText}`);
-      }
-
-      const data = await response.json();
+      const data = await searchModels(searchQuery);
       setRecommendations(data.recommendations);
       setShowRecommendations(true);
     } catch (error) {
       console.error('Search error:', error);
       setSearchError(
         error instanceof Error 
-          ? `Failed to get recommendations: ${error.message}` 
+          ? error.message
           : 'Failed to get recommendations. Please try again.'
       );
     } finally {

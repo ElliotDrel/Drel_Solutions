@@ -4,12 +4,19 @@ Model Recommendation API
 Simple FastAPI backend that uses OpenAI to recommend AI models based on user queries.
 """
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Depends, Request
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, Field, validator
 from typing import List, Dict, Optional
 import logging
 import uvicorn
+import os
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
+from auth import verify_api_key
+import re
+from config import settings
 
 from services.openai_service import get_openai_service
 
@@ -25,17 +32,38 @@ app = FastAPI(
 )
 
 # Configure CORS
+ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000").split(",")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, specify actual origins
+    allow_origins=ALLOWED_ORIGINS,  # Secure: use env var
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST"],
+    allow_headers=["Authorization", "Content-Type"],
 )
+
+# Add rate limiting
+limiter = Limiter(key_func=get_remote_address)
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # Request/Response models
 class ModelSearchRequest(BaseModel):
-    query: str
+    query: str = Field(..., min_length=1, max_length=1000, description="Search query for model recommendations")
+
+    @validator('query')
+    def sanitize_query(cls, v):
+        # Remove potentially harmful prompt injection patterns
+        harmful_patterns = [
+            r'ignore.*previous.*instructions',
+            r'system.*prompt',
+            r'role.*play',
+            r'<script.*>',
+            r'javascript:',
+        ]
+        for pattern in harmful_patterns:
+            if re.search(pattern, v, re.IGNORECASE):
+                raise ValueError("Query contains potentially harmful content")
+        return v.strip()
 
 class ModelRecommendation(BaseModel):
     rank: int
@@ -60,8 +88,9 @@ async def root():
         "version": "2.0.0"
     }
 
-@app.post("/api/model_search", response_model=ModelSearchResponse)
-async def search_models(request: ModelSearchRequest):
+@app.post("/api/model_search", response_model=ModelSearchResponse, dependencies=[Depends(verify_api_key)])
+@limiter.limit("10/minute")
+async def search_models(request: Request, model_request: ModelSearchRequest):
     """
     Search for AI models based on user query.
     
@@ -71,13 +100,10 @@ async def search_models(request: ModelSearchRequest):
     3. Returns top 5 model recommendations with explanations
     """
     try:
-        if not request.query or not request.query.strip():
-            raise HTTPException(status_code=400, detail="Query cannot be empty")
-        
-        logger.info(f"Model search request: {request.query[:100]}...")
+        logger.info(f"Model search request: {model_request.query[:100]}...")
         
         # Get recommendations from OpenAI
-        result = await openai_service.get_model_recommendations(request.query)
+        result = await openai_service.get_model_recommendations(model_request.query)
         
         # Convert to response model
         recommendations = [

@@ -88,7 +88,32 @@ Configure your API keys for the various AI providers in your environment variabl
 ANTHROPIC_API_KEY=your_anthropic_key
 GOOGLE_API_KEY=your_google_key
 OPENAI_API_KEY=your_openai_key
+
+# Backend Security (required for FastAPI backend)
+API_KEY=your_backend_api_key              # Required for backend authentication
+ALLOWED_ORIGINS=http://localhost:3000     # Comma-separated list of allowed origins for CORS
 ```
+
+## Backend Security & Compliance
+
+The backend FastAPI service now includes:
+- **API Key Authentication**: All sensitive endpoints require an API key via the Authorization header.
+- **Secure CORS**: Allowed origins are controlled via the ALLOWED_ORIGINS environment variable.
+- **Rate Limiting**: Expensive endpoints are rate-limited to prevent abuse.
+- **Robust Input Validation**: All user input is validated and sanitized.
+- **Environment Variable Validation**: On startup, the backend checks for all required environment variables using `backend/config.py`.
+
+**Required Environment Variables:**
+```bash
+OPENAI_API_KEY=your_openai_api_key
+API_KEY=your_backend_api_key
+ALLOWED_ORIGINS=http://localhost:3000
+```
+
+For full security and API guidelines, see:
+- `.cursor/rules/security.mdc`
+- `.cursor/rules/security-audit.mdc`
+- `.cursor/rules/fastapi.mdc`
 
 ## Contributing
 

@@ -7,7 +7,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 // Mock window.location.replace
 const replaceSpy = vi.fn();
 
-describe.skip("/blog route", () => {
+describe("/blog route", () => {
   beforeEach(() => {
     replaceSpy.mockReset();
     vi.spyOn(window.location, "replace").mockImplementation(replaceSpy as any);

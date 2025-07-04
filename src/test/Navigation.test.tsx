@@ -47,18 +47,16 @@ describe("Navigation component", () => {
         <Navigation />
       </MemoryRouter>
     );
-    // Mobile menu button is only visible on small screens, so force window width
-    window.innerWidth = 500;
-    window.dispatchEvent(new Event("resize"));
+    // Find the mobile menu button by its aria-label
     const menuButton = screen.getByRole("button", { name: /toggle menu/i });
     expect(menuButton).toBeInTheDocument();
     // Menu should not be open initially
-    expect(screen.queryByText(/model advisor/i)).not.toBeVisible();
+    expect(screen.queryByText(/model advisor/i)).not.toBeInTheDocument();
     // Open menu
     menuButton.click();
-    expect(screen.getByText(/model advisor/i)).toBeVisible();
+    expect(screen.getByText(/model advisor/i)).toBeInTheDocument();
     // Close menu
     menuButton.click();
-    expect(screen.queryByText(/model advisor/i)).not.toBeVisible();
+    expect(screen.queryByText(/model advisor/i)).not.toBeInTheDocument();
   });
 });

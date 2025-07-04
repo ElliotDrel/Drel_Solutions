@@ -10,7 +10,7 @@ const replaceSpy = vi.fn();
 describe("/blog route", () => {
   beforeEach(() => {
     replaceSpy.mockReset();
-    vi.spyOn(window.location, "replace").mockImplementation(replaceSpy as any);
+    vi.spyOn(window.location, "replace").mockImplementation(replaceSpy as (url: string) => void);
   });
 
   it("calls window.location.replace with Substack URL", async () => {

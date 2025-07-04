@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { DollarSign, Clock, Zap, FileText, Filter, Search, Sparkles, ArrowRight, Brain, Lightbulb, Cpu, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { searchModels } from "@/lib/api";
+import { searchModels } from "../lib/api";
 
 interface ModelInfo {
   name: string;

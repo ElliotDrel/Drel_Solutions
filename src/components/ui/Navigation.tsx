@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import * as React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Button } from "@/components/ui/button";
 import { Menu, X, ChevronDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 /**
  * Centralized site navigation bar.
@@ -12,8 +12,8 @@ import { Menu, X, ChevronDown } from "lucide-react";
  * links are automatically styled based on the current route.
  */
 const Navigation: React.FC = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
   const location = useLocation();
 
   /* Helper to style active links */

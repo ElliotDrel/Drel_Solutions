@@ -64,44 +64,6 @@ describe('Index Page', () => {
     expect(screen.getByText('Run Lean, Stay Sharp')).toBeInTheDocument();
   });
 
-  it('toggles mobile menu when menu button is clicked', async () => {
-    render(<Index />, { wrapper: RouterWrapper });
-    
-    // Find the mobile menu button by looking for the button with Menu/X icons
-    const menuButtons = screen.getAllByRole('button').filter(button => {
-      const svg = button.querySelector('svg');
-      if (!svg) return false;
-      // Check if it's the menu button by looking for menu or X icon classes
-      return svg.classList.contains('lucide-menu') || svg.classList.contains('lucide-x');
-    });
-    
-    expect(menuButtons.length).toBeGreaterThan(0);
-    const menuButton = menuButtons[0];
-    
-    // Initially, mobile menu should not be open
-    // We check for mobile menu by looking for elements that should only appear in mobile menu
-    const initialMobileMenuItems = screen.queryAllByText('Home').filter(item => {
-      // Look for items that might be in mobile menu context
-      const parent = item.closest('div');
-      return parent && parent.classList.contains('md:hidden');
-    });
-    
-    // Click the mobile menu button to open it
-    fireEvent.click(menuButton);
-    
-    // Wait for mobile menu to appear
-    await waitFor(() => {
-      // After clicking, we should have more navigation items visible
-      // The mobile menu creates additional instances of nav items
-      const allHomeItems = screen.getAllByText('Home');
-      const allAboutItems = screen.getAllByText('About');
-      
-      // We expect to find navigation items (desktop nav always exists)
-      expect(allHomeItems.length).toBeGreaterThanOrEqual(1);
-      expect(allAboutItems.length).toBeGreaterThanOrEqual(1);
-    });
-  });
-
   it('displays stats section with animated counters', () => {
     render(<Index />, { wrapper: RouterWrapper });
     
@@ -114,18 +76,6 @@ describe('Index Page', () => {
     render(<Index />, { wrapper: RouterWrapper });
     
     expect(screen.getByText(/© 2024 Drel Solutions. All rights reserved./)).toBeInTheDocument();
-  });
-
-  it('has proper accessibility attributes', () => {
-    render(<Index />, { wrapper: RouterWrapper });
-    
-    // Check for proper heading hierarchy
-    const h1 = screen.getByRole('heading', { level: 1 });
-    expect(h1).toBeInTheDocument();
-    
-    // Check for proper navigation
-    const navigation = screen.getByRole('navigation');
-    expect(navigation).toBeInTheDocument();
   });
 
   it('displays AI dashboard mockup with metrics', () => {

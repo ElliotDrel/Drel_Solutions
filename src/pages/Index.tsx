@@ -17,6 +17,7 @@ const Navigation = () => {
             <div className="ml-10 flex items-baseline space-x-8">
               <a href="#home" className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">Home</a>
               <a href="/about" className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">About</a>
+              <a href="https://drelsolutions.substack.com/" target="_blank" rel="noopener noreferrer" className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">Blog</a>
               <div className="relative">
                 <button onClick={() => setIsDropdownOpen(!isDropdownOpen)} className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors flex items-center">
                   Solutions <ChevronDown className="ml-1 h-4 w-4" />
@@ -41,6 +42,7 @@ const Navigation = () => {
             <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-200">
               <a href="#home" className="block text-gray-700 hover:text-blue-600 px-3 py-2 text-base font-medium">Home</a>
               <a href="/about" className="block text-gray-700 hover:text-blue-600 px-3 py-2 text-base font-medium">About</a>
+              <a href="https://drelsolutions.substack.com/" target="_blank" rel="noopener noreferrer" className="block text-gray-700 hover:text-blue-600 px-3 py-2 text-base font-medium">Blog</a>
               <a href="/modeladvisor" className="block text-gray-700 hover:text-blue-600 px-3 py-2 text-base font-medium">Model Advisor</a>
               <div className="pt-2">
                 <Link to="/contact">

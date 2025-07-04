@@ -7,9 +7,8 @@ afterEach(() => {
   cleanup();
 });
 
-// Mock the IntersectionObserver
-global.IntersectionObserver = class IntersectionObserver {
-  constructor() {}
+// Mock the IntersectionObserver (cast to any to bypass strict typing issues)
+(globalThis as any).IntersectionObserver = class {
   observe() {
     return null;
   }

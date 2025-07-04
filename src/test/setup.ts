@@ -7,18 +7,31 @@ afterEach(() => {
   cleanup();
 });
 
-// Mock the IntersectionObserver (cast to any to bypass strict typing issues)
-(globalThis as any).IntersectionObserver = class {
-  observe() {
-    return null;
+// Mock the IntersectionObserver with a typed implementation
+class MockIntersectionObserver implements IntersectionObserver {
+  readonly root: Element | null = null;
+  readonly rootMargin: string = "0px";
+  readonly thresholds: ReadonlyArray<number> = [];
+
+  observe(): void {
+    /* noop */
   }
-  disconnect() {
-    return null;
+  disconnect(): void {
+    /* noop */
   }
-  unobserve() {
-    return null;
+  unobserve(): void {
+    /* noop */
   }
-};
+  takeRecords(): IntersectionObserverEntry[] {
+    return [];
+  }
+}
+
+Object.defineProperty(globalThis, "IntersectionObserver", {
+  writable: true,
+  configurable: true,
+  value: MockIntersectionObserver,
+});
 
 // Mock window.matchMedia
 Object.defineProperty(window, 'matchMedia', {

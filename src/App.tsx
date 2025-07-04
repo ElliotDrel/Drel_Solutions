@@ -10,7 +10,6 @@ import Contact from "./pages/Contact";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 import ModelAdvisor from "./pages/ModelAdvisor";
-import Layout from "./components/Layout";
 
 const queryClient = new QueryClient();
 
@@ -48,13 +47,11 @@ const App = () => (
       >
         <ScrollToTop />
         <Routes>
-          <Route element={<Layout />}>
-            <Route path="/" element={<Index />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/modeladvisor" element={<ModelAdvisor />} />
-            <Route path="/blog" element={<BlogRedirect />} />
-          </Route>
+          <Route path="/" element={<Index />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/modeladvisor" element={<ModelAdvisor />} />
+          <Route path="/blog" element={<BlogRedirect />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

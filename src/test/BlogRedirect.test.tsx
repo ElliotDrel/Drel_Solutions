@@ -17,11 +17,8 @@ describe("/blog route", () => {
   });
 
   it("calls window.location.replace with Substack URL", () => {
-    render(
-      <MemoryRouter initialEntries={["/blog"]}>
-        <App />
-      </MemoryRouter>
-    );
+    window.history.pushState({}, "", "/blog");
+    render(<App />);
 
     expect(replaceSpy).toHaveBeenCalledWith("https://drelsolutions.substack.com/");
   });

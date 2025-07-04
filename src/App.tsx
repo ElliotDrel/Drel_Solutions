@@ -10,6 +10,7 @@ import Contact from "./pages/Contact";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 import ModelAdvisor from "./pages/ModelAdvisor";
+import Layout from "./components/Layout";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,14 @@ const ScrollToTop = () => {
     // Scroll to top on route change
     window.scrollTo(0, 0);
   }, [location.pathname]);
+
+  return null;
+};
+
+const BlogRedirect = () => {
+  useEffect(() => {
+    window.location.href = "https://drelsolutions.substack.com/";
+  }, []);
 
   return null;
 };
@@ -39,10 +48,13 @@ const App = () => (
       >
         <ScrollToTop />
         <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/modeladvisor" element={<ModelAdvisor />} />
+          <Route element={<Layout />}>
+            <Route path="/" element={<Index />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/modeladvisor" element={<ModelAdvisor />} />
+            <Route path="/blog" element={<BlogRedirect />} />
+          </Route>
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

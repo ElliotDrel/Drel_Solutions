@@ -27,14 +27,14 @@ const ScrollToTop = () => {
 };
 
 // Improved ExternalRedirect: client-only, loading feedback, ARIA
-const ExternalRedirect = ({ to }: { to: string }) => {
+export const ExternalRedirect = ({ to, redirector = window.location.replace }: { to: string, redirector?: (url: string) => void }) => {
   const [redirecting, setRedirecting] = useState(true);
   useEffect(() => {
     if (typeof window !== "undefined") {
       setRedirecting(true);
-      window.location.replace(to);
+      redirector(to);
     }
-  }, [to]);
+  }, [to, redirector]);
   return redirecting ? (
     <div
       className="min-h-screen flex items-center justify-center bg-white"

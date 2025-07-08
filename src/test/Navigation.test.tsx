@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import Navigation from "@/components/ui/Navigation";
 import { describe, it, expect } from "vitest";
@@ -41,7 +41,7 @@ describe("Navigation component", () => {
     expect(nav).toBeInTheDocument();
   });
 
-  it("toggles mobile menu when menu button is clicked", () => {
+  it("toggles mobile menu when menu button is clicked", async () => {
     render(
       <MemoryRouter>
         <Navigation />
@@ -50,13 +50,24 @@ describe("Navigation component", () => {
     // Find the mobile menu button by its aria-label
     const menuButton = screen.getByRole("button", { name: /toggle menu/i });
     expect(menuButton).toBeInTheDocument();
+    
     // Menu should not be open initially
     expect(screen.queryByText(/model advisor/i)).not.toBeInTheDocument();
+    
     // Open menu
-    menuButton.click();
-    expect(screen.getByText(/model advisor/i)).toBeInTheDocument();
+    fireEvent.click(menuButton);
+
+    // Wait for the menu to appear
+    await waitFor(() => {
+      expect(screen.getByText(/model advisor/i)).toBeInTheDocument();
+    });
+
     // Close menu
-    menuButton.click();
-    expect(screen.queryByText(/model advisor/i)).not.toBeInTheDocument();
+    fireEvent.click(menuButton);
+    
+    // Wait for the menu to disappear
+    await waitFor(() => {
+      expect(screen.queryByText(/model advisor/i)).not.toBeInTheDocument();
+    });
   });
 });

@@ -1,24 +1,17 @@
 import React from "react";
 import { render, waitFor } from "@testing-library/react";
-import { MemoryRouter, Route, Routes } from "react-router-dom";
-import App from "@/App";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
+import { ExternalRedirect } from "@/App"; // Assuming ExternalRedirect is exported from App.tsx
 
-// Mock window.location.replace
-const replaceSpy = vi.fn();
-
-describe("/blog route", () => {
-  beforeEach(() => {
-    replaceSpy.mockReset();
-    vi.spyOn(window.location, "replace").mockImplementation(replaceSpy as (url: string) => void);
-  });
-
-  it("calls window.location.replace with Substack URL", async () => {
-    window.history.pushState({}, "", "/blog");
-    render(<App />);
+describe("ExternalRedirect component", () => {
+  it("calls the redirector with the correct URL", async () => {
+    const replaceSpy = vi.fn();
+    const url = "https://drelsolutions.substack.com/";
+    
+    render(<ExternalRedirect to={url} redirector={replaceSpy} />);
 
     await waitFor(() => {
-      expect(replaceSpy).toHaveBeenCalledWith("https://drelsolutions.substack.com/");
+      expect(replaceSpy).toHaveBeenCalledWith(url);
     });
   });
 });

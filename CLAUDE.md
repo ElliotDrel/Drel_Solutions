@@ -24,6 +24,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `npm run test:e2e:ui` - Run Playwright with UI
 - `npm run test:all` - Run both unit and e2e tests
 - `npm run test:ci` - Run all tests with coverage (used in CI)
+- `npm run test -- <filename>` - Run specific unit test file
+- `npx playwright test <filename>` - Run specific e2e test file
 
 ### Backend Commands
 ```bash

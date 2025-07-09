@@ -54,3 +54,6 @@ playwright-report/
 playwright/.cache/
 *.lcov
 coverage.data
+
+# Claude settings
+.claude/settings.local.json

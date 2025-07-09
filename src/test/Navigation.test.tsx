@@ -70,4 +70,93 @@ describe("Navigation component", () => {
       expect(screen.queryByText(/model advisor/i)).not.toBeInTheDocument();
     });
   });
+
+  it("has proper accessibility attributes", () => {
+    render(
+      <MemoryRouter>
+        <Navigation />
+      </MemoryRouter>
+    );
+    
+    // Check mobile menu button accessibility
+    const menuButton = screen.getByRole("button", { name: /toggle menu/i });
+    expect(menuButton).toHaveAttribute("aria-expanded", "false");
+    expect(menuButton).toHaveAttribute("aria-controls", "mobile-menu");
+    
+    // Check Solutions dropdown button accessibility
+    const solutionsButton = screen.getByRole("button", { name: /solutions/i });
+    expect(solutionsButton).toHaveAttribute("aria-expanded", "false");
+    expect(solutionsButton).toHaveAttribute("aria-haspopup", "true");
+    expect(solutionsButton).toHaveAttribute("aria-controls", "solutions-dropdown");
+  });
+
+  it("opens and closes dropdown with proper accessibility states", async () => {
+    render(
+      <MemoryRouter>
+        <Navigation />
+      </MemoryRouter>
+    );
+    
+    const solutionsButton = screen.getByRole("button", { name: /solutions/i });
+    
+    // Initially closed
+    expect(solutionsButton).toHaveAttribute("aria-expanded", "false");
+    
+    // Open dropdown
+    fireEvent.click(solutionsButton);
+    await waitFor(() => {
+      expect(solutionsButton).toHaveAttribute("aria-expanded", "true");
+      expect(screen.getByRole("menu")).toBeInTheDocument();
+    });
+    
+    // Close dropdown
+    fireEvent.click(solutionsButton);
+    await waitFor(() => {
+      expect(solutionsButton).toHaveAttribute("aria-expanded", "false");
+    });
+  });
+
+  it("closes dropdown when clicking outside", async () => {
+    render(
+      <MemoryRouter>
+        <Navigation />
+      </MemoryRouter>
+    );
+    
+    const solutionsButton = screen.getByRole("button", { name: /solutions/i });
+    
+    // Open dropdown
+    fireEvent.click(solutionsButton);
+    await waitFor(() => {
+      expect(screen.getByRole("menu")).toBeInTheDocument();
+    });
+    
+    // Click outside (on document body)
+    fireEvent.mouseDown(document.body);
+    await waitFor(() => {
+      expect(screen.queryByRole("menu")).not.toBeInTheDocument();
+    });
+  });
+
+  it("closes menus when Escape key is pressed", async () => {
+    render(
+      <MemoryRouter>
+        <Navigation />
+      </MemoryRouter>
+    );
+    
+    const solutionsButton = screen.getByRole("button", { name: /solutions/i });
+    
+    // Open dropdown
+    fireEvent.click(solutionsButton);
+    await waitFor(() => {
+      expect(screen.getByRole("menu")).toBeInTheDocument();
+    });
+    
+    // Press Escape
+    fireEvent.keyDown(document, { key: 'Escape' });
+    await waitFor(() => {
+      expect(screen.queryByRole("menu")).not.toBeInTheDocument();
+    });
+  });
 });

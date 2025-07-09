@@ -9,7 +9,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <>
       <Navigation />
-      {children}
+      <main className="pt-16">
+        {children}
+      </main>
     </>
   );
 };

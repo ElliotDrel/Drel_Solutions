@@ -21,7 +21,7 @@ const About = () => {
     <div className="min-h-screen bg-white">
       {/* Navigation is now provided by the global Layout component */}
       
-      <main className="pt-16">
+      <main>
         {/* Values Section */}
         <section className="h-[70vh] bg-blue-100 flex items-center pt-8">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

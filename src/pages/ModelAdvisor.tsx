@@ -398,7 +398,7 @@ const ModelAdvisor = () => {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
         {/* Navigation is now provided by the global Layout component */}
-        <main className="pt-20">
+        <main>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div className="flex justify-center items-center h-64">
               <div className="text-xl text-gray-600">Loading AI models...</div>
@@ -416,7 +416,7 @@ const ModelAdvisor = () => {
       {/* Show loading animation when searching */}
       {isSearching && <LoadingAnimation />}
       
-      <main className="pt-20">
+      <main>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="space-y-8">
             {/* Header */}

@@ -100,9 +100,14 @@ const Navigation: React.FC = () => {
               <Link to="/" className={linkClasses("/")}>Home</Link>
               <Link to="/about" className={linkClasses("/about")}>About</Link>
               {/* External blog link */}
-              <Link to="/blog" className={linkClasses("/blog")}>
+              <a 
+                href="https://drelsolutions.substack.com/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className={linkClasses("/blog")}
+              >
                 Blog
-              </Link>
+              </a>
 
               {/* Solutions dropdown */}
               <div className="relative" ref={dropdownRef}>
@@ -175,9 +180,16 @@ const Navigation: React.FC = () => {
               <Link to="/about" className="block text-gray-700 hover:text-blue-600 px-3 py-2 text-base font-medium" onClick={() => setIsMenuOpen(false)} role="menuitem">
                 About
               </Link>
-              <Link to="/blog" className="block text-gray-700 hover:text-blue-600 px-3 py-2 text-base font-medium" onClick={() => setIsMenuOpen(false)} role="menuitem">
+              <a 
+                href="https://drelsolutions.substack.com/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="block text-gray-700 hover:text-blue-600 px-3 py-2 text-base font-medium" 
+                onClick={() => setIsMenuOpen(false)} 
+                role="menuitem"
+              >
                 Blog
-              </Link>
+              </a>
               <Link to="/modeladvisor" className="block text-gray-700 hover:text-blue-600 px-3 py-2 text-base font-medium" onClick={() => setIsMenuOpen(false)} role="menuitem">
                 Model Advisor
               </Link>

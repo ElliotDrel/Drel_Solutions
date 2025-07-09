@@ -2,7 +2,7 @@ import { test, expect, Page } from '@playwright/test';
 
 // NavigationHelper class to encapsulate navigation logic
 class NavigationHelper {
-  constructor(private page: Page, private isMobile: boolean) {}
+  constructor(private page: Page, private isMobile: boolean, private baseURL?: string) {}
 
   async openMobileMenu() {
     if (!this.isMobile) return;
@@ -29,7 +29,7 @@ class NavigationHelper {
   async navigateToContact() {
     if (this.isMobile) {
       // For mobile, use direct navigation as the menu might be complex
-      await this.page.goto('/contact');
+      await this.page.goto(this.baseURL ? `${this.baseURL}/contact` : '/contact');
     } else {
       await this.page.locator('nav button:has-text("Let\'s Talk"), nav a:has-text("Let\'s Talk")').first().click();
     }
@@ -37,23 +37,23 @@ class NavigationHelper {
 
   async navigateToHome() {
     if (this.isMobile) {
-      await this.page.goto('/');
+      await this.page.goto(this.baseURL || '/');
     } else {
       await this.page.locator('nav a:has-text("Drel Solutions")').first().click();
     }
   }
 
   async navigateToModelAdvisor() {
-    await this.page.goto('/modeladvisor');
+    await this.page.goto(this.baseURL ? `${this.baseURL}/modeladvisor` : '/modeladvisor');
   }
 }
 
 test.describe('Navigation', () => {
-  test('should navigate between all pages successfully', async ({ page, isMobile }) => {
-    const navHelper = new NavigationHelper(page, isMobile);
+  test('should navigate between all pages successfully', async ({ page, isMobile, baseURL }) => {
+    const navHelper = new NavigationHelper(page, isMobile, baseURL);
     
     // Start at homepage
-    await page.goto('/');
+    await page.goto(baseURL || '/');
     await expect(page.getByText('AI Consulting That')).toBeVisible();
     
     // Navigate to About page
@@ -77,19 +77,19 @@ test.describe('Navigation', () => {
     await expect(page.url()).not.toContain('/about');
   });
 
-  test('should handle 404 pages correctly', async ({ page }) => {
-    await page.goto('/non-existent-page');
+  test('should handle 404 pages correctly', async ({ page, baseURL }) => {
+    await page.goto(baseURL ? `${baseURL}/non-existent-page` : '/non-existent-page');
     await page.waitForURL('/non-existent-page');
     
     // Should show NotFound component
     await expect(page.getByText('404')).toBeVisible();
   });
 
-  test('should work with browser back/forward buttons', async ({ page, isMobile }) => {
-    const navHelper = new NavigationHelper(page, isMobile);
+  test('should work with browser back/forward buttons', async ({ page, isMobile, baseURL }) => {
+    const navHelper = new NavigationHelper(page, isMobile, baseURL);
     
     // Start at homepage
-    await page.goto('/');
+    await page.goto(baseURL || '/');
     
     // Navigate to about page
     await navHelper.navigateToAbout();
@@ -105,11 +105,11 @@ test.describe('Navigation', () => {
     await page.waitForURL('/about');
   });
 
-  test('should maintain responsive navigation on mobile', async ({ page }) => {
+  test('should maintain responsive navigation on mobile', async ({ page, baseURL }) => {
     // Set mobile viewport
     await page.setViewportSize({ width: 375, height: 667 });
     
-    await page.goto('/');
+    await page.goto(baseURL || '/');
     
     // Open mobile menu using more specific selector
     const menuButton = page.locator('button[data-testid="mobile-menu-button"]').or(
@@ -131,19 +131,30 @@ test.describe('Navigation', () => {
     await expect(page.url()).toContain('/about');
   });
 
-  test('should handle CTA button clicks correctly', async ({ page }) => {
-    await page.goto('/');
+  test('should handle CTA button clicks correctly', async ({ page, baseURL }) => {
+    await page.goto(baseURL || '/');
     
     // Click main CTA button - use a more specific selector for the hero section button
     const heroSection = page.locator('#home, section').first();
-    const ctaButton = heroSection.locator('button:has-text("Start Saving TIME and MONEY"), a:has-text("Start Saving TIME and MONEY")').first();
+    
+    // Debug logging for CTA button
+    console.log('DEBUG: Looking for CTA button...');
+    const allButtons = await page.locator('button').allTextContents();
+    console.log('DEBUG: All button texts:', allButtons);
+    const allLinks = await page.locator('a').allTextContents();
+    console.log('DEBUG: All link texts:', allLinks);
+    
+    const ctaButton = heroSection.locator('button:has-text("Start Saving TIME and MONEY!"), a:has-text("Start Saving TIME and MONEY!")').first();
+    const ctaButtonCount = await ctaButton.count();
+    console.log('DEBUG: CTA button count:', ctaButtonCount);
+    
     await ctaButton.click();
     await page.waitForURL('/contact');
     await expect(page.url()).toContain('/contact');
   });
 
-  test('should maintain scroll position and smooth scrolling', async ({ page }) => {
-    await page.goto('/');
+  test('should maintain scroll position and smooth scrolling', async ({ page, baseURL }) => {
+    await page.goto(baseURL || '/');
     
     // Wait for page to fully load
     await page.waitForLoadState('networkidle');
@@ -166,12 +177,20 @@ test.describe('Navigation', () => {
       ? page.locator('.md\\:hidden a:has-text("Blog")').first()
       : page.locator('nav a:has-text("Blog")').first();
 
+    // Debug logging for blog link
+    console.log('DEBUG: Blog link found, checking attributes...');
+    const blogHref = await blogLink.getAttribute('href');
+    const blogTarget = await blogLink.getAttribute('target');
+    console.log('DEBUG: Blog link href:', blogHref);
+    console.log('DEBUG: Blog link target:', blogTarget);
+    
     // Intercept new page (tab) opening
     const [newPage] = await Promise.all([
       context.waitForEvent('page'),
       blogLink.click({ button: 'middle' }) // Simulate middle-click (new tab)
     ]);
     await newPage.waitForLoadState('domcontentloaded');
+    console.log('DEBUG: New page URL:', newPage.url());
     expect(newPage.url()).toContain('https://drelsolutions.substack.com');
     await newPage.close();
   });

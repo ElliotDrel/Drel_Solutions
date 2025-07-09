@@ -379,7 +379,7 @@ const ModelAdvisor = () => {
       console.error('Search error:', error);
       setSearchError(
         error instanceof Error 
-          ? error.message
+          ? `Failed to get recommendations: ${error.message}`
           : 'Failed to get recommendations. Please try again.'
       );
     } finally {

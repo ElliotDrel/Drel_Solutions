@@ -7,12 +7,12 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <>
+    <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors">
       <Navigation />
       <main className="pt-16">
         {children}
       </main>
-    </>
+    </div>
   );
 };
 

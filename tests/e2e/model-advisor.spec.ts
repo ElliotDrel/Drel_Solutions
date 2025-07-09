@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Model Advisor', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto('/modeladvisor');
+  test.beforeEach(async ({ page, baseURL }) => {
+    await page.goto(baseURL ? `${baseURL}/modeladvisor` : '/modeladvisor');
     // Wait for the page to load completely
     await page.waitForLoadState('networkidle');
   });
@@ -488,6 +488,14 @@ test.describe('Model Advisor', () => {
     await expect(page.getByText('AI is Thinking')).toBeHidden({ timeout: 20000 });
     
     // Check error message is displayed
+    console.log('DEBUG: Looking for error message...');
+    const errorElements = await page.locator('text=/Failed to get recommendations/').count();
+    console.log(`DEBUG: Found ${errorElements} error elements`);
+    
+    // Try to find any error-related text on the page
+    const allErrorTexts = await page.locator('.text-red-600, [class*="error"], [class*="red"]').allTextContents();
+    console.log('DEBUG: All error-related text on page:', allErrorTexts);
+    
     await expect(page.getByText(/Failed to get recommendations/)).toBeVisible();
     
     // Verify search functionality still works after error

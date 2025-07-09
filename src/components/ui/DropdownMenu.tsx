@@ -57,12 +57,13 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
         case 'Escape':
           onClose();
           break;
-        case 'ArrowDown':
+        case 'ArrowDown': {
           event.preventDefault();
           // Focus first item
           const firstItem = dropdownRef.current?.querySelector('a');
           firstItem?.focus();
           break;
+        }
       }
     };
 

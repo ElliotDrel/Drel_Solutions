@@ -26,8 +26,8 @@ const TrackedLink: React.FC<TrackedLinkProps> = ({
 }) => {
   const handleClick = () => {
     // Track the click event
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', trackingEvent, {
+    if (typeof window !== 'undefined' && window.gtag) {
+      window.gtag('event', trackingEvent, {
         event_category: trackingCategory,
         event_label: trackingLabel || (to || href),
         transport_type: 'beacon'
@@ -35,8 +35,8 @@ const TrackedLink: React.FC<TrackedLinkProps> = ({
     }
 
     // For Vercel Analytics
-    if (typeof window !== 'undefined' && (window as any).va) {
-      (window as any).va('track', trackingEvent, {
+    if (typeof window !== 'undefined' && window.va) {
+      window.va('track', trackingEvent, {
         category: trackingCategory,
         label: trackingLabel || (to || href)
       });

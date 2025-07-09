@@ -36,7 +36,9 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
+backend/lib/
+__pycache__/
+*.pyc
 lib64/
 parts/
 sdist/
@@ -54,3 +56,6 @@ playwright-report/
 playwright/.cache/
 *.lcov
 coverage.data
+
+# Ignore Claude local settings
+.claude/settings.local.json

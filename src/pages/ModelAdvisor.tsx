@@ -4,72 +4,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Menu, X, ChevronDown, DollarSign, Clock, Zap, FileText, Filter, Search, Sparkles, ArrowRight, Brain, Lightbulb, Cpu } from 'lucide-react';
+import { DollarSign, Clock, Zap, FileText, Filter, Search, Sparkles, ArrowRight, Brain, Lightbulb, Cpu, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
-const Navigation = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  
-  return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          <div className="flex items-center">
-            <Link to="/" className="flex items-center text-2xl font-bold text-blue-600 hover:text-blue-700 transition-colors">
-              <img src="/drel-logo.png" alt="Drel Solutions Logo" className="h-10 w-10 rounded-lg" />
-              <span>Drel Solutions</span>
-            </Link>
-          </div>
-          
-          {/* Desktop Navigation */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-8">
-              <Link to="/" className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">Home</Link>
-              <Link to="/about" className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">About</Link>
-              <div className="relative">
-                <button onClick={() => setIsDropdownOpen(!isDropdownOpen)} className="text-blue-600 px-3 py-2 text-sm font-medium transition-colors flex items-center">
-                  Solutions <ChevronDown className="ml-1 h-4 w-4" />
-                </button>
-                {isDropdownOpen && (
-                  <div className="absolute top-full left-0 mt-1 w-48 bg-white rounded-md shadow-lg border border-gray-200 z-50">
-                    <a href="/modeladvisor" className="block px-4 py-2 text-sm text-blue-600 bg-blue-50 hover:bg-blue-100">Model Advisor</a>
-                  </div>
-                )}
-              </div>
-              <Link to="/contact">
-                <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2">Let's Talk</Button>
-              </Link>
-            </div>
-          </div>
-
-          {/* Mobile menu button */}
-          <div className="md:hidden">
-            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-gray-700 hover:text-blue-600 p-2" data-testid="mobile-menu-button">
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-200">
-              <Link to="/" className="block text-gray-700 hover:text-blue-600 px-3 py-2 text-base font-medium">Home</Link>
-              <Link to="/about" className="block text-gray-700 hover:text-blue-600 px-3 py-2 text-base font-medium">About</Link>
-              <a href="/modeladvisor" className="block text-blue-600 bg-blue-50 px-3 py-2 text-base font-medium">Model Advisor</a>
-              <div className="pt-2">
-                <Link to="/contact">
-                  <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">Let's Talk</Button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-    </nav>
-  );
-};
 
 interface ModelInfo {
   name: string;
@@ -474,27 +410,20 @@ const ModelAdvisor = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
-        <Navigation />
-        <main className="pt-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div className="flex justify-center items-center h-64">
-              <div className="text-xl text-gray-600">Loading AI models...</div>
-            </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="flex justify-center items-center h-64">
+            <div className="text-xl text-gray-600">Loading AI models...</div>
           </div>
-        </main>
+        </div>
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
-      <Navigation />
-      
       {/* Show loading animation when searching */}
       {isSearching && <LoadingAnimation />}
-      
-      <main className="pt-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-12">
           <div className="space-y-8">
             {/* Header */}
             <div className="text-center space-y-4">
@@ -736,7 +665,6 @@ const ModelAdvisor = () => {
             </div>
           </div>
         </div>
-      </main>
     </div>
   );
 };

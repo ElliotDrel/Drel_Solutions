@@ -26,15 +26,51 @@ const ScrollToTop = () => {
   return null;
 };
 
-// Improved ExternalRedirect: client-only, loading feedback, ARIA
-export const ExternalRedirect = ({ to, redirector = window.location.replace }: { to: string, redirector?: (url: string) => void }) => {
+// Safe default redirector that doesn't evaluate window at module load time
+const getDefaultRedirector = () => {
+  if (typeof window !== "undefined") {
+    return window.location.replace;
+  }
+  return (url: string) => {
+    console.warn('Redirect attempted in non-browser environment:', url);
+  };
+};
+
+// Fixed ExternalRedirect: proper state management, SSR-safe, error handling
+export const ExternalRedirect = ({ to, redirector }: { to: string, redirector?: (url: string) => void }) => {
   const [redirecting, setRedirecting] = useState(true);
+  
   useEffect(() => {
     if (typeof window !== "undefined") {
-      setRedirecting(true);
-      redirector(to);
+      const actualRedirector = redirector || getDefaultRedirector();
+      
+      try {
+        // Set a timeout to handle cases where redirect fails or is delayed
+        const timeoutId = setTimeout(() => {
+          console.warn('Redirect may have failed, hiding loading screen');
+          setRedirecting(false);
+        }, 3000);
+        
+        // Attempt the redirect
+        actualRedirector(to);
+        
+        // If we reach here, the redirect was called successfully
+        // but we might still be in the page (e.g., in tests or if redirect fails)
+        // The timeout will handle this case
+        
+        // Cleanup function to clear timeout if component unmounts
+        return () => clearTimeout(timeoutId);
+        
+      } catch (error) {
+        console.error('Redirect failed:', error);
+        setRedirecting(false);
+      }
+    } else {
+      // SSR environment - don't show loading screen
+      setRedirecting(false);
     }
   }, [to, redirector]);
+  
   return redirecting ? (
     <div
       className="min-h-screen flex items-center justify-center bg-white"

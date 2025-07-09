@@ -111,7 +111,6 @@ ALLOWED_ORIGINS=http://localhost:3000
 ```
 
 For full security and API guidelines, see:
-- `.cursor/rules/security.mdc`
 - `.cursor/rules/security-audit.mdc`
 - `.cursor/rules/fastapi.mdc`
 

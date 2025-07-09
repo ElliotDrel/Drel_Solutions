@@ -32,10 +32,9 @@ app = FastAPI(
 )
 
 # Configure CORS
-ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000").split(",")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=ALLOWED_ORIGINS,  # Secure: use env var
+    allow_origins=settings.allowed_origins,  # Secure: use validated config
     allow_credentials=True,
     allow_methods=["GET", "POST"],
     allow_headers=["Authorization", "Content-Type"],

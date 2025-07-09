@@ -100,18 +100,14 @@ const Navigation: React.FC = () => {
               <Link to="/" className={linkClasses("/")}>Home</Link>
               <Link to="/about" className={linkClasses("/about")}>About</Link>
               {/* External blog link */}
-              <a
-                href="https://drelsolutions.substack.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors"
-              >
+              <Link to="/blog" className={linkClasses("/blog")}>
                 Blog
               </a>
 
               {/* Solutions dropdown */}
               <div className="relative" ref={dropdownRef}>
                 <button
+                  id="solutions-button"
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                   className={
                     linkClasses("/modeladvisor", "flex items-center")
@@ -179,15 +175,9 @@ const Navigation: React.FC = () => {
               <Link to="/about" className="block text-gray-700 hover:text-blue-600 px-3 py-2 text-base font-medium" onClick={() => setIsMenuOpen(false)} role="menuitem">
                 About
               </Link>
-              <a
-                href="https://drelsolutions.substack.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block text-gray-700 hover:text-blue-600 px-3 py-2 text-base font-medium"
-                role="menuitem"
-              >
+              <Link to="/blog" className="block text-gray-700 hover:text-blue-600 px-3 py-2 text-base font-medium" onClick={() => setIsMenuOpen(false)} role="menuitem">
                 Blog
-              </a>
+              </Link>
               <Link to="/modeladvisor" className="block text-gray-700 hover:text-blue-600 px-3 py-2 text-base font-medium" onClick={() => setIsMenuOpen(false)} role="menuitem">
                 Model Advisor
               </Link>

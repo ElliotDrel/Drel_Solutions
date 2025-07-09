@@ -59,3 +59,6 @@ coverage.data
 
 # Ignore Claude local settings
 .claude/settings.local.json
+
+# Vite build artifacts
+vite.config.ts.timestamp-*.mjs

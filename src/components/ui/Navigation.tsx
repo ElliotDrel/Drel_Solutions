@@ -102,7 +102,7 @@ const Navigation: React.FC = () => {
               {/* External blog link */}
               <Link to="/blog" className={linkClasses("/blog")}>
                 Blog
-              </a>
+              </Link>
 
               {/* Solutions dropdown */}
               <div className="relative" ref={dropdownRef}>

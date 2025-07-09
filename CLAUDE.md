@@ -45,6 +45,7 @@ cd backend && python main.py  # Start FastAPI server on port 3298
 - **Main Service**: Model recommendation API using OpenAI
 - **Port**: Backend runs on port 3298
 - **API Endpoint**: `/api/model_search` - takes query, returns model recommendations
+- **Security**: API key authentication, rate limiting, CORS configuration, input validation
 - **Model Documentation**: Extensive collection of AI model specs in `model_docs/` and `public/model_docs/`
 
 ### Key Application Flow
@@ -66,6 +67,8 @@ cd backend && python main.py  # Start FastAPI server on port 3298
 ### Backend (`backend/`)
 - `main.py` - FastAPI app with CORS, model search endpoint
 - `services/openai_service.py` - OpenAI integration service
+- `auth.py` - API key authentication system
+- `config.py` - Environment configuration validation
 - `requirements.txt` - Python dependencies
 
 ### Documentation
@@ -103,7 +106,12 @@ cd backend && python main.py  # Start FastAPI server on port 3298
 ### Environment Setup
 - Node.js 18+
 - Python backend dependencies in `backend/requirements.txt`
-- OpenAI API key required in `.env` file
+- Required environment variables:
+  - `OPENAI_API_KEY` - OpenAI API access
+  - `API_KEY` - Backend authentication
+  - `ALLOWED_ORIGINS` - CORS configuration
+  - `VITE_API_URL` - Frontend API endpoint
+  - `VITE_API_KEY` - Frontend authentication
 - Development server runs on port 6756
 - Backend runs on port 3298
 
@@ -125,3 +133,15 @@ cd backend && python main.py  # Start FastAPI server on port 3298
 - Shadcn UI components preferred
 - React 18 patterns with hooks
 - Path alias `@/` for `src/` directory
+
+### API Security
+- All API endpoints require authentication via Bearer token
+- Rate limiting is enforced (configurable limits)
+- Input validation and content filtering applied
+- CORS origins controlled via environment variables
+
+### Navigation & Routing
+- Centralized navigation in `src/components/ui/Navigation.tsx`
+- Layout wrapper in `src/components/Layout.tsx`
+- External redirect system for `/blog` route to Substack
+- Client-side routing with React Router DOM

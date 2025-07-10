@@ -51,14 +51,9 @@ const Navigation: React.FC = () => {
               <Link to="/about" className={getLinkClassName('/about')}>
                 About
               </Link>
-              <a 
-                href="https://drelsolutions.substack.com/" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors"
-              >
+              <Link to="/blog" className={getLinkClassName('/blog')}>
                 Blog
-              </a>
+              </Link>
               <DropdownMenu
                 isOpen={isDropdownOpen}
                 onToggle={() => setIsDropdownOpen(!isDropdownOpen)}
@@ -103,7 +98,7 @@ const Navigation: React.FC = () => {
           links={[
             { href: '/', label: 'Home', className: getMobileLinkClassName('/') },
             { href: '/about', label: 'About', className: getMobileLinkClassName('/about') },
-            { href: 'https://drelsolutions.substack.com/', label: 'Blog', external: true, className: "block text-gray-700 hover:text-blue-600 px-3 py-2 text-base font-medium" },
+            { href: '/blog', label: 'Blog', className: getMobileLinkClassName('/blog') },
             { href: '/modeladvisor', label: 'Model Advisor', className: getMobileLinkClassName('/modeladvisor') }
           ]}
         />

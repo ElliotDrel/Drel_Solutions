@@ -11,9 +11,13 @@ const ThemeToggle: React.FC = () => {
   useEffect(() => {
     setMounted(true);
     // Get theme from localStorage or default to system
-    const savedTheme = localStorage.getItem('theme') as Theme;
-    if (savedTheme && ['light', 'dark', 'system'].includes(savedTheme)) {
-      setTheme(savedTheme);
+    try {
+      const savedTheme = localStorage.getItem('theme') as Theme;
+      if (savedTheme && ['light', 'dark', 'system'].includes(savedTheme)) {
+        setTheme(savedTheme);
+      }
+    } catch (error) {
+      console.warn('localStorage not available, using default theme');
     }
   }, []);
 
@@ -31,7 +35,11 @@ const ThemeToggle: React.FC = () => {
     }
 
     // Save to localStorage
-    localStorage.setItem('theme', theme);
+    try {
+      localStorage.setItem('theme', theme);
+    } catch (error) {
+      console.warn('Unable to save theme preference');
+    }
   }, [theme, mounted]);
 
   const cycleTheme = () => {

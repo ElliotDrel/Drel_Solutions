@@ -1,10 +1,10 @@
-import { Filter, X, Calendar, Tag } from 'lucide-react';
+import { Filter, X, Calendar, Tag, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 
 interface BrowseControlsProps {
-  sortBy: 'date' | 'topic';
-  onSortChange: (sort: 'date' | 'topic') => void;
+  sortBy: 'date' | 'topic' | 'author';
+  onSortChange: (sort: 'date' | 'topic' | 'author') => void;
   selectedAuthor: string | null;
   selectedTag: string | null;
   onClearFilters: () => void;
@@ -45,6 +45,15 @@ export const BrowseControls = ({
           >
             <Tag className="h-4 w-4 mr-2" />
             Topic
+          </Button>
+          <Button
+            variant={sortBy === 'author' ? 'default' : 'ghost'}
+            size="sm"
+            onClick={() => onSortChange('author')}
+            className="transition-colors"
+          >
+            <User className="h-4 w-4 mr-2" />
+            Author
           </Button>
         </div>
       </div>

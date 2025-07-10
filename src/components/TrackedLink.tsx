@@ -48,8 +48,22 @@ const TrackedLink: React.FC<TrackedLinkProps> = ({
     }
   };
 
-  // External link
-  if (external || href) {
+  // External link - prioritize 'to' prop over 'href' when both are present
+  if (external || (href && !to)) {
+    // Validate href exists for external links
+    if (!href) {
+      console.warn('TrackedLink: external prop is true but href is missing');
+      return (
+        <button
+          className={className}
+          onClick={handleClick}
+          type="button"
+        >
+          {children}
+        </button>
+      );
+    }
+    
     return (
       <a
         href={href}

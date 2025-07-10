@@ -13,7 +13,7 @@ const Blog = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedAuthor, setSelectedAuthor] = useState<string | null>(null);
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
-  const [sortBy, setSortBy] = useState<'date' | 'topic'>('date');
+  const [sortBy, setSortBy] = useState<'date' | 'topic' | 'author'>('date');
   const { toast } = useToast();
 
   const postsPerPage = 9;
@@ -33,6 +33,12 @@ const Blog = () => {
   // Sort posts
   if (sortBy === 'date') {
     filteredPosts.sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+  }
+  else if (sortBy === 'topic') {
+    filteredPosts.sort((a, b) => a.title.localeCompare(b.title));
+  }
+  else if (sortBy === 'author') {
+    filteredPosts.sort((a, b) => a.author.name.localeCompare(b.author.name));
   }
 
   // Paginate posts

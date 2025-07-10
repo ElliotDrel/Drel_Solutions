@@ -1,4 +1,5 @@
 import { Clock, User } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -71,9 +72,9 @@ export const ArticleCard = ({ post, onAuthorClick, onTagClick }: ArticleCardProp
           asChild
           className="w-full group-hover:border-primary group-hover:text-primary transition-colors"
         >
-          <a href={`/blog/${post.slug}`}>
+          <Link to={`/blog/${post.slug}`}>
             Read Article
-          </a>
+          </Link>
         </Button>
       </CardContent>
     </Card>

@@ -1,4 +1,5 @@
 import { Clock, User } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -65,9 +66,9 @@ export const FeaturedPost = ({ post, onAuthorClick, onTagClick }: FeaturedPostPr
             size="lg"
             className="w-fit shadow-card hover:shadow-card-hover"
           >
-            <a href={`/blog/${post.slug}`}>
+            <Link to={`/blog/${post.slug}`}>
               Read Article
-            </a>
+            </Link>
           </Button>
         </CardContent>
       </div>

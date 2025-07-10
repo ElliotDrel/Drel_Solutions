@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 interface DropdownItem {
@@ -48,33 +48,64 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
     };
   }, [isOpen, onClose]);
 
+  // Memoized keyboard handler to prevent event listener cleanup issues
+  const handleKeyDown = useCallback((event: KeyboardEvent) => {
+    if (!isOpen) return;
+
+    const menuItems = dropdownRef.current?.querySelectorAll('a') || [];
+    const currentFocusIndex = Array.from(menuItems).findIndex(item => item === document.activeElement);
+
+    switch (event.key) {
+      case 'Escape':
+        onClose();
+        break;
+      case 'ArrowDown': {
+        event.preventDefault();
+        if (currentFocusIndex === -1) {
+          // No item focused, focus first item
+          (menuItems[0] as HTMLElement)?.focus();
+        } else {
+          // Focus next item, wrap to first if at end
+          const nextIndex = (currentFocusIndex + 1) % menuItems.length;
+          (menuItems[nextIndex] as HTMLElement)?.focus();
+        }
+        break;
+      }
+      case 'ArrowUp': {
+        event.preventDefault();
+        if (currentFocusIndex === -1) {
+          // No item focused, focus last item
+          (menuItems[menuItems.length - 1] as HTMLElement)?.focus();
+        } else {
+          // Focus previous item, wrap to last if at beginning
+          const prevIndex = currentFocusIndex === 0 ? menuItems.length - 1 : currentFocusIndex - 1;
+          (menuItems[prevIndex] as HTMLElement)?.focus();
+        }
+        break;
+      }
+      case 'Home': {
+        event.preventDefault();
+        (menuItems[0] as HTMLElement)?.focus();
+        break;
+      }
+      case 'End': {
+        event.preventDefault();
+        (menuItems[menuItems.length - 1] as HTMLElement)?.focus();
+        break;
+      }
+    }
+  }, [isOpen, onClose]);
+
   // Handle keyboard navigation
   useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (!isOpen) return;
-
-      switch (event.key) {
-        case 'Escape':
-          onClose();
-          break;
-        case 'ArrowDown': {
-          event.preventDefault();
-          // Focus first item
-          const firstItem = dropdownRef.current?.querySelector('a');
-          firstItem?.focus();
-          break;
-        }
-      }
-    };
-
     if (isOpen) {
       document.addEventListener('keydown', handleKeyDown);
+      
+      return () => {
+        document.removeEventListener('keydown', handleKeyDown);
+      };
     }
-
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [isOpen, onClose]);
+  }, [isOpen, handleKeyDown]);
 
   return (
     <div className="relative">

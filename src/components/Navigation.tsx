@@ -75,10 +75,12 @@ const Navigation: React.FC = () => {
                   { href: '/modeladvisor', label: 'Model Advisor', isActive: isActive('/modeladvisor') }
                 ]}
               />
-              <ThemeToggle />
               <Link to="/contact">
                 <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2">Let's Talk</Button>
               </Link>
+              <div className="ml-4">
+                <ThemeToggle />
+              </div>
             </div>
           </div>
 

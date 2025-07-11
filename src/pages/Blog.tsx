@@ -13,7 +13,7 @@ import { TagSort } from '@/components/blog/TagSort';
 const Blog = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedAuthor, setSelectedAuthor] = useState<string | null>(null);
-  const [selectedTag, setSelectedTag] = useState<string | null>(null);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState<'date' | 'topic' | 'author'>('date');
   const { toast } = useToast();
 
@@ -27,10 +27,11 @@ const Blog = () => {
     filteredPosts = filteredPosts.filter(post => post.author.slug === selectedAuthor);
   }
   
-  if (selectedTag) {
-    filteredPosts = filteredPosts.filter(post => post.tags.includes(selectedTag));
+  if (selectedTags.length > 0) {
+    filteredPosts = filteredPosts.filter(post =>
+      selectedTags.every(tag=>post.tags.includes(tag))
+    );
   }
-
   // Sort posts
   if (sortBy === 'date') {
     filteredPosts.sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
@@ -58,7 +59,11 @@ const Blog = () => {
   };
 
   const handleTagFilter = (tag: string) => {
-    setSelectedTag(selectedTag === tag ? null : tag);
+    setSelectedTags(prev =>
+      prev.includes(tag)
+        ? prev.filter(t => t !== tag) // Remove if already selected
+        : [...prev, tag]              // Add if not selected
+    );
     setCurrentPage(1);
   };
 
@@ -107,18 +112,18 @@ const Blog = () => {
           sortBy={sortBy}
           onSortChange={setSortBy}
           selectedAuthor={selectedAuthor}
-          selectedTag={selectedTag}
+          selectedTags={selectedTags}
           onTagClick={handleTagFilter}
           onClearFilters={() => {
             setSelectedAuthor(null);
-            setSelectedTag(null);
+            setSelectedTags([]);
             setCurrentPage(1);
           }}
         />
 
         {/* Tag Sort Menu */}
 
-        <TagSort onTagClick={handleTagFilter} selectedTag={selectedTag} />
+        <TagSort onTagClick={handleTagFilter} selectedTags={selectedTags} />
 
         {/* Post Grid */}
         <PostGrid

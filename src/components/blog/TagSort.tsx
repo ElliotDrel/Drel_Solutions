@@ -7,29 +7,23 @@ const uniqueTags = [...new Set(allTags)]; // All unique tags from all articles
 
 interface TagSortProps {
   onTagClick: (tag: string) => void;
-  selectedTag: string | null;
+  selectedTags: string[];
 }
 
-export const TagSort = ({ onTagClick, selectedTag }: TagSortProps) => {
+export const TagSort = ({ onTagClick, selectedTags }: TagSortProps) => {
     return (
-        <div className="relative">
-            <div className="flex overflow-x-auto scrollbar-hide">
-                {uniqueTags.map((tag) => (
-                    <Button
-                        key={tag}
-                        variant={selectedTag === tag ? "default" : "ghost"}
-                        size="sm"
-                        onClick={() => onTagClick(tag)}
-                        className="mr-2 flex-shrink-0"
-                    >
-                        {tag}
-                    </Button>
-                ))}
-            </div>
-            {/* Left fade */}
-            <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-background to-transparent pointer-events-none"></div>
-            {/* Right fade */}
-            <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-background to-transparent pointer-events-none"></div>
+        <div>
+            {uniqueTags.map((tag) => (
+                <Button
+                    key={tag}
+                    variant={selectedTags.includes(tag) ? "default" : "ghost"}
+                    size="sm"
+                    onClick={() => onTagClick(tag)}
+                    className="mr-2 flex-shrink-0"
+                >
+                    {tag}
+                </Button>
+            ))}
         </div>
     )
 }

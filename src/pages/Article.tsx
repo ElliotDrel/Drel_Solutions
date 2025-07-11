@@ -145,7 +145,7 @@ const Article = () => {
           </div>
 
           {/* Author Card */}
-          <Card className="mt-12">
+          <Card className="mt-12 bg-background">
             <CardContent className="p-6">
               <div className="flex items-start space-x-4">
                 <div className="w-16 h-16 rounded-full bg-gradient-primary flex items-center justify-center text-white font-semibold text-lg">

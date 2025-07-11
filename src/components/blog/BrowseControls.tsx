@@ -6,7 +6,7 @@ interface BrowseControlsProps {
   sortBy: 'date' | 'topic' | 'author';
   onSortChange: (sort: 'date' | 'topic' | 'author') => void;
   selectedAuthor: string | null;
-  selectedTag: string | null;
+  selectedTags: string[];
   onClearFilters: () => void;
   onTagClick: (tag: string) => void;
 }
@@ -15,11 +15,11 @@ export const BrowseControls = ({
   sortBy,
   onSortChange,
   selectedAuthor,
-  selectedTag,
+  selectedTags,
   onClearFilters,
   onTagClick
 }: BrowseControlsProps) => {
-  const hasActiveFilters = selectedAuthor || selectedTag;
+  const hasActiveFilters = selectedAuthor || (selectedTags.length > 0);
 
   return (
     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 py-4 border-b">
@@ -70,11 +70,11 @@ export const BrowseControls = ({
             </Badge>
           )}
           
-          {selectedTag && (
-            <Badge variant="secondary" className="text-xs">
-              Tag: {selectedTag}
+          {selectedTags.map(tag => (
+            <Badge key={tag}>
+              Tag: {tag}
             </Badge>
-          )}
+          ))}
           
           <Button
             variant="ghost"

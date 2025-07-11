@@ -105,6 +105,14 @@ html {
   body {
     @apply bg-background text-foreground;
   }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-foreground;
+  }
+
+  p {
+    @apply text-foreground;
+  }
 }
 
 /* Custom animations for loading states */
@@ -121,4 +129,14 @@ html {
 
 .animate-fade-in {
   animation: fadeIn 0.8s ease-in-out;
+}
+
+/* Hide scrollbar for webkit browsers */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
 }

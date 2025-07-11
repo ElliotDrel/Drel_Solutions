@@ -8,7 +8,7 @@ const HeroSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-8">
             <div className="space-y-4">
-              <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+              <h1 className="text-5xl lg:text-6xl font-bold text-foreground leading-tight">
                 AI Consulting That 
                 <span className="text-blue-600"> Pays for Itself</span>
               </h1>              <p className="text-xl text-gray-600 leading-relaxed">
@@ -162,7 +162,7 @@ const CoreValuesSection = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center space-y-16">
           <div className="space-y-4">
-            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900">Built to Save You Time and Money</h2>
+            <h2 className="text-4xl lg:text-5xl font-bold text-foreground">Built to Save You Time and Money</h2>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -172,7 +172,7 @@ const CoreValuesSection = () => {
                     <value.icon className="h-8 w-8 text-blue-600" />
                   </div>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900">{value.title}</h3>
+                <h3 className="text-xl font-semibold text-foreground">{value.title}</h3>
                 <p className="text-gray-600">{value.description}</p>
               </div>)}          </div>
             <div className="pt-20">            <div className="bg-blue-600 text-white py-16 px-8 rounded-2xl">              <div className="text-center space-y-8">

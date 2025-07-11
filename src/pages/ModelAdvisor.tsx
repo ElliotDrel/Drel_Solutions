@@ -97,7 +97,7 @@ const LoadingAnimation = () => {
 
           {/* AI thinking header */}
           <div>
-            <h3 id="loading-title" className="text-xl font-bold text-gray-900 mb-2">
+            <h3 id="loading-title" className="text-xl font-bold text-foreground mb-2">
               AI is Thinking{dots}
             </h3>
             <p id="loading-description" className="text-gray-600 text-sm">

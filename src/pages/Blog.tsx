@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { BlogPost } from '@/types/blog';
 import { mockPosts } from '@/data/blog/articles';
+import { TagSort } from '@/components/blog/TagSort';
 
 
 const Blog = () => {
@@ -107,12 +108,17 @@ const Blog = () => {
           onSortChange={setSortBy}
           selectedAuthor={selectedAuthor}
           selectedTag={selectedTag}
+          onTagClick={handleTagFilter}
           onClearFilters={() => {
             setSelectedAuthor(null);
             setSelectedTag(null);
             setCurrentPage(1);
           }}
         />
+
+        {/* Tag Sort Menu */}
+
+        <TagSort onTagClick={handleTagFilter} selectedTag={selectedTag} />
 
         {/* Post Grid */}
         <PostGrid

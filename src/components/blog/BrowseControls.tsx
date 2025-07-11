@@ -8,6 +8,7 @@ interface BrowseControlsProps {
   selectedAuthor: string | null;
   selectedTag: string | null;
   onClearFilters: () => void;
+  onTagClick: (tag: string) => void;
 }
 
 export const BrowseControls = ({
@@ -15,7 +16,8 @@ export const BrowseControls = ({
   onSortChange,
   selectedAuthor,
   selectedTag,
-  onClearFilters
+  onClearFilters,
+  onTagClick
 }: BrowseControlsProps) => {
   const hasActiveFilters = selectedAuthor || selectedTag;
 

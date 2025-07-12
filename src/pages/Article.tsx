@@ -1,18 +1,22 @@
 import { useParams, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { Clock, User, ArrowLeft, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
-import { BlogPost } from '@/types/blog';
+import { BlogPost, BlogContent } from '@/types/blog';
 import { RecommendedArticles } from '@/components/blog/RecommendedArticles';
 import { StayUpdatedSection } from '@/components/blog/StayUpdatedSection';
 import { useToast } from '@/hooks/use-toast';
-import { mockPosts, articleContent } from '@/data/blog/articles';
+import { BlogLoader } from '@/lib/content/blog-loader';
 
 const Article = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const [post, setPost] = useState<BlogContent | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const handleAuthorFilter = (authorSlug: string) => {
     navigate(`/blog?author=${authorSlug}`);
@@ -48,15 +52,53 @@ const Article = () => {
     }
   };
 
-  // Find the post by slug
-  const post = mockPosts.find(p => p.slug === slug);
+  useEffect(() => {
+    const loadPost = async () => {
+      if (!slug) {
+        setError('No slug provided');
+        setLoading(false);
+        return;
+      }
 
-  if (!post) {
+      try {
+        setLoading(true);
+        const postContent = await BlogLoader.getPostBySlug(slug);
+        
+        if (!postContent) {
+          setError('Post not found');
+        } else {
+          setPost(postContent);
+        }
+      } catch (err) {
+        console.error('Error loading post:', err);
+        setError('Failed to load post');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadPost();
+  }, [slug]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+          <p className="text-muted-foreground">Loading article...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!post || error) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center space-y-4">
           <h1 className="text-2xl font-bold">Article Not Found</h1>
-          <p className="text-muted-foreground">The article you're looking for doesn't exist.</p>
+          <p className="text-muted-foreground">
+            {error || "The article you're looking for doesn't exist."}
+          </p>
           <Button onClick={() => navigate('/blog')}>
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Blog
@@ -65,8 +107,6 @@ const Article = () => {
       </div>
     );
   }
-
-  const content = articleContent[slug!] || '<p>Content coming soon...</p>';
 
   return (
     <div className="min-h-screen bg-background">
@@ -88,7 +128,7 @@ const Article = () => {
           <header className="space-y-6">
             {/* Tags */}
             <div className="flex flex-wrap gap-2">
-              {post.tags.map((tag) => (
+              {post.frontmatter.tags.map((tag) => (
                 <Badge key={tag} variant="secondary" className="text-xs">
                   {tag}
                 </Badge>
@@ -97,23 +137,23 @@ const Article = () => {
 
             {/* Title */}
             <h1 className="text-4xl md:text-5xl font-bold leading-tight">
-              {post.title}
+              {post.frontmatter.title}
             </h1>
 
             {/* Subtitle */}
             <p className="text-xl text-muted-foreground leading-relaxed">
-              {post.subtitle}
+              {post.frontmatter.subtitle}
             </p>
 
             {/* Meta Info */}
             <div className="flex flex-wrap items-center gap-6 text-sm text-muted-foreground">
               <div className="flex items-center">
                 <User className="h-4 w-4 mr-2" />
-                {post.author.name}
+                {post.frontmatter.author.name}
               </div>
               <div className="flex items-center">
                 <Calendar className="h-4 w-4 mr-2" />
-                {new Date(post.publishedAt).toLocaleDateString('en-US', {
+                {new Date(post.frontmatter.publishedAt).toLocaleDateString('en-US', {
                   year: 'numeric',
                   month: 'long',
                   day: 'numeric'
@@ -127,20 +167,22 @@ const Article = () => {
           </header>
 
           {/* Featured Image */}
-          <div className="relative overflow-hidden rounded-lg">
-            <img
-              src={post.image}
-              alt={post.title}
-              className="w-full h-64 md:h-96 object-cover"
-              loading="eager"
-            />
-          </div>
+          {post.frontmatter.image && (
+            <div className="relative overflow-hidden rounded-lg">
+              <img
+                src={post.frontmatter.image}
+                alt={post.frontmatter.title}
+                className="w-full h-64 md:h-96 object-cover"
+                loading="eager"
+              />
+            </div>
+          )}
 
           {/* Article Content */}
           <div className="prose prose-lg max-w-none">
             <div 
               className="article-content space-y-6 leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: content }}
+              dangerouslySetInnerHTML={{ __html: post.content }}
             />
           </div>
 
@@ -149,10 +191,10 @@ const Article = () => {
             <CardContent className="p-6">
               <div className="flex items-start space-x-4">
                 <div className="w-16 h-16 rounded-full bg-gradient-primary flex items-center justify-center text-white font-semibold text-lg">
-                  {post.author.name.split(' ').map(n => n[0]).join('')}
+                  {post.frontmatter.author.name.split(' ').map(n => n[0]).join('')}
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-lg font-semibold mb-2">{post.author.name}</h3>
+                  <h3 className="text-lg font-semibold mb-2">{post.frontmatter.author.name}</h3>
                   <p className="text-muted-foreground">
                     Expert in workflow optimization and process automation. Helping businesses 
                     streamline operations and improve efficiency through systematic approaches 
@@ -168,8 +210,8 @@ const Article = () => {
             
             {/* Recommended Articles */}
             <RecommendedArticles
-              currentPostId={post.id}
-              posts={mockPosts}
+              currentPostId={post.frontmatter.id}
+              posts={BlogLoader.getRecommendedPosts(post.frontmatter.slug, 3)}
               onAuthorClick={handleAuthorFilter}
               onTagClick={handleTagFilter}
             />

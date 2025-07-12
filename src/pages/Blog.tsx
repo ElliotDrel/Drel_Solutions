@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BlogHero } from '@/components/blog/BlogHero';
 import { FeaturedPost } from '@/components/blog/FeaturedPost';
 import { PostGrid } from '@/components/blog/PostGrid';
@@ -6,7 +6,7 @@ import { BrowseControls } from '@/components/blog/BrowseControls';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { BlogPost } from '@/types/blog';
-import { mockPosts } from '@/data/blog/articles';
+import { BlogLoader } from '@/lib/content/blog-loader';
 
 
 const Blog = () => {
@@ -14,30 +14,52 @@ const Blog = () => {
   const [selectedAuthor, setSelectedAuthor] = useState<string | null>(null);
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<'date' | 'topic'>('date');
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [featuredPost, setFeaturedPost] = useState<BlogPost | null>(null);
+  const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
   const postsPerPage = 9;
-  const featuredPost = mockPosts[0];
-  
-  // Filter posts
-  let filteredPosts = mockPosts.slice(1); // Exclude featured post
-  
-  if (selectedAuthor) {
-    filteredPosts = filteredPosts.filter(post => post.author.slug === selectedAuthor);
-  }
-  
-  if (selectedTag) {
-    filteredPosts = filteredPosts.filter(post => post.tags.includes(selectedTag));
-  }
 
-  // Sort posts
-  if (sortBy === 'date') {
-    filteredPosts.sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
-  }
+  useEffect(() => {
+    const loadPosts = async () => {
+      try {
+        setLoading(true);
+        
+        // Get featured posts
+        const featured = BlogLoader.getFeaturedPosts(1);
+        const featuredPost = featured.length > 0 ? featured[0] : null;
+        
+        // Get all posts with filters
+        const allPosts = await BlogLoader.getAllPosts({
+          filter: (post) => {
+            let include = true;
+            if (selectedAuthor) {
+              include = include && post.author.slug === selectedAuthor;
+            }
+            if (selectedTag) {
+              include = include && post.tags.includes(selectedTag);
+            }
+            return include;
+          },
+          sort: sortBy === 'date' ? 'date' : 'title'
+        });
+
+        setFeaturedPost(featuredPost);
+        setPosts(allPosts.filter(post => post.slug !== featuredPost?.slug)); // Exclude featured post
+        setLoading(false);
+      } catch (error) {
+        console.error('Error loading posts:', error);
+        setLoading(false);
+      }
+    };
+
+    loadPosts();
+  }, [selectedAuthor, selectedTag, sortBy]);
 
   // Paginate posts
-  const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
-  const displayedPosts = filteredPosts.slice(0, currentPage * postsPerPage);
+  const totalPages = Math.ceil(posts.length / postsPerPage);
+  const displayedPosts = posts.slice(0, currentPage * postsPerPage);
 
   const handleLoadMore = () => {
     if (currentPage < totalPages) {
@@ -89,11 +111,13 @@ const Blog = () => {
         <BlogHero />
 
         {/* Featured Post Banner */}
-        <FeaturedPost 
-          post={featuredPost}
-          onAuthorClick={handleAuthorFilter}
-          onTagClick={handleTagFilter}
-        />
+        {featuredPost && (
+          <FeaturedPost 
+            post={featuredPost}
+            onAuthorClick={handleAuthorFilter}
+            onTagClick={handleTagFilter}
+          />
+        )}
 
         {/* Browse Controls */}
         <BrowseControls

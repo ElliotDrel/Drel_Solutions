@@ -1,4 +1,4 @@
-import type { BlogContent, SEOMetadata } from '@/types/blog'
+import type { BlogContent, SEOMetadata } from '../../types/blog'
 
 export function generateSEOMeta(post: BlogContent): SEOMetadata {
   const baseUrl = import.meta.env.VITE_BASE_URL || 'https://drel.solutions'

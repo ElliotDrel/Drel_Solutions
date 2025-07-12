@@ -1,4 +1,4 @@
-import type { BlogContent, BlogIndex, BlogPost } from '@/types/blog'
+import type { BlogContent, BlogIndex, BlogPost } from '../../types/blog'
 
 // Fallback data when build-time generated content is not available
 const fallbackBlogData: BlogIndex = {

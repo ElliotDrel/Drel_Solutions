@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { BlogPostSchema } from '@/types/blog'
+import { BlogPostSchema } from '../../types/blog'
 
 export function validateFrontmatter(data: unknown): z.infer<typeof BlogPostSchema> {
   try {

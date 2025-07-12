@@ -59,10 +59,13 @@ cd backend && python main.py  # Start FastAPI server on port 3298
 ## Project Structure
 
 ### Frontend (`src/`)
-- `pages/` - Route components (Index, ModelAdvisor, About, Contact, NotFound)
+- `pages/` - Route components (Index, ModelAdvisor, About, Contact, Blog, Article, NotFound)
 - `components/ui/` - Shadcn UI components (Button, Dialog, etc.)
+- `components/blog/` - Blog-specific components (BlogHero, PostGrid, etc.)
 - `hooks/` - Custom React hooks (use-toast, use-mobile)
 - `lib/` - Utilities (utils.ts with cn helper)
+- `data/blog/` - Blog data and mock content
+- `types/` - TypeScript type definitions
 - `test/` - Unit test files
 
 ### Backend (`backend/`)
@@ -127,3 +130,13 @@ cd backend && python main.py  # Start FastAPI server on port 3298
 - Shadcn UI components preferred
 - React 18 patterns with hooks
 - Path alias `@/` for `src/` directory
+- Extensive Cursor IDE rules in `.cursor/rules/` covering React, testing, security, and more
+- React Router DOM for client-side routing
+- Lazy loading with ErrorBoundary for performance optimization
+
+### Blog System
+- Blog pages use lazy loading for performance
+- Mock blog data in `src/data/blog/articles.ts`
+- Blog components in `src/components/blog/`
+- Routes: `/blog` (listing) and `/blog/:slug` (individual articles)
+- TypeScript interfaces defined in `src/types/blog.ts`

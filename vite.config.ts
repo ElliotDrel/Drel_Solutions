@@ -13,7 +13,9 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     react(),
-    contentProcessor(),
+    ...(process.env.NODE_ENV !== 'test' && process.env.VITEST !== 'true' 
+      ? [contentProcessor()] 
+      : [])
   ],
   resolve: {
     alias: {

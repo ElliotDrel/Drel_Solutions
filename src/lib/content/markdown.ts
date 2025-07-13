@@ -29,10 +29,36 @@ export function generateExcerpt(content: string, maxLength = 200): string {
 }
 
 export function sanitizeMarkdown(content: string): string {
-  // For static markdown content processed at build time, no sanitization needed
-  // Content is controlled and comes from trusted sources
-  // A proper markdown processor will handle HTML escaping when added
+  // Comprehensive XSS protection - remove all potentially dangerous content
   return content
+    // Script tags (case-insensitive, with attributes and content)
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+    // Event handlers (onclick, onload, onerror, etc.)
+    .replace(/\s*on\w+\s*=\s*["'][^"']*["']/gi, '')
+    .replace(/\s*on\w+\s*=\s*[^"'\s>]+/gi, '')
+    // JavaScript protocols (case-insensitive)
+    .replace(/javascript\s*:/gi, '')
+    // Data URIs with script content or HTML
+    .replace(/data\s*:\s*text\/html[^"'>]*/gi, '')
+    .replace(/data\s*:\s*application\/[^"'>]*script[^"'>]*/gi, '')
+    // Style tags and CSS expressions (IE-specific)
+    .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, '')
+    .replace(/expression\s*\(/gi, '')
+    .replace(/-moz-binding\s*:/gi, '')
+    // Iframe, object, embed, and other potentially dangerous tags
+    .replace(/<(iframe|object|embed|applet|link)\b[^<]*(?:(?!<\/\1>)<[^<]*)*<\/\1>/gi, '')
+    .replace(/<(iframe|object|embed|applet|link|meta|base)\b[^>]*\/?>/gi, '')
+    // Form elements that could be problematic
+    .replace(/<(form|input|button|textarea|select|option)\b[^>]*>/gi, '')
+    .replace(/<\/(form|input|button|textarea|select|option)>/gi, '')
+    // SVG with script content
+    .replace(/<svg\b[^<]*(?:(?!<\/svg>)<[^<]*)*<\/svg>/gi, '')
+    // Comments that might contain malicious content
+    .replace(/<!--[\s\S]*?-->/g, '')
+    // Generic dangerous attribute patterns
+    .replace(/\s*(src|href|action|formaction|background|poster)\s*=\s*["']?\s*javascript:/gi, '')
+    .replace(/\s*(src|href|action|formaction|background|poster)\s*=\s*["']?\s*data:/gi, '')
+    .replace(/\s*(src|href|action|formaction|background|poster)\s*=\s*["']?\s*vbscript:/gi, '')
 }
 
 export function processMarkdownToHtml(content: string): string {

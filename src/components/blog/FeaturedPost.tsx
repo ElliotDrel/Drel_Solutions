@@ -64,7 +64,7 @@ export const FeaturedPost = ({ post, onAuthorClick, onTagClick }: FeaturedPostPr
           <Button
             asChild
             size="lg"
-            className="w-fit btn-article shadow-card hover:shadow-card-hover transition-all"
+            className="w-fit shadow-card hover:shadow-card-hover"
           >
             <Link to={`/blog/${post.slug}`}>
               Read Article

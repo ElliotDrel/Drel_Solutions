@@ -153,7 +153,7 @@ const Contact = () => {
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full btn-primary-elevated btn-size-lg disabled:transform-none disabled:opacity-70"
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg rounded-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105 disabled:transform-none disabled:opacity-70"
                 >
                   {isSubmitting ? (
                     <div className="flex items-center space-x-2">

@@ -122,30 +122,3 @@ html {
 .animate-fade-in {
   animation: fadeIn 0.8s ease-in-out;
 }
-
-/* Standardized Button Utility Classes */
-@layer utilities {
-  .btn-primary {
-    @apply bg-blue-600 hover:bg-blue-700 text-white transition-colors;
-  }
-  
-  .btn-primary-elevated {
-    @apply bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-xl transition-all transform hover:scale-105;
-  }
-  
-  .btn-article {
-    @apply bg-red-600 hover:bg-red-700 text-white transition-colors;
-  }
-  
-  .btn-outline-primary {
-    @apply border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition-all duration-200;
-  }
-  
-  .btn-size-lg {
-    @apply px-8 py-4 text-lg rounded-lg;
-  }
-  
-  .btn-size-md {
-    @apply px-6 py-2;
-  }
-}

@@ -63,6 +63,7 @@ const Article = () => {
 
       try {
         setLoading(true);
+        setError(null);
         const postContent = await BlogLoader.getPostBySlug(slug);
         
         if (!postContent) {

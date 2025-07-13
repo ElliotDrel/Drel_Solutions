@@ -2,35 +2,23 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Development Commands
+## Available Commands (Vercel Deployment Only)
 
-### Frontend Development
-- `npm run dev` - Start Vite development server (port 6756)
-- `npm run build` - Build for production
+**IMPORTANT**: This project is deployed exclusively on Vercel. No local development is performed.
+
+### Build & Test Commands
+- `npm run build` - Build for production (runs in Vercel)
 - `npm run build:dev` - Build in development mode
-- `npm run preview` - Preview production build
 - `npm run lint` - Run ESLint
-
-### Backend Development
-- `npm run start:backend` - Start Python FastAPI backend (cd backend && python main.py)
-- `npm run start:full` - Start both frontend and backend concurrently
-
-### Testing Commands
-- `npm run test` - Run Vitest unit tests in watch mode
-- `npm run test:ui` - Run Vitest with UI
 - `npm run test:run` - Run unit tests once
 - `npm run test:coverage` - Run unit tests with coverage (80% minimum required)
 - `npm run test:e2e` - Run Playwright end-to-end tests
-- `npm run test:e2e:ui` - Run Playwright with UI
-- `npm run test:all` - Run both unit and e2e tests
 - `npm run test:ci` - Run all tests with coverage (used in CI)
-- `npm run test -- <filename>` - Run specific unit test file
-- `npx playwright test <filename>` - Run specific e2e test file
 
-### Backend Commands
-```bash
-cd backend && python main.py  # Start FastAPI server on port 3298
-```
+### Development Note
+- All development and testing happens through Vercel's build system
+- Code changes are made locally, then pushed to git for Vercel deployment
+- No local servers or backend processes are run
 
 ## Architecture Overview
 
@@ -42,12 +30,12 @@ cd backend && python main.py  # Start FastAPI server on port 3298
 - **Forms**: React Hook Form with Zod validation
 - **Testing**: Vitest + React Testing Library (unit), Playwright (e2e)
 
-### Backend Architecture
-- **Framework**: FastAPI (Python)
-- **Main Service**: Model recommendation API using OpenAI
-- **Port**: Backend runs on port 3298
+### Backend Architecture (Vercel Serverless)
+- **Framework**: Vercel Serverless Functions (no traditional backend)
+- **Main Service**: Model recommendation API using OpenAI (deployed as serverless function)
 - **API Endpoint**: `/api/model_search` - takes query, returns model recommendations
 - **Model Documentation**: Extensive collection of AI model specs in `model_docs/` and `public/model_docs/`
+- **Note**: No local backend development - all API functionality runs on Vercel
 
 ### Key Application Flow
 1. User submits query on ModelAdvisor page
@@ -68,10 +56,11 @@ cd backend && python main.py  # Start FastAPI server on port 3298
 - `types/` - TypeScript type definitions
 - `test/` - Unit test files
 
-### Backend (`backend/`)
-- `main.py` - FastAPI app with CORS, model search endpoint
-- `services/openai_service.py` - OpenAI integration service
-- `requirements.txt` - Python dependencies
+### API (`api/`)
+- Serverless functions for Vercel deployment
+- `model_search.py` - Model search endpoint implementation
+- OpenAI service integration for model recommendations
+- **Note**: No traditional backend structure - uses Vercel serverless functions
 
 ### Documentation
 - `model_docs/` - Source model documentation files
@@ -95,9 +84,10 @@ cd backend && python main.py  # Start FastAPI server on port 3298
 
 ### API Integration
 - Use TanStack Query for data fetching
-- Backend API base URL varies by environment
+- API routes handled by Vercel serverless functions
 - Model search request format: `{ query: string }`
 - Response format: `{ recommendations: ModelRecommendation[] }`
+- **Note**: All API calls go through Vercel's serverless function endpoints
 
 ### Testing Requirements
 - **Unit Tests**: 80% coverage minimum (branches, functions, lines, statements)
@@ -106,11 +96,10 @@ cd backend && python main.py  # Start FastAPI server on port 3298
 - **CI**: Tests must pass for deployment
 
 ### Environment Setup
-- Node.js 18+
-- Python backend dependencies in `backend/requirements.txt`
-- OpenAI API key required in `.env` file
-- Development server runs on port 6756
-- Backend runs on port 3298
+- **Local Development**: Not performed - all development through Vercel
+- **Dependencies**: Managed through Vercel's build system
+- **Environment Variables**: Set in Vercel dashboard (OpenAI API key, etc.)
+- **Deployment**: Automatic through git push to connected repository
 
 ### Environment Variables
 - `CONTENT_FAIL_ON_ERROR=true` - Force build failure on content processing errors (default: false)
@@ -126,13 +115,27 @@ cd backend && python main.py  # Start FastAPI server on port 3298
 - Models include capabilities, pricing, speed, accuracy characteristics
 
 ### Deployment & Development Workflow
-- **Hosting**: Vercel-only deployment (no local testing required)
-- **Workflow**: When development is complete, ask user to push to git
-- **Build Monitoring**: Request build logs from user if needed
-  - Specify if logs are needed only on build failure or regardless of outcome
-- Vercel integration with Speed Insights and Analytics
-- Build command includes test run: `npm run test:run && npm run build`
-- Only tested code reaches production
+
+**CRITICAL**: This project runs EXCLUSIVELY on Vercel. No local development environment exists.
+
+#### Development Process:
+1. **Code Changes**: Made locally and committed to git
+2. **Testing**: All testing happens in Vercel's build pipeline
+3. **Deployment**: Automatic on git push to main branch
+4. **Preview**: Automatic preview deployments for feature branches
+
+#### Build Log Requests:
+When requesting build/test logs from the user:
+- **Specify clearly**: Whether you need logs regardless of build outcome OR only on failure
+- **Example**: "Please push to git and send me the Vercel build logs regardless of success/failure"
+- **Example**: "Please push to git and send me the Vercel build logs only if the build fails"
+
+#### Key Points:
+- **No Local Backend**: All API functionality runs as Vercel serverless functions
+- **No Local Testing**: All tests run in Vercel's CI/CD pipeline
+- **Build Command**: `npm run test:run && npm run build` (includes tests)
+- **Monitoring**: Vercel Speed Insights and Analytics integrated
+- **Environment**: All environment variables managed in Vercel dashboard
 
 ### Code Standards
 - TypeScript strict mode

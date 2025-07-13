@@ -125,7 +125,11 @@ cd backend && python main.py  # Start FastAPI server on port 3298
 - Documentation is loaded by OpenAI service to make intelligent recommendations
 - Models include capabilities, pricing, speed, accuracy characteristics
 
-### Deployment
+### Deployment & Development Workflow
+- **Hosting**: Vercel-only deployment (no local testing required)
+- **Workflow**: When development is complete, ask user to push to git
+- **Build Monitoring**: Request build logs from user if needed
+  - Specify if logs are needed only on build failure or regardless of outcome
 - Vercel integration with Speed Insights and Analytics
 - Build command includes test run: `npm run test:run && npm run build`
 - Only tested code reaches production

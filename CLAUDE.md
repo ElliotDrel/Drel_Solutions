@@ -115,6 +115,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Routes: `/blog` (listing) and `/blog/:slug` (individual articles)
 - TypeScript interfaces defined in `src/types/blog.ts`
 
+### Design System & Styling
+- **Background Strategy**: All pages use hardcoded light backgrounds for consistent brand experience
+- **Page Container Pattern**: `bg-gradient-to-br from-blue-50 via-white to-green-50` for main page containers
+- **Theme Toggle**: Available but intentionally does NOT affect page backgrounds - only affects UI components
+- **Reasoning**: Brand consistency takes precedence over system theme preferences
+- **Implementation**: All `src/pages/*.tsx` files use the same gradient background pattern
+- **Components**: Use Shadcn UI components which do respond to theme toggle for buttons, cards, etc.
+
 ---
 
 ## Vercel Build & Deployment Reference

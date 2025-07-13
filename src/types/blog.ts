@@ -54,7 +54,7 @@ export interface SEOMetadata {
     image: string
     url: string
   }
-  jsonLd: Record<string, any>
+  jsonLd: Record<string, unknown>
 }
 
 export interface NewsletterSubscription {

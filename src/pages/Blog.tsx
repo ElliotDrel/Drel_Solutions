@@ -105,7 +105,7 @@ const Blog = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
         <div className="max-w-7xl mx-auto px-4 py-8 space-y-12">
           <BlogHero />
           <div className="flex justify-center items-center py-12">
@@ -117,7 +117,7 @@ const Blog = () => {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
       {/* Page Shell */}
       <div className="max-w-7xl mx-auto px-4 py-8 space-y-12">
         {/* Hero Header */}

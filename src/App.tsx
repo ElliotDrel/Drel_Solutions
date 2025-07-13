@@ -30,6 +30,20 @@ const ScrollToTop = () => {
   return null;
 };
 
+// Layout wrapper that applies gradient background to specific routes
+const LayoutWrapper = ({ children }: { children: ReactNode }) => {
+  const location = useLocation();
+  
+  // All routes use gradient background based on original design
+  const shouldUseGradient = true;
+  
+  return (
+    <Layout useGradientBackground={shouldUseGradient}>
+      {children}
+    </Layout>
+  );
+};
+
 // Simple Error Boundary component
 interface ErrorBoundaryState {
   hasError: boolean;
@@ -76,7 +90,7 @@ const App = () => (
         basename={undefined}
       >
         <ScrollToTop />
-        <Layout>
+        <LayoutWrapper>
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/about" element={<About />} />
@@ -105,7 +119,7 @@ const App = () => (
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
-        </Layout>
+        </LayoutWrapper>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

@@ -133,6 +133,18 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Routes: `/blog` (listing) and `/blog/:slug` (individual articles)
 - TypeScript interfaces defined in `src/types/blog.ts`
 
+### CRITICAL: Content Processing Build Failure Policy
+**DO NOT MODIFY**: The content processor is configured to fail builds when articles fail to load. This is intentional and must be preserved.
+
+- **Location**: `src/lib/build/content-processor.ts`
+- **Behavior**: Build MUST fail if any article processing fails
+- **Reasoning**: If an article fails to load, there is a problem with the file that needs immediate attention
+- **Policy**: The website should NOT deploy with broken articles - all articles must load successfully
+- **Never Change**: Do not add fallback mechanisms, error suppression, or continue-on-error logic to article processing
+- **Current State**: Production CI automatically fails on content processing errors (line 173 in content-processor.ts)
+
+If you encounter article loading issues, fix the underlying problem in the source files, never modify the failure behavior.
+
 ### Design System & Styling
 - **Background Strategy**: All pages use hardcoded light backgrounds for consistent brand experience
 - **Page Container Pattern**: `bg-gradient-to-br from-blue-50 via-white to-green-50` for main page containers

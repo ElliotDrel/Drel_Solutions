@@ -1,0 +1,28 @@
+{
+  "frontmatter": {
+    "id": "6",
+    "title": "Measuring Process Improvement ROI",
+    "subtitle": "Quantify the impact of your optimization efforts with these proven metrics",
+    "image": "/blog/images/posts/measuring-process-roi/hero.jpg",
+    "author": {
+      "name": "Alex Thompson",
+      "slug": "alex-thompson",
+      "avatar": "/blog/images/authors/alex-thompson.jpg"
+    },
+    "readingTime": 1,
+    "tags": [
+      "roi",
+      "metrics",
+      "improvement"
+    ],
+    "publishedAt": "2024-01-03",
+    "slug": "measuring-process-roi",
+    "featured": false,
+    "draft": false
+  },
+  "content": "\r\n# Measuring Process Improvement ROI\r\n\r\n## Defining Process Improvement ROI\r\n\r\nMeasuring the return on investment for process improvements requires careful consideration of both quantitative and qualitative benefits.\r\n\r\n## Key Metrics Framework\r\n\r\nOur framework includes time savings, error reduction, cost avoidance, and employee satisfaction measurements to provide a comprehensive view of improvement impact.\r\n\r\n## Baseline Establishment\r\n\r\nBefore implementing changes, establish clear baselines for current performance. This provides the foundation for accurate ROI calculations.\r\n\r\n## Tracking and Reporting\r\n\r\nRegular monitoring and transparent reporting ensure that improvements are sustained and stakeholders remain informed about progress.\r\n\r\n## Long-term Value\r\n\r\nProcess improvements often deliver compound benefits over time. Learn how to capture and communicate these long-term value propositions.",
+  "excerpt": "Measuring Process Improvement ROI\r\n\r\nDefining Process Improvement ROI\r\n\r\nMeasuring the return on investment for process improvements requires careful consideration of both quantitative and...",
+  "readingTime": 1,
+  "wordCount": 114,
+  "lastModified": "2025-07-13T19:45:54.058Z"
+}

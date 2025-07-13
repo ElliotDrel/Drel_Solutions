@@ -1,16 +1,16 @@
 import type { BlogContent, BlogIndex, BlogPost } from '../../types/blog'
-import { mockPosts } from '../../data/blog/articles'
+
+// Import the generated blog index directly
+import blogIndex from '@/content/generated/blog-index.json'
 
 // Fallback data when build-time generated content is not available
 const fallbackBlogData: BlogIndex = {
-  posts: mockPosts,
+  posts: [],
   authors: {},
-  tags: [...new Set(mockPosts.flatMap(p => p.tags))].sort(),
-  totalPosts: mockPosts.length,
+  tags: [],
+  totalPosts: 0,
   lastUpdated: new Date().toISOString()
 }
-
-// Fallback data is now accessed directly by the loadIndex method
 
 export class BlogLoader {
   private static _index: BlogIndex | null = null
@@ -38,9 +38,8 @@ export class BlogLoader {
 
   private static async loadIndex(): Promise<BlogIndex> {
     try {
-      // @ts-ignore - This file will be generated at build time
-      const indexModule = await import('@/content/generated/blog-index.json')
-      return indexModule.default
+      // Use the statically imported blog index for better performance
+      return blogIndex as BlogIndex
     } catch (error) {
       console.warn('Blog index not found, using fallback data')
       return fallbackBlogData

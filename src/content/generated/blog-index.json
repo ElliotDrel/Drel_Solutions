@@ -1,0 +1,222 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "title": "Streamlining Team Workflows with Automation",
+      "subtitle": "How we reduced manual tasks by 70% using smart process automation",
+      "image": "/blog/images/posts/streamlining-team-workflows/hero.jpg",
+      "author": {
+        "name": "Sarah Chen",
+        "slug": "sarah-chen",
+        "avatar": "/blog/images/authors/sarah-chen.jpg"
+      },
+      "readingTime": 1,
+      "tags": [
+        "workflow",
+        "automation",
+        "productivity"
+      ],
+      "publishedAt": "2024-01-15",
+      "slug": "streamlining-team-workflows",
+      "featured": true,
+      "draft": false
+    },
+    {
+      "id": "2",
+      "title": "The Hidden Costs of Manual Processes",
+      "subtitle": "Understanding the true impact of inefficient workflows on your bottom line",
+      "image": "/blog/images/posts/hidden-costs-manual-processes/hero.jpg",
+      "author": {
+        "name": "Marcus Rodriguez",
+        "slug": "marcus-rodriguez",
+        "avatar": "/blog/images/authors/marcus-rodriguez.jpg"
+      },
+      "readingTime": 1,
+      "tags": [
+        "processes",
+        "efficiency",
+        "cost-analysis"
+      ],
+      "publishedAt": "2024-01-12",
+      "slug": "hidden-costs-manual-processes",
+      "featured": false,
+      "draft": false
+    },
+    {
+      "id": "3",
+      "title": "Building Scalable Process Documentation",
+      "subtitle": "Create documentation that grows with your team and actually gets used",
+      "image": "/blog/images/posts/scalable-process-documentation/hero.jpg",
+      "author": {
+        "name": "Alex Thompson",
+        "slug": "alex-thompson",
+        "avatar": "/blog/images/authors/alex-thompson.jpg"
+      },
+      "readingTime": 1,
+      "tags": [
+        "documentation",
+        "scalability",
+        "processes"
+      ],
+      "publishedAt": "2024-01-10",
+      "slug": "scalable-process-documentation",
+      "featured": false,
+      "draft": false
+    },
+    {
+      "id": "4",
+      "title": "Data-Driven Decision Making for Small Teams",
+      "subtitle": "How to implement analytics and KPIs without overwhelming your team",
+      "image": "/blog/images/posts/data-driven-decision-making/hero.jpg",
+      "author": {
+        "name": "Sarah Chen",
+        "slug": "sarah-chen",
+        "avatar": "/blog/images/authors/sarah-chen.jpg"
+      },
+      "readingTime": 1,
+      "tags": [
+        "analytics",
+        "kpis",
+        "decision-making"
+      ],
+      "publishedAt": "2024-01-08",
+      "slug": "data-driven-decision-making",
+      "featured": false,
+      "draft": false
+    },
+    {
+      "id": "5",
+      "title": "Onboarding Automation That Actually Works",
+      "subtitle": "Design employee onboarding processes that create great first impressions",
+      "image": "/blog/images/posts/onboarding-automation/hero.jpg",
+      "author": {
+        "name": "Marcus Rodriguez",
+        "slug": "marcus-rodriguez",
+        "avatar": "/blog/images/authors/marcus-rodriguez.jpg"
+      },
+      "readingTime": 1,
+      "tags": [
+        "onboarding",
+        "automation",
+        "hr"
+      ],
+      "publishedAt": "2024-01-05",
+      "slug": "onboarding-automation",
+      "featured": false,
+      "draft": false
+    },
+    {
+      "id": "6",
+      "title": "Measuring Process Improvement ROI",
+      "subtitle": "Quantify the impact of your optimization efforts with these proven metrics",
+      "image": "/blog/images/posts/measuring-process-roi/hero.jpg",
+      "author": {
+        "name": "Alex Thompson",
+        "slug": "alex-thompson",
+        "avatar": "/blog/images/authors/alex-thompson.jpg"
+      },
+      "readingTime": 1,
+      "tags": [
+        "roi",
+        "metrics",
+        "improvement"
+      ],
+      "publishedAt": "2024-01-03",
+      "slug": "measuring-process-roi",
+      "featured": false,
+      "draft": false
+    },
+    {
+      "id": "7",
+      "title": "Communication Workflows for Remote Teams",
+      "subtitle": "Build effective communication patterns that work across time zones",
+      "image": "/blog/images/posts/communication-workflows-remote/hero.jpg",
+      "author": {
+        "name": "Sarah Chen",
+        "slug": "sarah-chen",
+        "avatar": "/blog/images/authors/sarah-chen.jpg"
+      },
+      "readingTime": 1,
+      "tags": [
+        "communication",
+        "remote-work",
+        "workflows"
+      ],
+      "publishedAt": "2024-01-01",
+      "slug": "communication-workflows-remote",
+      "featured": false,
+      "draft": false
+    },
+    {
+      "id": "8",
+      "title": "Quality Control in Rapid Growth",
+      "subtitle": "Maintain high standards while scaling your processes and team",
+      "image": "/blog/images/posts/quality-control-rapid-growth/hero.jpg",
+      "author": {
+        "name": "Marcus Rodriguez",
+        "slug": "marcus-rodriguez",
+        "avatar": "/blog/images/authors/marcus-rodriguez.jpg"
+      },
+      "readingTime": 1,
+      "tags": [
+        "quality-control",
+        "scaling",
+        "growth"
+      ],
+      "publishedAt": "2023-12-30",
+      "slug": "quality-control-rapid-growth",
+      "featured": false,
+      "draft": false
+    },
+    {
+      "id": "9",
+      "title": "Customer Feedback Integration Systems",
+      "subtitle": "Turn customer insights into actionable process improvements",
+      "image": "/blog/images/posts/customer-feedback-integration/hero.jpg",
+      "author": {
+        "name": "Alex Thompson",
+        "slug": "alex-thompson",
+        "avatar": "/blog/images/authors/alex-thompson.jpg"
+      },
+      "readingTime": 1,
+      "tags": [
+        "customer-feedback",
+        "integration",
+        "improvement"
+      ],
+      "publishedAt": "2023-12-28",
+      "slug": "customer-feedback-integration",
+      "featured": false,
+      "draft": false
+    }
+  ],
+  "authors": {},
+  "tags": [
+    "analytics",
+    "automation",
+    "communication",
+    "cost-analysis",
+    "customer-feedback",
+    "decision-making",
+    "documentation",
+    "efficiency",
+    "growth",
+    "hr",
+    "improvement",
+    "integration",
+    "kpis",
+    "metrics",
+    "onboarding",
+    "processes",
+    "productivity",
+    "quality-control",
+    "remote-work",
+    "roi",
+    "scalability",
+    "scaling",
+    "workflow",
+    "workflows"
+  ],
+  "totalPosts": 9,
+  "lastUpdated": "2025-07-13T19:45:54.178Z"
+}

@@ -112,6 +112,12 @@ cd backend && python main.py  # Start FastAPI server on port 3298
 - Development server runs on port 6756
 - Backend runs on port 3298
 
+### Environment Variables
+- `CONTENT_FAIL_ON_ERROR=true` - Force build failure on content processing errors (default: false)
+- `NODE_ENV=production` - Production environment detection
+- `CI=true` - CI environment detection (auto-set by most CI systems)
+- `VITEST=true` - Excludes content processor during testing (auto-set by Vitest)
+
 ## Important Notes
 
 ### Model Documentation System

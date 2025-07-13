@@ -5,9 +5,9 @@ import { BlogPostSchema } from '../../types/blog'
 import { calculateReadingTime, generateExcerpt } from '../content/markdown'
 import { validateFrontmatter, validateContentStructure } from '../content/validation'
 
-// Simple frontmatter parser (replacing gray-matter for now)
+// Enhanced frontmatter parser with multi-line YAML object support
 function parseFrontmatter(content: string): { data: any; content: string } {
-  const frontmatterRegex = /^---\n([\s\S]*?)\n---\n([\s\S]*)$/
+  const frontmatterRegex = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/
   const match = content.match(frontmatterRegex)
   
   if (!match) {
@@ -17,42 +17,87 @@ function parseFrontmatter(content: string): { data: any; content: string } {
   const [, frontmatterStr, bodyContent] = match
   const data: any = {}
   
-  // Simple YAML-like parsing
+  // Enhanced YAML-like parsing with multi-line object support
   const lines = frontmatterStr.split('\n')
-  for (const line of lines) {
+  let currentKey: string | null = null
+  let currentObject: any = null
+  let indentLevel = 0
+  
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i]
+    const trimmedLine = line.trim()
+    
+    // Skip empty lines
+    if (!trimmedLine) continue
+    
+    // Calculate current line indent
+    const lineIndent = line.length - line.trimStart().length
+    
+    // Check if this is a top-level key
     const colonIndex = line.indexOf(':')
-    if (colonIndex > 0) {
-      const key = line.substring(0, colonIndex).trim()
+    if (colonIndex > 0 && lineIndent === 0) {
+      // Save previous object if we were building one
+      if (currentKey && currentObject) {
+        data[currentKey] = currentObject
+      }
+      
+      currentKey = line.substring(0, colonIndex).trim()
       let value = line.substring(colonIndex + 1).trim()
       
-      // Remove quotes
-      if (value.startsWith('"') && value.endsWith('"')) {
-        value = value.slice(1, -1)
+      // If value is empty, this might be start of an object
+      if (!value) {
+        currentObject = {}
+        indentLevel = lineIndent
+        continue
       }
       
-      // Handle arrays (basic)
-      if (value.startsWith('[') && value.endsWith(']')) {
-        value = value.slice(1, -1).split(',').map(v => v.trim().replace(/"/g, ''))
-      }
-      
-      // Handle booleans
-      if (value === 'true') value = true
-      if (value === 'false') value = false
-      
-      // Handle numbers
-      if (/^\d+$/.test(value)) value = parseInt(value)
-      
-      // Handle nested objects (basic author handling)
-      if (key === 'author' && typeof value === 'string') {
-        // For now, just store as string, will be parsed later
-        data[key] = { name: value, slug: value.toLowerCase().replace(/\s+/g, '-') }
-      } else {
-        data[key] = value
+      // Process single-line values
+      value = parseValue(value)
+      data[currentKey] = value
+      currentKey = null
+      currentObject = null
+    }
+    // Handle nested object properties
+    else if (currentKey && currentObject && lineIndent > 0) {
+      const nestedColonIndex = trimmedLine.indexOf(':')
+      if (nestedColonIndex > 0) {
+        const nestedKey = trimmedLine.substring(0, nestedColonIndex).trim()
+        let nestedValue = trimmedLine.substring(nestedColonIndex + 1).trim()
+        nestedValue = parseValue(nestedValue)
+        currentObject[nestedKey] = nestedValue
       }
     }
   }
   
+  // Save final object if we were building one
+  if (currentKey && currentObject) {
+    data[currentKey] = currentObject
+  }
+  
   return { data, content: bodyContent }
+}
+
+// Helper function to parse individual values
+function parseValue(value: string): any {
+  // Remove quotes
+  if (value.startsWith('"') && value.endsWith('"')) {
+    return value.slice(1, -1)
+  }
+  
+  // Handle arrays
+  if (value.startsWith('[') && value.endsWith(']')) {
+    return value.slice(1, -1).split(',').map(v => v.trim().replace(/"/g, ''))
+  }
+  
+  // Handle booleans
+  if (value === 'true') return true
+  if (value === 'false') return false
+  
+  // Handle numbers
+  if (/^\d+$/.test(value)) return parseInt(value)
+  
+  // Return as string
+  return value
 }
 
 export function contentProcessor(): Plugin {
@@ -82,6 +127,7 @@ export function contentProcessor(): Plugin {
         console.log('✅ Basic blog index created')
         
         // Check if posts directory exists
+        const failedFiles: string[] = []
         try {
           const postFiles = await readdir('src/content/blog/posts')
           const markdownFiles = postFiles.filter(file => extname(file) === '.md')
@@ -128,7 +174,8 @@ export function contentProcessor(): Plugin {
                 
                 console.log(`✅ Processed post: ${frontmatter.slug}`)
               } catch (error) {
-                console.error(`Error processing ${file}:`, error)
+                console.error(`❌ Error processing ${file}:`, error)
+                failedFiles.push(file)
               }
             }
             
@@ -157,8 +204,39 @@ export function contentProcessor(): Plugin {
         }
         
       } catch (error) {
-        console.error('Error in content processor:', error)
-        // Don't fail the build, just warn
+        const errorReport = {
+          timestamp: new Date().toISOString(),
+          error: error.message,
+          stack: error.stack,
+          failedFiles: failedFiles.length > 0 ? failedFiles : undefined
+        }
+        
+        console.error('❌ Content processor failed:', error.message)
+        console.error('🔍 Stack trace:', error.stack)
+        if (failedFiles.length > 0) {
+          console.error('💥 Failed files:', failedFiles)
+        }
+        
+        // Environment-based error handling
+        const failOnError = process.env.CONTENT_FAIL_ON_ERROR === 'true'
+        const isProduction = process.env.NODE_ENV === 'production'
+        const isCi = process.env.CI === 'true'
+        
+        // Write error log for debugging
+        try {
+          await writeFile('content-processing-error.log', JSON.stringify(errorReport, null, 2))
+          console.log('📋 Error details written to content-processing-error.log')
+        } catch (logError) {
+          console.warn('⚠️ Could not write error log:', logError.message)
+        }
+        
+        if (failOnError || (isProduction && isCi)) {
+          throw new Error(`Content processing failed: ${error.message}. Check content-processing-error.log for details.`)
+        } else {
+          console.warn('⚠️ Continuing build despite content processing errors.')
+          console.warn('💡 Set CONTENT_FAIL_ON_ERROR=true to halt build on content errors.')
+          console.warn('📝 In production CI, builds will fail automatically on content errors.')
+        }
       }
     }
   }

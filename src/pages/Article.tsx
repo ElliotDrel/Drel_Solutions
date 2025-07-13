@@ -185,10 +185,9 @@ const Article = () => {
 
           {/* Article Content */}
           <div className="prose prose-lg max-w-none">
-            <div 
-              className="article-content space-y-6 leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: post.content }}
-            />
+            <div className="article-content space-y-6 leading-relaxed whitespace-pre-wrap">
+              {post.content}
+            </div>
           </div>
 
           {/* Author Card */}

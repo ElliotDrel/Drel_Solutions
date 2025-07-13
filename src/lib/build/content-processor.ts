@@ -64,6 +64,7 @@ export function contentProcessor(): Plugin {
         
         // Check if posts directory exists
         const failedFiles: string[] = []
+        
         try {
           const postFiles = await readdir('src/content/blog/posts')
           const markdownFiles = postFiles.filter(file => extname(file) === '.md')

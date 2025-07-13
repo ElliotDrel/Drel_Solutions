@@ -2,7 +2,7 @@ import type { Plugin } from 'vite'
 import { readFile, writeFile, mkdir, readdir } from 'fs/promises'
 import { join, extname } from 'path'
 import { BlogPostSchema } from '../../types/blog'
-import { calculateReadingTime, generateExcerpt } from '../content/markdown'
+import { calculateReadingTime, generateExcerpt, sanitizeMarkdown } from '../content/markdown'
 import { validateFrontmatter, validateContentStructure } from '../content/validation'
 
 // Enhanced frontmatter parser with multi-line YAML object support
@@ -150,14 +150,17 @@ export function contentProcessor(): Plugin {
                   console.warn(`Content validation issues in ${file}:`, contentValidation.errors)
                 }
                 
-                // Generate computed fields
-                const readingTime = calculateReadingTime(content)
-                const excerpt = generateExcerpt(content)
-                const wordCount = content.split(/\s+/).length
+                // Sanitize content for XSS protection
+                const sanitizedContent = sanitizeMarkdown(content)
+                
+                // Generate computed fields using sanitized content
+                const readingTime = calculateReadingTime(sanitizedContent)
+                const excerpt = generateExcerpt(sanitizedContent)
+                const wordCount = sanitizedContent.split(/\s+/).length
                 
                 const processedPost = {
                   frontmatter: { ...frontmatter, readingTime },
-                  content,
+                  content: sanitizedContent,
                   excerpt,
                   readingTime,
                   wordCount,

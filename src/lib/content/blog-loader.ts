@@ -10,27 +10,42 @@ const fallbackBlogData: BlogIndex = {
   lastUpdated: new Date().toISOString()
 }
 
-// This will be populated by the build process or use fallback
-let blogIndex: BlogIndex = fallbackBlogData
-
-// Try to import the generated blog index
-const loadBlogIndex = async () => {
-  try {
-    // @ts-ignore - This file will be generated at build time
-    const indexModule = await import('@/content/generated/blog-index.json')
-    blogIndex = indexModule.default
-  } catch (error) {
-    console.warn('Blog index not found, using fallback data')
-    // Keep using fallback data
-  }
-}
-
-// Initialize the blog index
-loadBlogIndex()
+// Fallback data is now accessed directly by the loadIndex method
 
 export class BlogLoader {
-  private static index: BlogIndex = blogIndex!
+  private static _index: BlogIndex | null = null
+  private static _loading: Promise<BlogIndex> | null = null
   private static contentCache = new Map<string, BlogContent>()
+
+  private static async ensureIndex(): Promise<BlogIndex> {
+    // If already loaded, return immediately
+    if (this._index) {
+      return this._index
+    }
+    
+    // If currently loading, wait for that operation
+    if (this._loading) {
+      return this._loading
+    }
+    
+    // Start loading
+    this._loading = this.loadIndex()
+    this._index = await this._loading
+    this._loading = null
+    
+    return this._index
+  }
+
+  private static async loadIndex(): Promise<BlogIndex> {
+    try {
+      // @ts-ignore - This file will be generated at build time
+      const indexModule = await import('@/content/generated/blog-index.json')
+      return indexModule.default
+    } catch (error) {
+      console.warn('Blog index not found, using fallback data')
+      return fallbackBlogData
+    }
+  }
 
   static async getAllPosts(options?: {
     includeContent?: boolean
@@ -38,7 +53,8 @@ export class BlogLoader {
     sort?: 'date' | 'title' | 'readingTime'
     limit?: number
   }): Promise<BlogPost[]> {
-    let posts = this.index.posts.filter(post => !post.draft)
+    const index = await this.ensureIndex()
+    let posts = index.posts.filter(post => !post.draft)
     
     if (options?.filter) {
       posts = posts.filter(options.filter)
@@ -71,30 +87,34 @@ export class BlogLoader {
     }
   }
 
-  static getPostsByAuthor(authorSlug: string): BlogPost[] {
-    return this.index.posts.filter(post => 
+  static async getPostsByAuthor(authorSlug: string): Promise<BlogPost[]> {
+    const index = await this.ensureIndex()
+    return index.posts.filter(post => 
       post.author.slug === authorSlug && !post.draft
     )
   }
 
-  static getPostsByTag(tag: string): BlogPost[] {
-    return this.index.posts.filter(post => 
+  static async getPostsByTag(tag: string): Promise<BlogPost[]> {
+    const index = await this.ensureIndex()
+    return index.posts.filter(post => 
       post.tags.includes(tag) && !post.draft
     )
   }
 
-  static getFeaturedPosts(limit = 3): BlogPost[] {
-    return this.index.posts
+  static async getFeaturedPosts(limit = 3): Promise<BlogPost[]> {
+    const index = await this.ensureIndex()
+    return index.posts
       .filter(post => post.featured && !post.draft)
       .slice(0, limit)
   }
 
-  static getRecommendedPosts(currentSlug: string, limit = 3): BlogPost[] {
-    const currentPost = this.index.posts.find(p => p.slug === currentSlug)
+  static async getRecommendedPosts(currentSlug: string, limit = 3): Promise<BlogPost[]> {
+    const index = await this.ensureIndex()
+    const currentPost = index.posts.find(p => p.slug === currentSlug)
     if (!currentPost) return []
 
     // Simple recommendation: same tags, different post
-    return this.index.posts
+    return index.posts
       .filter(post => 
         post.slug !== currentSlug && 
         !post.draft &&
@@ -103,21 +123,24 @@ export class BlogLoader {
       .slice(0, limit)
   }
 
-  static getAllTags(): string[] {
-    return this.index.tags
+  static async getAllTags(): Promise<string[]> {
+    const index = await this.ensureIndex()
+    return index.tags
   }
 
-  static getAllAuthors(): Record<string, any> {
-    return this.index.authors
+  static async getAllAuthors(): Promise<Record<string, any>> {
+    const index = await this.ensureIndex()
+    return index.authors
   }
 
-  static getIndex(): BlogIndex {
-    return this.index
+  static async getIndex(): Promise<BlogIndex> {
+    return await this.ensureIndex()
   }
 
   // Method to update index (used by build process)
   static updateIndex(newIndex: BlogIndex): void {
-    this.index = newIndex
+    this._index = newIndex
+    this._loading = null // Clear loading state
     this.contentCache.clear() // Clear cache when index updates
   }
 

@@ -409,7 +409,7 @@ const ModelAdvisor = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
+      <div className="min-h-screen">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="flex justify-center items-center h-64">
             <div className="text-xl text-gray-600">Loading AI models...</div>
@@ -420,7 +420,7 @@ const ModelAdvisor = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
+    <div className="min-h-screen">
       {/* Show loading animation when searching */}
       {isSearching && <LoadingAnimation />}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-12">

@@ -18,7 +18,7 @@ const About = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
+    <div className="min-h-screen">
         {/* Values Section */}
         <section className="h-[70vh] bg-blue-100 flex items-center pt-8">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -73,7 +73,7 @@ const About = () => {
           </div>
         </section>
 
-        <section className="py-20 bg-gradient-to-br from-blue-50 via-white to-green-50">
+        <section className="py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 {/* Left side - Text content */}

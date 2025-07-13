@@ -17,6 +17,13 @@ const About = () => {
       });
   }, []);
 
+  const scrollToDrelSolutions = () => {
+    const drelSection = document.querySelector('section:nth-of-type(2)'); // Drel Solutions section
+    if (drelSection) {
+      drelSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
         {/* Values Section */}
@@ -89,11 +96,18 @@ const About = () => {
                 </div>
                 
                 <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                  <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg rounded-lg shadow-lg hover:shadow-xl transition-all">
+                  <Button 
+                    onClick={scrollToDrelSolutions}
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg rounded-lg shadow-lg hover:shadow-xl transition-all"
+                  >
                     MY STORY
                   </Button>
-                  <Button variant="outline" className="border-2 border-gray-400 text-gray-700 hover:bg-gray-50 px-8 py-4 text-lg rounded-lg transition-all">
-                    ASK ME
+                  <Button 
+                    variant="outline" 
+                    asChild
+                    className="border-2 border-gray-400 text-gray-700 hover:bg-gray-50 px-8 py-4 text-lg rounded-lg transition-all"
+                  >
+                    <Link to="/contact">ASK ME</Link>
                   </Button>
                 </div>
               </div>

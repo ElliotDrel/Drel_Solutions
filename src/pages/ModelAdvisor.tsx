@@ -473,7 +473,7 @@ const ModelAdvisor = () => {
                     <Button 
                       onClick={handleSearch}
                       disabled={isSearching || !searchQuery.trim()}
-                      className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
+                      className="flex-1 btn-primary"
                     >
                       {isSearching ? (
                         <>
@@ -532,7 +532,7 @@ const ModelAdvisor = () => {
                     Browse All Models
                   </Button>
                   <Link to="/contact">
-                    <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+                    <Button className="btn-primary">
                       Get Expert Consultation
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
@@ -620,7 +620,7 @@ const ModelAdvisor = () => {
                         }
                       }}
                       variant="outline" 
-                      className="px-8 py-3 text-lg font-medium border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition-all duration-200"
+                      className="btn-outline-primary px-8 py-3 text-lg font-medium"
                     >
                       {showAllModels ? (
                         <>

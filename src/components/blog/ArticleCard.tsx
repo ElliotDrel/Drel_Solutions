@@ -67,10 +67,9 @@ export const ArticleCard = ({ post, onAuthorClick, onTagClick }: ArticleCardProp
         </div>
 
         <Button
-          variant="outline"
           size="sm"
           asChild
-          className="w-full group-hover:border-primary group-hover:text-primary transition-colors"
+          className="w-full btn-article"
         >
           <Link to={`/blog/${post.slug}`}>
             Read Article

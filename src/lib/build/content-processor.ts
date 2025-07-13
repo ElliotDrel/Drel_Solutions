@@ -157,11 +157,6 @@ export function contentProcessor(): Plugin {
           console.error('💥 Failed files:', failedFiles)
         }
         
-        // Environment-based error handling
-        const failOnError = process.env.CONTENT_FAIL_ON_ERROR === 'true'
-        const isProduction = process.env.NODE_ENV === 'production'
-        const isCi = process.env.CI === 'true'
-        
         // Write error log for debugging
         try {
           await writeFile('content-processing-error.log', JSON.stringify(errorReport, null, 2))
@@ -170,13 +165,9 @@ export function contentProcessor(): Plugin {
           console.warn('⚠️ Could not write error log:', logError.message)
         }
         
-        if (failOnError || (isProduction && isCi)) {
-          throw new Error(`Content processing failed: ${error.message}. Check content-processing-error.log for details.`)
-        } else {
-          console.warn('⚠️ Continuing build despite content processing errors.')
-          console.warn('💡 Set CONTENT_FAIL_ON_ERROR=true to halt build on content errors.')
-          console.warn('📝 In production CI, builds will fail automatically on content errors.')
-        }
+        // CRITICAL: Always fail build when content processing fails
+        // This ensures broken articles never make it to deployment
+        throw new Error(`Content processing failed: ${error.message}. Check content-processing-error.log for details.`)
       }
     }
   }

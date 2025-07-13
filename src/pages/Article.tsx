@@ -172,16 +172,14 @@ const Article = () => {
           </header>
 
           {/* Featured Image */}
-          {post.frontmatter.image && (
-            <div className="relative overflow-hidden rounded-lg">
-              <img
-                src={post.frontmatter.image}
-                alt={post.frontmatter.title}
-                className="w-full h-64 md:h-96 object-cover"
-                loading="eager"
-              />
-            </div>
-          )}
+          <div className="relative overflow-hidden rounded-lg">
+            <img
+              src={post.frontmatter.image || '/blog/images/Drel Solutions Unavailable Image Placeholder.png'}
+              alt={post.frontmatter.title}
+              className="w-full h-64 md:h-96 object-cover"
+              loading="eager"
+            />
+          </div>
 
           {/* Article Content */}
           <div className="prose prose-lg max-w-none">

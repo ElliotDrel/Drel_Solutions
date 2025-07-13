@@ -17,7 +17,7 @@ export const ArticleCard = ({ post, onAuthorClick, onTagClick }: ArticleCardProp
       <CardHeader className="p-0">
         <div className="relative overflow-hidden">
           <img
-            src={post.image}
+            src={post.image || '/blog/images/Drel Solutions Unavailable Image Placeholder.png'}
             alt={post.title}
             className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
             loading="lazy"

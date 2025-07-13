@@ -17,7 +17,7 @@ export const FeaturedPost = ({ post, onAuthorClick, onTagClick }: FeaturedPostPr
       <div className="md:flex">
         <div className="md:w-1/2">
           <img
-            src={post.image}
+            src={post.image || '/blog/images/Drel Solutions Unavailable Image Placeholder.png'}
             alt={post.title}
             className="w-full h-64 md:h-full object-cover"
             loading="eager"

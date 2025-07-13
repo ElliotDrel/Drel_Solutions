@@ -14,8 +14,6 @@ export const ArticleProgress: React.FC<ArticleProgressProps> = ({ content }) => 
       
       const h2Elements = tempDiv.querySelectorAll('h2');
       const h2Texts: string[] = [];
-
-      let i = 0;
       
       h2Elements.forEach((h2) => {
         const text = h2.textContent || '';

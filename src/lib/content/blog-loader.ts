@@ -1,26 +1,12 @@
 import type { BlogContent, BlogIndex, BlogPost } from '../../types/blog'
+import { mockPosts } from '../../data/blog/articles'
 
 // Fallback data when build-time generated content is not available
 const fallbackBlogData: BlogIndex = {
-  posts: [
-    {
-      id: "1",
-      title: "Streamlining Team Workflows with Automation",
-      subtitle: "How we reduced manual tasks by 70% using smart process automation",
-      slug: "streamlining-team-workflows",
-      author: { name: "Sarah Chen", slug: "sarah-chen" },
-      publishedAt: "2024-01-15",
-      readingTime: 8,
-      tags: ["workflow", "automation", "productivity"],
-      image: "/blog/images/posts/streamlining-team-workflows/hero.jpg",
-      featured: true,
-      draft: false
-    }
-    // Add other posts as needed for fallback
-  ],
+  posts: mockPosts,
   authors: {},
-  tags: ["workflow", "automation", "productivity"],
-  totalPosts: 1,
+  tags: [...new Set(mockPosts.flatMap(p => p.tags))].sort(),
+  totalPosts: mockPosts.length,
   lastUpdated: new Date().toISOString()
 }
 

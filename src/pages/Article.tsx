@@ -87,7 +87,7 @@ const Article = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center space-y-4">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
           <p className="text-muted-foreground">Loading article...</p>
@@ -98,7 +98,7 @@ const Article = () => {
 
   if (!post || error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center space-y-4">
           <h1 className="text-2xl font-bold">Article Not Found</h1>
           <p className="text-muted-foreground">
@@ -114,7 +114,7 @@ const Article = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
+    <div className="min-h-screen">
       <div className="max-w-4xl mx-auto px-4 py-8">
         {/* Navigation */}
         <div className="mb-8">

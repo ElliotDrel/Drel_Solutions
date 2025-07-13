@@ -57,11 +57,6 @@ export interface SEOMetadata {
   jsonLd: Record<string, any>
 }
 
-export interface BlogPostContent {
-  slug: string;
-  content: string;
-}
-
 export interface NewsletterSubscription {
   email: string;
   subscribedAt: string;

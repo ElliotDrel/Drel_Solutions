@@ -15,6 +15,7 @@ const Article = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [post, setPost] = useState<BlogContent | null>(null);
+  const [recommendedPosts, setRecommendedPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -68,6 +69,9 @@ const Article = () => {
           setError('Post not found');
         } else {
           setPost(postContent);
+          // Load recommended posts
+          const recommended = await BlogLoader.getRecommendedPosts(slug, 3);
+          setRecommendedPosts(recommended);
         }
       } catch (err) {
         console.error('Error loading post:', err);
@@ -211,7 +215,7 @@ const Article = () => {
             {/* Recommended Articles */}
             <RecommendedArticles
               currentPostId={post.frontmatter.id}
-              posts={BlogLoader.getRecommendedPosts(post.frontmatter.slug, 3)}
+              posts={recommendedPosts}
               onAuthorClick={handleAuthorFilter}
               onTagClick={handleTagFilter}
             />

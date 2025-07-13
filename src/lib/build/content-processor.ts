@@ -1,11 +1,12 @@
 import type { Plugin } from 'vite'
 import { readFile, writeFile, mkdir, readdir } from 'fs/promises'
 import { join, extname } from 'path'
+import * as yaml from 'js-yaml'
 import { BlogPostSchema } from '../../types/blog'
 import { calculateReadingTime, generateExcerpt, sanitizeMarkdown } from '../content/markdown'
 import { validateFrontmatter, validateContentStructure } from '../content/validation'
 
-// Enhanced frontmatter parser with multi-line YAML object support
+// Robust frontmatter parser using js-yaml
 function parseFrontmatter(content: string): { data: any; content: string } {
   const frontmatterRegex = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/
   const match = content.match(frontmatterRegex)
@@ -15,89 +16,24 @@ function parseFrontmatter(content: string): { data: any; content: string } {
   }
   
   const [, frontmatterStr, bodyContent] = match
-  const data: any = {}
   
-  // Enhanced YAML-like parsing with multi-line object support
-  const lines = frontmatterStr.split('\n')
-  let currentKey: string | null = null
-  let currentObject: any = null
-  let indentLevel = 0
-  
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i]
-    const trimmedLine = line.trim()
+  try {
+    // Use js-yaml to parse the frontmatter with proper YAML spec compliance
+    const data = yaml.load(frontmatterStr, { 
+      // Safe loading to prevent code execution
+      schema: yaml.SAFE_SCHEMA,
+      // Allow duplicate keys (last one wins)
+      json: true 
+    }) as Record<string, any> || {}
     
-    // Skip empty lines
-    if (!trimmedLine) continue
+    return { data, content: bodyContent }
+  } catch (error: any) {
+    console.error('❌ YAML frontmatter parsing error:', error.message)
+    console.error('📄 Failed content preview:', frontmatterStr.substring(0, 100) + '...')
     
-    // Calculate current line indent
-    const lineIndent = line.length - line.trimStart().length
-    
-    // Check if this is a top-level key
-    const colonIndex = line.indexOf(':')
-    if (colonIndex > 0 && lineIndent === 0) {
-      // Save previous object if we were building one
-      if (currentKey && currentObject) {
-        data[currentKey] = currentObject
-      }
-      
-      currentKey = line.substring(0, colonIndex).trim()
-      let value = line.substring(colonIndex + 1).trim()
-      
-      // If value is empty, this might be start of an object
-      if (!value) {
-        currentObject = {}
-        indentLevel = lineIndent
-        continue
-      }
-      
-      // Process single-line values
-      value = parseValue(value)
-      data[currentKey] = value
-      currentKey = null
-      currentObject = null
-    }
-    // Handle nested object properties
-    else if (currentKey && currentObject && lineIndent > 0) {
-      const nestedColonIndex = trimmedLine.indexOf(':')
-      if (nestedColonIndex > 0) {
-        const nestedKey = trimmedLine.substring(0, nestedColonIndex).trim()
-        let nestedValue = trimmedLine.substring(nestedColonIndex + 1).trim()
-        nestedValue = parseValue(nestedValue)
-        currentObject[nestedKey] = nestedValue
-      }
-    }
+    // Return empty data object to allow build to continue with warning
+    return { data: {}, content: bodyContent }
   }
-  
-  // Save final object if we were building one
-  if (currentKey && currentObject) {
-    data[currentKey] = currentObject
-  }
-  
-  return { data, content: bodyContent }
-}
-
-// Helper function to parse individual values
-function parseValue(value: string): any {
-  // Remove quotes
-  if (value.startsWith('"') && value.endsWith('"')) {
-    return value.slice(1, -1)
-  }
-  
-  // Handle arrays
-  if (value.startsWith('[') && value.endsWith(']')) {
-    return value.slice(1, -1).split(',').map(v => v.trim().replace(/"/g, ''))
-  }
-  
-  // Handle booleans
-  if (value === 'true') return true
-  if (value === 'false') return false
-  
-  // Handle numbers
-  if (/^\d+$/.test(value)) return parseInt(value)
-  
-  // Return as string
-  return value
 }
 
 export function contentProcessor(): Plugin {

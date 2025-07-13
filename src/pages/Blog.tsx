@@ -27,7 +27,7 @@ const Blog = () => {
         setLoading(true);
         
         // Get featured posts
-        const featured = BlogLoader.getFeaturedPosts(1);
+        const featured = await BlogLoader.getFeaturedPosts(1);
         const featuredPost = featured.length > 0 ? featured[0] : null;
         
         // Get all posts with filters

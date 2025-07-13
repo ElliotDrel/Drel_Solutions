@@ -11,10 +11,28 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Never run `npm install`, `npm run build`, or any other commands
 - Code changes are made locally only
 - All building, testing, and deployment happens on Vercel and Github
+- **Ask for build logs** when changes could impact functionality
 
 ### Development Process
 1. **Code Changes**: Edit files as requested
-2. **Vercel Handles**: All building, testing, and deployment automatically
+2. **Verification**: Request Vercel build logs for complex changes (see "When to Request Build Logs" below)
+3. **Vercel Handles**: All building, testing, and deployment automatically
+
+### When to Request Build Logs
+**Always ask for build logs when:**
+- Adding new dependencies or imports
+- Modifying TypeScript interfaces or types
+- Changing API endpoints or data structures
+- Adding new components or pages
+- Modifying routing logic
+- Making changes to configuration files
+- Any changes that could break functionality
+
+**Build logs not needed for:**
+- Simple CSS/styling changes
+- Text content updates
+- Minor UI adjustments
+- Documentation updates
 
 ## Architecture Overview
 

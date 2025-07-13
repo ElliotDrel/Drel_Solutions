@@ -6,6 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { BlogPost } from '@/types/blog';
 import { RecommendedArticles } from '@/components/blog/RecommendedArticles';
 import { StayUpdatedSection } from '@/components/blog/StayUpdatedSection';
+import { ArticleProgress } from '@/components/blog/ArticleProgress';
 import { useToast } from '@/hooks/use-toast';
 import { mockPosts, articleContent } from '@/data/blog/articles';
 
@@ -69,8 +70,12 @@ const Article = () => {
   const content = articleContent[slug!] || '<p>Content coming soon...</p>';
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-4xl mx-auto px-4 py-8">
+    <div className="flex">
+      <div className="w-80 p-4">
+        <ArticleProgress content={content} />
+      </div>
+      <div id="article-content" className="max-h-screen bg-background mx-auto overflow-auto scrollbar-hide">
+        <div className="max-w-4xl mx-auto px-4 py-8">
         {/* Navigation */}
         <div className="mb-8">
           <Button 
@@ -189,6 +194,7 @@ const Article = () => {
           </div>
         </article>
       </div>
+    </div>
     </div>
   );
 };

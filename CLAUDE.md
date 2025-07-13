@@ -2,23 +2,19 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Available Commands (Vercel Deployment Only)
+## Development Workflow
 
-**IMPORTANT**: This project is deployed exclusively on Vercel. No local development is performed.
+**CRITICAL**: This project runs EXCLUSIVELY on Vercel. DO NOT attempt local development, installs, or builds.
 
-### Build & Test Commands
-- `npm run build` - Build for production (runs in Vercel)
-- `npm run build:dev` - Build in development mode
-- `npm run lint` - Run ESLint
-- `npm run test:run` - Run unit tests once
-- `npm run test:coverage` - Run unit tests with coverage (80% minimum required)
-- `npm run test:e2e` - Run Playwright end-to-end tests
-- `npm run test:ci` - Run all tests with coverage (used in CI)
+### Your Role
+- Edit code files only
+- Never run `npm install`, `npm run build`, or any other commands
+- Code changes are made locally only
+- All building, testing, and deployment happens on Vercel and Github
 
-### Development Note
-- All development and testing happens through Vercel's build system
-- Code changes are made locally, then pushed to git for Vercel deployment
-- No local servers or backend processes are run
+### Development Process
+1. **Code Changes**: Edit files as requested
+2. **Vercel Handles**: All building, testing, and deployment automatically
 
 ## Architecture Overview
 
@@ -95,47 +91,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **Test on**: Chromium, Firefox (CI only), Mobile Chrome
 - **CI**: Tests must pass for deployment
 
-### Environment Setup
-- **Local Development**: Not performed - all development through Vercel
-- **Dependencies**: Managed through Vercel's build system
-- **Environment Variables**: Set in Vercel dashboard (OpenAI API key, etc.)
-- **Deployment**: Automatic through git push to connected repository
-
-### Environment Variables
-- `CONTENT_FAIL_ON_ERROR=true` - Force build failure on content processing errors (default: false)
-- `NODE_ENV=production` - Production environment detection
-- `CI=true` - CI environment detection (auto-set by most CI systems)
-- `VITEST=true` - Excludes content processor during testing (auto-set by Vitest)
-
 ## Important Notes
 
 ### Model Documentation System
 - Comprehensive model specs for Anthropic, Google, and OpenAI models
 - Documentation is loaded by OpenAI service to make intelligent recommendations
 - Models include capabilities, pricing, speed, accuracy characteristics
-
-### Deployment & Development Workflow
-
-**CRITICAL**: This project runs EXCLUSIVELY on Vercel. No local development environment exists.
-
-#### Development Process:
-1. **Code Changes**: Made locally and committed to git
-2. **Testing**: All testing happens in Vercel's build pipeline
-3. **Deployment**: Automatic on git push to main branch
-4. **Preview**: Automatic preview deployments for feature branches
-
-#### Build Log Requests:
-When requesting build/test logs from the user:
-- **Specify clearly**: Whether you need logs regardless of build outcome OR only on failure
-- **Example**: "Please push to git and send me the Vercel build logs regardless of success/failure"
-- **Example**: "Please push to git and send me the Vercel build logs only if the build fails"
-
-#### Key Points:
-- **No Local Backend**: All API functionality runs as Vercel serverless functions
-- **No Local Testing**: All tests run in Vercel's CI/CD pipeline
-- **Build Command**: `npm run test:run && npm run build` (includes tests)
-- **Monitoring**: Vercel Speed Insights and Analytics integrated
-- **Environment**: All environment variables managed in Vercel dashboard
 
 ### Code Standards
 - TypeScript strict mode
@@ -153,3 +114,32 @@ When requesting build/test logs from the user:
 - Blog components in `src/components/blog/`
 - Routes: `/blog` (listing) and `/blog/:slug` (individual articles)
 - TypeScript interfaces defined in `src/types/blog.ts`
+
+---
+
+## Vercel Build & Deployment Reference
+
+*The following commands and processes are handled automatically by Vercel. This information is included for reference only.*
+
+### Build Commands (Vercel Only)
+- `npm run build` - Build for production
+- `npm run build:dev` - Build in development mode
+- `npm run lint` - Run ESLint
+- `npm run test:run` - Run unit tests once
+- `npm run test:coverage` - Run unit tests with coverage (80% minimum required)
+- `npm run test:e2e` - Run Playwright end-to-end tests
+- `npm run test:ci` - Run all tests with coverage (used in CI)
+
+### Environment Variables (Vercel Dashboard)
+- `CONTENT_FAIL_ON_ERROR=true` - Force build failure on content processing errors (default: false)
+- `NODE_ENV=production` - Production environment detection
+- `CI=true` - CI environment detection (auto-set by most CI systems)
+- `VITEST=true` - Excludes content processor during testing (auto-set by Vitest)
+
+### Vercel Deployment Process
+1. **Testing**: All tests run in Vercel's CI/CD pipeline
+2. **Building**: `npm run test:run && npm run build` (includes tests)
+3. **Deployment**: Automatic on git push to main branch
+4. **Preview**: Automatic preview deployments for feature branches
+5. **Monitoring**: Vercel Speed Insights and Analytics integrated
+6. **Environment**: All environment variables managed in Vercel dashboard

@@ -32,7 +32,7 @@ export const ArticleCard = ({ post, onAuthorClick, onTagClick }: ArticleCardProp
               <Badge
                 key={tag}
                 variant="secondary"
-                className="text-xs cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors"
+                className="text-xs cursor-pointer hover:bg-blue-600 hover:text-white transition-colors"
                 onClick={() => onTagClick(tag)}
               >
                 {tag}
@@ -40,20 +40,20 @@ export const ArticleCard = ({ post, onAuthorClick, onTagClick }: ArticleCardProp
             ))}
           </div>
           
-          <h3 className="text-xl font-semibold leading-tight group-hover:text-primary transition-colors">
+          <h3 className="text-xl font-semibold leading-tight group-hover:text-blue-600 transition-colors">
             {post.title}
           </h3>
           
-          <p className="text-muted-foreground text-sm line-clamp-2">
+          <p className="text-gray-600 text-sm line-clamp-2">
             {post.subtitle}
           </p>
         </div>
 
-        <div className="flex items-center justify-between text-sm text-muted-foreground border-t pt-4">
+        <div className="flex items-center justify-between text-sm text-gray-600 border-t pt-4">
           <Button
             variant="ghost"
             size="sm"
-            className="p-0 h-auto hover:text-primary transition-colors"
+            className="p-0 h-auto hover:text-blue-600 transition-colors"
             onClick={() => onAuthorClick(post.author.slug)}
           >
             <User className="h-3 w-3 mr-1" />
@@ -70,7 +70,7 @@ export const ArticleCard = ({ post, onAuthorClick, onTagClick }: ArticleCardProp
           variant="outline"
           size="sm"
           asChild
-          className="w-full group-hover:border-primary group-hover:text-primary transition-colors"
+          className="w-full group-hover:border-blue-600 group-hover:text-blue-600 transition-colors"
         >
           <Link to={`/blog/${post.slug}`}>
             Read Article

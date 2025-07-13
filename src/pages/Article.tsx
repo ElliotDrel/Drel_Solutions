@@ -1,6 +1,8 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { Clock, User, ArrowLeft, Calendar } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
@@ -183,9 +185,12 @@ const Article = () => {
 
           {/* Article Content */}
           <div className="prose prose-lg max-w-none">
-            <div className="article-content space-y-6 leading-relaxed whitespace-pre-wrap">
+            <ReactMarkdown 
+              className="article-content space-y-6 leading-relaxed"
+              remarkPlugins={[remarkGfm]}
+            >
               {post.content}
-            </div>
+            </ReactMarkdown>
           </div>
 
           {/* Author Card */}

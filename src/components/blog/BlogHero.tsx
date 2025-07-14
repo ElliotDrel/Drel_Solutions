@@ -15,7 +15,7 @@ export const BlogHero = () => {
         </p>
       </div>
       
-      <div className="flex justify-center space-x-4">
+      <div className="flex justify-start space-x-4">
         <Button variant="ghost" size="sm" asChild>
           <a href="https://twitter.com/drelsolutions" target="_blank" rel="noopener noreferrer">
             <Twitter className="h-4 w-4" />

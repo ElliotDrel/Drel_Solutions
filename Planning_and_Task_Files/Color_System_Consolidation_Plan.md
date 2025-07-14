@@ -241,7 +241,7 @@ touch color-migration-progress.md
 - [ ] Add brand color definitions to `tailwind.config.ts`
 - [ ] Add provider color definitions
 - [ ] Remove any dark mode configurations
-- [ ] Test configuration with `npx tailwindcss --help`
+- [ ] Test configuration by requesting Vercel build logs to verify Tailwind processes correctly
 
 **Task 3.3: Create Color Utility Functions** (30 minutes)
 ```typescript
@@ -522,7 +522,7 @@ jobs:
 ### Pre-Implementation Checklist
 - [ ] Create feature branch: `git checkout -b feature/color-system-consolidation`
 - [ ] Backup current files: `cp src/index.css src/index.css.backup`
-- [ ] Install additional tooling: `npm install --save-dev eslint-plugin-no-hardcoded-colors`
+- [ ] Add additional tooling to package.json: `eslint-plugin-no-hardcoded-colors` (Vercel will install during deployment)
 - [ ] Document current state: Take screenshots of all major pages
 - [ ] Run baseline tests: `npm run test:all` and document results
 

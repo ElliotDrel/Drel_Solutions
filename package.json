@@ -9,8 +9,6 @@
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start:backend": "cd backend && python main.py",
-    "start:full": "concurrently \"npm run start:backend\" \"npm run dev\" --names \"backend,frontend\" --prefix name",
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:run": "vitest run",

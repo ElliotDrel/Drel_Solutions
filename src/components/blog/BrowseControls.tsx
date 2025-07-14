@@ -22,13 +22,12 @@ export const BrowseControls = ({
   const hasActiveFilters = selectedAuthor || (selectedTags.length > 0);
 
   return (
-    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 py-4 border-b">
-      <div className="flex items-center space-x-4">
+    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 py-4 border-b w-full">
+      <div className="flex-1 flex items-center space-x-4">
         <div className="flex items-center space-x-2">
           <Filter className="h-4 w-4 text-muted-foreground" />
           <span className="text-sm font-medium">Browse by:</span>
         </div>
-        
         <div className="flex space-x-2">
           <Button
             variant={sortBy === 'date' ? 'default' : 'ghost'}
@@ -59,23 +58,22 @@ export const BrowseControls = ({
           </Button>
         </div>
       </div>
-
+      <div className="w-full sm:w-auto flex justify-start sm:justify-end">
+        <span className="text-lg font-semibold text-brand-neutral-700">Latest Posts</span>
+      </div>
       {hasActiveFilters && (
         <div className="flex items-center space-x-2">
           <span className="text-sm text-muted-foreground">Active filters:</span>
-          
           {selectedAuthor && (
             <Badge variant="secondary" className="text-xs">
               Author: {selectedAuthor.replace('-', ' ')}
             </Badge>
           )}
-          
           {selectedTags.map(tag => (
             <Badge key={tag}>
               Tag: {tag}
             </Badge>
           ))}
-          
           <Button
             variant="ghost"
             size="sm"

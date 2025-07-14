@@ -121,7 +121,9 @@ const Blog = () => {
               setCurrentPage(1);
             }}
           />
-          <TagSort onTagClick={handleTagFilter} selectedTags={selectedTags} />
+          <div className="border-b w-full border-brand-neutral-200 pb-2">
+            <TagSort onTagClick={handleTagFilter} selectedTags={selectedTags} />
+          </div>
         </div>
 
         {/* Post Grid */}

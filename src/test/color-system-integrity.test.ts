@@ -128,12 +128,13 @@ describe('Color System Integrity Tests', () => {
                   case 'slate':
                   case 'zinc':
                   case 'neutral':
-                  case 'stone':
+                  case 'stone': {
                     const numberMatch = match.match(/-[0-9]+/);
                     if (numberMatch) {
                       suggestion = match.replace(new RegExp(`-${color}-[0-9]+`), `-brand-neutral${numberMatch[0]}`);
                     }
                     break;
+                  }
                   default:
                     suggestion = `Check brand color system for ${color} equivalent`;
                 }

@@ -111,6 +111,96 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - React 18 patterns with hooks
 - Path alias `@/` for `src/` directory
 
+## Brand Color System (CRITICAL)
+
+**IMPORTANT**: This project uses a unified brand color system. NEVER use hardcoded Tailwind colors.
+
+### Core Rules
+1. **NEVER use hardcoded Tailwind colors** (bg-blue-600, text-gray-700, etc.)
+2. **ALWAYS use brand color classes** (bg-brand-primary, text-brand-neutral-700, etc.)
+3. **Automated protection** prevents hardcoded colors from being deployed
+
+### Available Brand Colors
+
+#### Core Brand Colors
+```css
+bg-brand-primary     /* Main brand blue */
+bg-brand-secondary   /* Secondary brand color */
+bg-brand-accent      /* Purple accent color */
+bg-brand-success     /* Green success color */
+bg-brand-warning     /* Orange warning color */
+bg-brand-danger      /* Red danger color */
+bg-brand-info        /* Blue info color */
+```
+
+#### Neutral Scale (50-900)
+```css
+bg-brand-neutral-50   /* Lightest backgrounds */
+bg-brand-neutral-100  /* Light backgrounds */
+bg-brand-neutral-200  /* Borders, dividers */
+bg-brand-neutral-300  /* Disabled states */
+bg-brand-neutral-400  /* Placeholders */
+bg-brand-neutral-500  /* Secondary text */
+bg-brand-neutral-600  /* Primary text */
+bg-brand-neutral-700  /* Headings */
+bg-brand-neutral-800  /* Emphasized text */
+bg-brand-neutral-900  /* Highest contrast */
+```
+
+#### Provider-Specific Colors
+```css
+bg-provider-openai    /* Green (maps to brand-success) */
+bg-provider-anthropic /* Purple (maps to brand-accent) */
+bg-provider-google    /* Blue (maps to brand-primary) */
+bg-provider-default   /* Gray (maps to brand-neutral-500) */
+```
+
+### Usage Examples
+
+#### ❌ WRONG (Hardcoded Colors)
+```css
+bg-blue-600 text-gray-700 border-green-500 hover:bg-red-600
+```
+
+#### ✅ CORRECT (Brand Colors)
+```css
+bg-brand-primary text-brand-neutral-700 border-brand-success hover:bg-brand-danger
+```
+
+### Common Patterns
+
+#### Text Colors
+- **Headings**: `text-brand-neutral-700` or `text-brand-neutral-800`
+- **Body text**: `text-brand-neutral-600`
+- **Secondary text**: `text-brand-neutral-500`
+- **Muted text**: `text-brand-neutral-400`
+
+#### Background Colors
+- **Primary actions**: `bg-brand-primary text-brand-neutral-50`
+- **Light backgrounds**: `bg-brand-neutral-50` or `bg-brand-neutral-100`
+- **Card backgrounds**: `bg-card` (automatically maps to brand colors)
+
+#### Borders
+- **Standard borders**: `border-brand-neutral-200`
+- **Emphasized borders**: `border-brand-neutral-300`
+
+### Provider Color Utilities
+Use utility functions from `src/lib/colors.ts`:
+```typescript
+getProviderBgClass(provider)      // Returns 'bg-provider-openai'
+getProviderTextClass(provider)    // Returns 'text-provider-openai'
+getProviderBorderClass(provider)  // Returns 'border-provider-openai'
+```
+
+### Automated Protection
+- **Color integrity test** at `src/test/color-system-integrity.test.ts`
+- **Runs automatically** in CI/CD pipeline
+- **Blocks deployment** if hardcoded colors are detected
+- **Provides exact suggestions** for brand color replacements
+
+### Single Source of Truth
+All colors are defined in `src/index.css` as CSS custom properties. Changing base brand colors automatically updates the entire application.
+
 ## .scratchpad Usage Guide
 
 ### Purpose

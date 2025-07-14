@@ -53,7 +53,7 @@ export const ArticleCard = ({ post, onAuthorClick, onTagClick }: ArticleCardProp
           <Button
             variant="ghost"
             size="sm"
-            className="p-0 h-auto hover:text-primary transition-colors"
+            className="p-0 h-auto border border-transparent hover:bg-transparent hover:text-transparent hover:opacity-0 hover:border-brand-primary transition-colors"
             onClick={() => onAuthorClick(post.author.slug)}
           >
             <User className="h-3 w-3 mr-1" />

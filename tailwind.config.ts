@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 import tailwindcssAnimate from "tailwindcss-animate";
 import typography from "@tailwindcss/typography";
-import * as tokens from "./build/tokens.js";
+import { semanticColors } from "./build/tailwind-colors.js";
 
 export default {
 	darkMode: ["class"],
@@ -22,7 +22,7 @@ export default {
 		},
 		extend: {
 			colors: {
-				...tokens,
+				...semanticColors,
 				transparent: "transparent",
 				current: "currentColor",
 				border: 'hsl(var(--border))',

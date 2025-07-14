@@ -127,7 +127,7 @@ export class BlogLoader {
     return index.tags
   }
 
-  static async getAllAuthors(): Promise<Record<string, any>> {
+  static async getAllAuthors(): Promise<Record<string, unknown>> {
     const index = await this.ensureIndex()
     return index.authors
   }

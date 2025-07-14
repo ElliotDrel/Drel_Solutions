@@ -17,9 +17,9 @@ export const BlogPostSchema = z.object({
   image: z.string().optional(),
   featured: z.boolean().default(false),
   draft: z.boolean().default(false),
-  // SEO fields with character limits
-  metaTitle: z.string().min(1).max(100), // SEO title limit
-  metaDescription: z.string().min(1).max(200), // SEO description limit
+  // SEO fields with character limits (optional for backward compatibility)
+  metaTitle: z.string().min(1).max(100).optional(), // SEO title limit
+  metaDescription: z.string().min(1).max(200).optional(), // SEO description limit
   canonicalUrl: z.string().url().optional()
 })
 

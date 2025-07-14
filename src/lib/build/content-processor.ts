@@ -7,7 +7,7 @@ import { calculateReadingTime, generateExcerpt, sanitizeMarkdown } from '../cont
 import { validateFrontmatter, validateContentStructure } from '../content/validation'
 
 // Robust frontmatter parser using js-yaml
-function parseFrontmatter(content: string): { data: any; content: string } {
+function parseFrontmatter(content: string): { data: Record<string, unknown>; content: string } {
   const frontmatterRegex = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/
   const match = content.match(frontmatterRegex)
   
@@ -24,11 +24,11 @@ function parseFrontmatter(content: string): { data: any; content: string } {
       schema: yaml.SAFE_SCHEMA,
       // Allow duplicate keys (last one wins)
       json: true 
-    }) as Record<string, any> || {}
+    }) as Record<string, unknown> || {}
     
     return { data, content: bodyContent }
-  } catch (error: any) {
-    console.error('❌ YAML frontmatter parsing error:', error.message)
+  } catch (error: unknown) {
+    console.error('❌ YAML frontmatter parsing error:', error instanceof Error ? error.message : String(error))
     console.error('📄 Failed content preview:', frontmatterStr.substring(0, 100) + '...')
     
     // Return empty data object to allow build to continue with warning
@@ -173,7 +173,7 @@ export function contentProcessor(): Plugin {
   }
 }
 
-async function processAuthors(): Promise<Record<string, any>> {
+async function processAuthors(): Promise<Record<string, unknown>> {
   // For now, return empty object
   // This will be enhanced when we add author markdown files
   return {}

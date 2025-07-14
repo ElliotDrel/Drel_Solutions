@@ -176,7 +176,7 @@ const Article = () => {
           {/* Featured Image */}
           <div className="relative overflow-hidden rounded-lg">
             <img
-              src={post.frontmatter.image || '/blog/images/Drel Solutions Unavailable Image Placeholder.png'}
+              src={post.frontmatter.image || '/blog/images/drel-solutions-image-placeholder.png'}
               alt={post.frontmatter.title}
               className="w-full h-64 md:h-96 object-cover"
               loading="eager"

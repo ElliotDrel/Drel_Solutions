@@ -116,7 +116,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
       {isOpen && (
         <div
           ref={dropdownRef}
-          className="absolute top-full left-0 mt-1 w-56 bg-white rounded-md shadow-lg border border-gray-200 z-50"
+          className="absolute top-full left-0 mt-1 w-56 bg-white rounded-md shadow-lg border border-brand-neutral-200 z-50"
           role="menu"
           aria-orientation="vertical"
           aria-labelledby="solutions-menu"
@@ -125,8 +125,8 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
             {items.map((item, index) => {
               const linkClasses = `block px-4 py-2 text-sm transition-colors ${
                 item.isActive 
-                  ? 'text-blue-600 bg-blue-50' 
-                  : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
+                  ? 'text-brand-primary bg-brand-primary/10' 
+                  : 'text-brand-neutral-700 hover:bg-brand-neutral-100 hover:text-brand-neutral-900'
               }`;
 
               if (item.external) {

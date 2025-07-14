@@ -2,52 +2,62 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Development Commands
+## Development Workflow
 
-### Frontend Development
-- `npm run dev` - Start Vite development server (port 6756)
-- `npm run build` - Build for production
-- `npm run build:dev` - Build in development mode
-- `npm run preview` - Preview production build
-- `npm run lint` - Run ESLint
+**CRITICAL**: This project runs EXCLUSIVELY on Vercel. DO NOT attempt local development, installs, or builds.
 
-### Backend Development
-- `npm run start:backend` - Start Python FastAPI backend (cd backend && python main.py)
-- `npm run start:full` - Start both frontend and backend concurrently
+### Your Role
+- Edit code files only
+- Never run `npm install`, `npm run build`, or any other commands
+- Code changes are made locally only
+- All building, testing, and deployment happens on Vercel and Github
+- **Ask for build logs** when changes could impact functionality
 
-### Testing Commands
-- `npm run test` - Run Vitest unit tests in watch mode
-- `npm run test:ui` - Run Vitest with UI
-- `npm run test:run` - Run unit tests once
-- `npm run test:coverage` - Run unit tests with coverage (80% minimum required)
-- `npm run test:e2e` - Run Playwright end-to-end tests
-- `npm run test:e2e:ui` - Run Playwright with UI
-- `npm run test:all` - Run both unit and e2e tests
-- `npm run test:ci` - Run all tests with coverage (used in CI)
-- `npm run test -- <filename>` - Run specific unit test file
-- `npx playwright test <filename>` - Run specific e2e test file
+### Development Process
+1. **Code Changes**: Edit files as requested
+2. **Verification**: Request Vercel build logs for complex changes (see "When to Request Build Logs" below)
+3. **Vercel Handles**: All building, testing, and deployment automatically
 
-### Backend Commands
-```bash
-cd backend && python main.py  # Start FastAPI server on port 3298
-```
+### When to Request Build Logs
+**Always ask for build logs when:**
+- Adding new dependencies or imports
+- Modifying TypeScript interfaces or types
+- Changing API endpoints or data structures
+- Adding new components or pages
+- Modifying routing logic
+- Making changes to configuration files
+- Any changes that could break functionality
+
+**Build logs not needed for:**
+- Simple CSS/styling changes
+- Text content updates
+- Minor UI adjustments
+- Documentation updates
 
 ## Architecture Overview
 
 ### Frontend Architecture
 - **Framework**: React 18 + TypeScript + Vite
-- **Styling**: Tailwind CSS with Shadcn UI components
+- **Styling**: Tailwind CSS with Shadcn UI components + centralized color tokens
 - **Routing**: React Router DOM with client-side routing
 - **State Management**: TanStack Query for server state, React hooks for local state
 - **Forms**: React Hook Form with Zod validation
 - **Testing**: Vitest + React Testing Library (unit), Playwright (e2e)
 
-### Backend Architecture
-- **Framework**: FastAPI (Python)
-- **Main Service**: Model recommendation API using OpenAI
-- **Port**: Backend runs on port 3298
+### Color System & Design Tokens
+- **Token Definition**: All colors defined in `tokens/colors.json` as single source of truth
+- **Style Dictionary**: Generates CSS variables (`src/styles/theme.css`) and Tailwind utilities automatically
+- **Build Integration**: `npm run tokens` regenerates color utilities from token file
+- **Color Usage**: Use semantic color classes (e.g., `text-primary`, `bg-surface-blue`) instead of hex values
+- **Pre-commit Protection**: Git hooks prevent committing hex colors to maintain token system integrity
+- **Consistent Palette**: Site uses fixed brand colors, ignoring user theme preferences for consistency
+
+### Backend Architecture (Vercel Serverless)
+- **Framework**: Vercel Serverless Functions (no traditional backend)
+- **Main Service**: Model recommendation API using OpenAI (deployed as serverless function)
 - **API Endpoint**: `/api/model_search` - takes query, returns model recommendations
 - **Model Documentation**: Extensive collection of AI model specs in `model_docs/` and `public/model_docs/`
+- **Note**: No local backend development - all API functionality runs on Vercel
 
 ### Key Application Flow
 1. User submits query on ModelAdvisor page
@@ -59,16 +69,20 @@ cd backend && python main.py  # Start FastAPI server on port 3298
 ## Project Structure
 
 ### Frontend (`src/`)
-- `pages/` - Route components (Index, ModelAdvisor, About, Contact, NotFound)
+- `pages/` - Route components (Index, ModelAdvisor, About, Contact, Blog, Article, NotFound)
 - `components/ui/` - Shadcn UI components (Button, Dialog, etc.)
+- `components/blog/` - Blog-specific components (BlogHero, PostGrid, etc.)
 - `hooks/` - Custom React hooks (use-toast, use-mobile)
 - `lib/` - Utilities (utils.ts with cn helper)
+- `data/blog/` - Blog data and mock content
+- `types/` - TypeScript type definitions
 - `test/` - Unit test files
 
-### Backend (`backend/`)
-- `main.py` - FastAPI app with CORS, model search endpoint
-- `services/openai_service.py` - OpenAI integration service
-- `requirements.txt` - Python dependencies
+### API (`api/`)
+- Serverless functions for Vercel deployment
+- `model_search.py` - Model search endpoint implementation
+- OpenAI service integration for model recommendations
+- **Note**: No traditional backend structure - uses Vercel serverless functions
 
 ### Documentation
 - `model_docs/` - Source model documentation files
@@ -92,22 +106,16 @@ cd backend && python main.py  # Start FastAPI server on port 3298
 
 ### API Integration
 - Use TanStack Query for data fetching
-- Backend API base URL varies by environment
+- API routes handled by Vercel serverless functions
 - Model search request format: `{ query: string }`
 - Response format: `{ recommendations: ModelRecommendation[] }`
+- **Note**: All API calls go through Vercel's serverless function endpoints
 
 ### Testing Requirements
 - **Unit Tests**: 80% coverage minimum (branches, functions, lines, statements)
 - **E2E Tests**: Critical user journeys tested with Playwright
 - **Test on**: Chromium, Firefox (CI only), Mobile Chrome
 - **CI**: Tests must pass for deployment
-
-### Environment Setup
-- Node.js 18+
-- Python backend dependencies in `backend/requirements.txt`
-- OpenAI API key required in `.env` file
-- Development server runs on port 6756
-- Backend runs on port 3298
 
 ## Important Notes
 
@@ -116,14 +124,79 @@ cd backend && python main.py  # Start FastAPI server on port 3298
 - Documentation is loaded by OpenAI service to make intelligent recommendations
 - Models include capabilities, pricing, speed, accuracy characteristics
 
-### Deployment
-- Vercel integration with Speed Insights and Analytics
-- Build command includes test run: `npm run test:run && npm run build`
-- Only tested code reaches production
-
 ### Code Standards
 - TypeScript strict mode
 - ESLint configuration enforced
 - Shadcn UI components preferred
 - React 18 patterns with hooks
 - Path alias `@/` for `src/` directory
+- Extensive Cursor IDE rules in `.cursor/rules/` covering React, testing, security, and more
+- React Router DOM for client-side routing
+- Lazy loading with ErrorBoundary for performance optimization
+
+### Color Usage Guidelines
+- **NEVER use hex colors** directly in components (e.g., `#2563eb`, `#ffffff`)
+- **NEVER use numbered Tailwind colors** (e.g., `bg-blue-600`, `text-gray-500`)
+- **ALWAYS use semantic tokens** from the centralized system:
+  - `text-primary`, `text-secondary`, `text-foreground`
+  - `bg-background`, `bg-surface`, `bg-primary`
+  - `border`, `border-light`
+  - Provider-specific: `text-openai`, `bg-anthropic-light`, `text-google`
+- **Run `npm run tokens`** after editing `tokens/colors.json`
+- **Pre-commit hooks** will block commits containing hex colors
+
+### Blog System
+- Blog pages use lazy loading for performance
+- Mock blog data in `src/data/blog/articles.ts`
+- Blog components in `src/components/blog/`
+- Routes: `/blog` (listing) and `/blog/:slug` (individual articles)
+- TypeScript interfaces defined in `src/types/blog.ts`
+
+### CRITICAL: Content Processing Build Failure Policy
+**DO NOT MODIFY**: The content processor is configured to fail builds when articles fail to load. This is intentional and must be preserved.
+
+- **Location**: `src/lib/build/content-processor.ts`
+- **Behavior**: Build MUST fail if any article processing fails
+- **Reasoning**: If an article fails to load, there is a problem with the file that needs immediate attention
+- **Policy**: The website should NOT deploy with broken articles - all articles must load successfully
+- **Never Change**: Do not add fallback mechanisms, error suppression, or continue-on-error logic to article processing
+- **Current State**: Production CI automatically fails on content processing errors (line 173 in content-processor.ts)
+
+If you encounter article loading issues, fix the underlying problem in the source files, never modify the failure behavior.
+
+### Design System & Styling
+- **Background Strategy**: All pages use hardcoded light backgrounds for consistent brand experience
+- **Page Container Pattern**: `bg-gradient-to-br from-blue-50 via-white to-green-50` for main page containers
+- **Theme Toggle**: Available but intentionally does NOT affect page backgrounds - only affects UI components
+- **Reasoning**: Brand consistency takes precedence over system theme preferences
+- **Implementation**: All `src/pages/*.tsx` files use the same gradient background pattern
+- **Components**: Use Shadcn UI components which do respond to theme toggle for buttons, cards, etc.
+
+---
+
+## Vercel Build & Deployment Reference
+
+*The following commands and processes are handled automatically by Vercel. This information is included for reference only.*
+
+### Build Commands (Vercel Only)
+- `npm run build` - Build for production
+- `npm run build:dev` - Build in development mode
+- `npm run lint` - Run ESLint
+- `npm run test:run` - Run unit tests once
+- `npm run test:coverage` - Run unit tests with coverage (80% minimum required)
+- `npm run test:e2e` - Run Playwright end-to-end tests
+- `npm run test:ci` - Run all tests with coverage (used in CI)
+
+### Environment Variables (Vercel Dashboard)
+- `CONTENT_FAIL_ON_ERROR=true` - Force build failure on content processing errors (default: false)
+- `NODE_ENV=production` - Production environment detection
+- `CI=true` - CI environment detection (auto-set by most CI systems)
+- `VITEST=true` - Excludes content processor during testing (auto-set by Vitest)
+
+### Vercel Deployment Process
+1. **Testing**: All tests run in Vercel's CI/CD pipeline
+2. **Building**: `npm run test:run && npm run build` (includes tests)
+3. **Deployment**: Automatic on git push to main branch
+4. **Preview**: Automatic preview deployments for feature branches
+5. **Monitoring**: Vercel Speed Insights and Analytics integrated
+6. **Environment**: All environment variables managed in Vercel dashboard

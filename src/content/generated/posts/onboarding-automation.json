@@ -1,0 +1,28 @@
+{
+  "frontmatter": {
+    "id": "5",
+    "title": "Onboarding Automation That Actually Works",
+    "subtitle": "Design employee onboarding processes that create great first impressions",
+    "image": "/blog/images/posts/onboarding-automation/hero.jpg",
+    "author": {
+      "name": "Marcus Rodriguez",
+      "slug": "marcus-rodriguez",
+      "avatar": "/blog/images/authors/marcus-rodriguez.jpg"
+    },
+    "readingTime": 1,
+    "tags": [
+      "onboarding",
+      "automation",
+      "hr"
+    ],
+    "publishedAt": "2024-01-05",
+    "slug": "onboarding-automation",
+    "featured": false,
+    "draft": false
+  },
+  "content": "\r\n# Onboarding Automation That Actually Works\r\n\r\n## First Impressions Matter\r\n\r\nEmployee onboarding sets the tone for the entire employment relationship. A smooth, professional onboarding process creates confidence and engagement from day one.\r\n\r\n## The Automation Framework\r\n\r\nOur onboarding automation framework covers pre-boarding preparation, first-day logistics, training schedules, and long-term integration checkpoints.\r\n\r\n## Technology Integration\r\n\r\nModern onboarding leverages technology to handle administrative tasks automatically, freeing up managers to focus on relationship building and strategic discussions.\r\n\r\n## Measuring Onboarding Success\r\n\r\nTrack metrics like time-to-productivity, new hire satisfaction, and 90-day retention rates to continuously improve your onboarding process.\r\n\r\n## Customization at Scale\r\n\r\nWhile automation provides consistency, personalization ensures relevance. Learn how to balance standardized processes with role-specific customization.",
+  "excerpt": "Onboarding Automation That Actually Works\r\n\r\nFirst Impressions Matter\r\n\r\nEmployee onboarding sets the tone for the entire employment relationship. A smooth, professional onboarding process creates...",
+  "readingTime": 1,
+  "wordCount": 116,
+  "lastModified": "2025-07-13T19:45:54.080Z"
+}

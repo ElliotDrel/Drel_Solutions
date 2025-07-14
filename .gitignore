@@ -30,14 +30,16 @@ __pycache__/
 *$py.class
 *.so
 .Python
-build/
+# Python build directory (not src build directories)
+/build/
 develop-eggs/
 dist/
 downloads/
 eggs/
 .eggs/
-lib/
-lib64/
+# Python-specific directories only
+**/site-packages/
+**/lib64/
 parts/
 sdist/
 var/

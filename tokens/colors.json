@@ -1,0 +1,49 @@
+{
+  "brand": {
+    "primary": { "value": "#2563eb" },
+    "primaryHover": { "value": "#1d4ed8" },
+    "secondary": { "value": "#10b981" },
+    "accent": { "value": "#f59e0b" },
+
+    "background": { "value": "#ffffff" },
+    "surface": { "value": "#f8fafc" },
+    "surfaceBlue": { "value": "#eff6ff" },
+    "surfaceGreen": { "value": "#ecfdf5" },
+    "surfacePurple": { "value": "#faf5ff" },
+    "surfaceYellow": { "value": "#fffbeb" },
+    "surfaceRed": { "value": "#fef2f2" },
+
+    "foreground": { "value": "#111827" },
+    "foregroundSecondary": { "value": "#4b5563" },
+    "foregroundMuted": { "value": "#6b7280" },
+
+    "border": { "value": "#d1d5db" },
+    "borderLight": { "value": "#e5e7eb" },
+    "focusRing": { "value": "#3b82f6" },
+
+    "success": { "value": "#22c55e" },
+    "successLight": { "value": "#16a34a" },
+    "warning": { "value": "#f59e0b" },
+    "warningLight": { "value": "#fbbf24" },
+    "error": { "value": "#ef4444" },
+    "errorLight": { "value": "#dc2626" },
+    "info": { "value": "#3b82f6" },
+
+    "gradientFrom": { "value": "#dbeafe" },
+    "gradientVia": { "value": "#ffffff" },
+    "gradientTo": { "value": "#dcfce7" },
+
+    "openai": { "value": "#10b981" },
+    "openaiLight": { "value": "#d1fae5" },
+    "anthropic": { "value": "#8b5cf6" },
+    "anthropicLight": { "value": "#ede9fe" },
+    "google": { "value": "#3b82f6" },
+    "googleLight": { "value": "#dbeafe" },
+
+    "dashboard": {
+      "red": { "value": "#f87171" },
+      "yellow": { "value": "#fbbf24" },
+      "green": { "value": "#34d399" }
+    }
+  }
+}

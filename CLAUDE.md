@@ -129,11 +129,12 @@ The `.scratchpad/` folder serves as Claude Code's thinking space for:
 - **Planning**: Organize thoughts before starting work
 
 ### How to Use
-1. Create files with descriptive names (e.g., `task_analysis.md`, `investigation_notes.md`)
-2. Use markdown for structure and readability
-3. Include timestamps for context
-4. Reference specific files/functions with `file:line` format
-5. Update files as understanding evolves
+1. Create files with date/time prefix and descriptive names (e.g., `07-14-25_14.30_task_analysis.md`, `07-14-25_14.45_investigation_notes.md`)
+2. Use format: `MM-DD-YY_HH.MM_descriptive_name.extension`
+3. Use markdown for structure and readability
+4. Include timestamps for context within content
+5. Reference specific files/functions with `file:line` format
+6. Update files as understanding, thinking and planning evolves
 
 ### File Types
 - `*.md` - Main documentation and plans

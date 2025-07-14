@@ -5,11 +5,8 @@ export const BlogHero = () => {
   return (
     <div className="space-y-6">
       <div className="space-y-2">
-        <h1 className="text-5xl font-bold text-brand-neutral-700">Drel Solutions Blog</h1>
-        <h2 className="text-4xl font-bold bg-gradient-hero bg-clip-text text-transparent">
-          New at Drel Solutions Blog
-        </h2>
-        <p className="text-lg text-muted-foreground max-w-2xl">
+        <h1 className="text-5xl font-bold text-brand-neutral-700 mb-0">Drel Solutions Blog</h1>
+        <p className="text-lg text-muted-foreground max-w-2xl mt-0">
           Discover practical insights on workflow optimization, process automation, 
           and building efficient systems that scale with your business.
         </p>

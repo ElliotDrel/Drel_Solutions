@@ -49,7 +49,7 @@ export const FeaturedPost = ({ post, onAuthorClick, onTagClick }: FeaturedPostPr
             <Button
               variant="ghost"
               size="sm"
-              className="p-0 h-auto border border-transparent hover:bg-transparent hover:text-transparent hover:opacity-0 hover:border-brand-primary transition-colors"
+              className="p-0 h-auto transition-all transform hover:scale-105 hover:shadow-lg"
               onClick={() => onAuthorClick(post.author.slug)}
             >
               <User className="h-4 w-4 mr-1" />
@@ -64,7 +64,7 @@ export const FeaturedPost = ({ post, onAuthorClick, onTagClick }: FeaturedPostPr
           <Button
             asChild
             size="lg"
-            className="w-fit shadow-card hover:shadow-card-hover"
+            className="w-fit shadow-card hover:shadow-card-hover bg-brand-primary text-brand-neutral-50 hover:bg-brand-neutral-50 hover:text-brand-primary transition-colors"
           >
             <Link to={`/blog/${post.slug}`}>
               Read Article

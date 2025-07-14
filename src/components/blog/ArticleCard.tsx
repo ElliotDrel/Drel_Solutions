@@ -53,7 +53,7 @@ export const ArticleCard = ({ post, onAuthorClick, onTagClick }: ArticleCardProp
           <Button
             variant="ghost"
             size="sm"
-            className="p-0 h-auto border border-transparent hover:bg-transparent hover:text-transparent hover:opacity-0 hover:border-brand-primary transition-colors"
+            className="p-0 h-auto transition-all transform hover:scale-105 hover:shadow-lg"
             onClick={() => onAuthorClick(post.author.slug)}
           >
             <User className="h-3 w-3 mr-1" />
@@ -70,7 +70,7 @@ export const ArticleCard = ({ post, onAuthorClick, onTagClick }: ArticleCardProp
           variant="outline"
           size="sm"
           asChild
-          className="w-full group-hover:border-primary group-hover:text-primary transition-colors"
+          className="w-full bg-brand-primary text-brand-neutral-50 hover:bg-brand-neutral-50 hover:text-brand-primary transition-colors"
         >
           <Link to={`/blog/${post.slug}`}>
             Read Article

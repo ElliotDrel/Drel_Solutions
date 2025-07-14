@@ -107,23 +107,22 @@ const Blog = () => {
           onTagClick={handleTagFilter}
         />
 
-        {/* Browse Controls */}
-        <BrowseControls
-          sortBy={sortBy}
-          onSortChange={setSortBy}
-          selectedAuthor={selectedAuthor}
-          selectedTags={selectedTags}
-          onTagClick={handleTagFilter}
-          onClearFilters={() => {
-            setSelectedAuthor(null);
-            setSelectedTags([]);
-            setCurrentPage(1);
-          }}
-        />
-
-        {/* Tag Sort Menu */}
-
-        <TagSort onTagClick={handleTagFilter} selectedTags={selectedTags} />
+        {/* Controls and Tag Sort - reduced spacing between them */}
+        <div className="space-y-2">
+          <BrowseControls
+            sortBy={sortBy}
+            onSortChange={setSortBy}
+            selectedAuthor={selectedAuthor}
+            selectedTags={selectedTags}
+            onTagClick={handleTagFilter}
+            onClearFilters={() => {
+              setSelectedAuthor(null);
+              setSelectedTags([]);
+              setCurrentPage(1);
+            }}
+          />
+          <TagSort onTagClick={handleTagFilter} selectedTags={selectedTags} />
+        </div>
 
         {/* Post Grid */}
         <PostGrid

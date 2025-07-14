@@ -68,30 +68,30 @@ const LoadingAnimation = () => {
       aria-describedby="loading-description"
       aria-modal="true"
     >
-      <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 p-8 max-w-md w-full mx-4">
+      <div className="bg-white rounded-2xl shadow-2xl border border-brand-neutral-200 p-8 max-w-md w-full mx-4">
         <div className="text-center space-y-6">
           {/* Main AI thinking animation */}
           <div className="relative">
             <div className="flex justify-center">
               <div className="relative">
                 {/* Outer rotating ring */}
-                <div className="w-20 h-20 border-4 border-blue-100 rounded-full animate-spin border-t-blue-600"></div>
+                <div className="w-20 h-20 border-4 border-brand-primary/20 rounded-full animate-spin border-t-brand-primary"></div>
                 {/* Inner pulsing brain icon */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <Brain className="h-8 w-8 text-blue-600 animate-pulse" />
+                  <Brain className="h-8 w-8 text-brand-primary animate-pulse" />
                 </div>
               </div>
             </div>
             
             {/* Floating icons animation */}
             <div className="absolute -top-2 -left-2 animate-bounce">
-              <Lightbulb className="h-5 w-5 text-yellow-500" style={{ animationDelay: '0.1s' }} />
+              <Lightbulb className="h-5 w-5 text-brand-warning" style={{ animationDelay: '0.1s' }} />
             </div>
             <div className="absolute -top-2 -right-2 animate-bounce">
-              <Cpu className="h-5 w-5 text-green-500" style={{ animationDelay: '0.3s' }} />
+              <Cpu className="h-5 w-5 text-brand-success" style={{ animationDelay: '0.3s' }} />
             </div>
             <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 animate-bounce">
-              <Sparkles className="h-5 w-5 text-purple-500" style={{ animationDelay: '0.5s' }} />
+              <Sparkles className="h-5 w-5 text-brand-accent" style={{ animationDelay: '0.5s' }} />
             </div>
           </div>
 
@@ -100,28 +100,28 @@ const LoadingAnimation = () => {
             <h3 id="loading-title" className="text-xl font-bold text-foreground mb-2">
               AI is Thinking{dots}
             </h3>
-            <p id="loading-description" className="text-gray-600 text-sm">
+            <p id="loading-description" className="text-brand-neutral-600 text-sm">
               Our advanced AI is analyzing your requirements to find the perfect model recommendations.
             </p>
           </div>
 
           {/* Cycling messages */}
           <div className="min-h-[24px] flex items-center justify-center">
-            <p className="text-blue-600 font-medium text-sm animate-fade-in">
+            <p className="text-brand-primary font-medium text-sm animate-fade-in">
               {loadingMessages[currentMessage]}
             </p>
           </div>
 
           {/* Progress indicator */}
-          <div className="w-full bg-gray-200 rounded-full h-2">
+          <div className="w-full bg-brand-neutral-200 rounded-full h-2">
             <div 
-              className="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full transition-all duration-300 animate-pulse"
+              className="bg-gradient-to-r from-brand-primary to-brand-accent h-2 rounded-full transition-all duration-300 animate-pulse"
               style={{ width: `${((currentMessage + 1) / loadingMessages.length) * 100}%` }}
             ></div>
           </div>
 
           {/* Subtle tip */}
-          <p className="text-xs text-gray-500 italic">
+          <p className="text-xs text-brand-neutral-500 italic">
             This usually takes 10-15 seconds...
           </p>
         </div>
@@ -443,7 +443,7 @@ const ModelAdvisor = () => {
                     <Sparkles className="h-8 w-8 text-blue-600" />
                     <h2 className="text-2xl font-bold text-gray-900">AI-Powered Model Recommendations</h2>
                   </div>
-                  <p className="text-gray-600">
+                  <p className="text-brand-neutral-600">
                     Describe your project or task, and our AI will recommend the best models for your specific needs.
                   </p>
                 </div>
@@ -509,7 +509,7 @@ const ModelAdvisor = () => {
                   <h3 className="text-2xl font-bold text-gray-900 mb-2">
                     Top 5 Recommended Models for Your Task
                   </h3>
-                  <p className="text-gray-600">
+                  <p className="text-brand-neutral-600">
                     AI-analyzed recommendations based on your specific requirements
                   </p>
                 </div>

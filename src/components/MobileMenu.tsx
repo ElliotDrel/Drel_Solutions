@@ -24,7 +24,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
 
   return (
     <div className="md:hidden">
-      <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-200">
+      <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-brand-neutral-200">
         {links.map((link, index) => {
           if (link.external) {
             return (
@@ -55,7 +55,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
         
         <div className="pt-2">
           <Link to="/contact" onClick={onClose}>
-            <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
+            <Button className="w-full bg-brand-primary hover:bg-brand-primary/90 text-white">
               Let's Talk
             </Button>
           </Link>

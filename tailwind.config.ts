@@ -61,6 +61,37 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				
+				// Add direct brand color access
+				brand: {
+					primary: 'hsl(var(--brand-primary))',
+					secondary: 'hsl(var(--brand-secondary))',
+					accent: 'hsl(var(--brand-accent))',
+					success: 'hsl(var(--brand-success))',
+					warning: 'hsl(var(--brand-warning))',
+					danger: 'hsl(var(--brand-danger))',
+					info: 'hsl(var(--brand-info))',
+					neutral: {
+						50: 'hsl(var(--brand-neutral-50))',
+						100: 'hsl(var(--brand-neutral-100))',
+						200: 'hsl(var(--brand-neutral-200))',
+						300: 'hsl(var(--brand-neutral-300))',
+						400: 'hsl(var(--brand-neutral-400))',
+						500: 'hsl(var(--brand-neutral-500))',
+						600: 'hsl(var(--brand-neutral-600))',
+						700: 'hsl(var(--brand-neutral-700))',
+						800: 'hsl(var(--brand-neutral-800))',
+						900: 'hsl(var(--brand-neutral-900))',
+					}
+				},
+				
+				// Provider-specific colors
+				provider: {
+					openai: 'hsl(var(--provider-openai))',
+					anthropic: 'hsl(var(--provider-anthropic))',
+					google: 'hsl(var(--provider-google))',
+					default: 'hsl(var(--provider-default))'
 				}
 			},
 			borderRadius: {

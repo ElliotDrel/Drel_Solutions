@@ -11,51 +11,67 @@ html {
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* === CORE BRAND COLORS === */
+    --brand-primary: 214 100% 50%;        /* Main brand blue */
+    --brand-secondary: 142 76% 36%;       /* Secondary brand color */
+    --brand-accent: 262 83% 58%;          /* Accent/highlight color */
+    
+    /* === SEMANTIC COLORS === */
+    --brand-success: 142 76% 36%;         /* Success states */
+    --brand-warning: 45 93% 58%;          /* Warning states */
+    --brand-danger: 0 84% 60%;            /* Error states */
+    --brand-info: 214 100% 50%;           /* Info states */
+    
+    /* === NEUTRAL SCALE === */
+    --brand-neutral-50: 0 0% 98%;         /* Lightest backgrounds */
+    --brand-neutral-100: 0 0% 95%;        /* Light backgrounds */
+    --brand-neutral-200: 0 0% 90%;        /* Borders, dividers */
+    --brand-neutral-300: 0 0% 80%;        /* Disabled states */
+    --brand-neutral-400: 0 0% 60%;        /* Placeholders */
+    --brand-neutral-500: 0 0% 45%;        /* Secondary text */
+    --brand-neutral-600: 0 0% 35%;        /* Primary text */
+    --brand-neutral-700: 0 0% 25%;        /* Headings */
+    --brand-neutral-800: 0 0% 15%;        /* Emphasized text */
+    --brand-neutral-900: 0 0% 9%;         /* Highest contrast */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
+    /* === SEMANTIC MAPPINGS === */
+    /* All semantic colors reference base brand colors */
+    --background: var(--brand-neutral-50);
+    --foreground: var(--brand-neutral-900);
+    --card: var(--brand-neutral-50);
+    --card-foreground: var(--brand-neutral-900);
+    --popover: var(--brand-neutral-50);
+    --popover-foreground: var(--brand-neutral-900);
+    --primary: var(--brand-primary);
+    --primary-foreground: var(--brand-neutral-50);
+    --secondary: var(--brand-neutral-100);
+    --secondary-foreground: var(--brand-neutral-900);
+    --muted: var(--brand-neutral-100);
+    --muted-foreground: var(--brand-neutral-500);
+    --accent: var(--brand-accent);
+    --accent-foreground: var(--brand-neutral-50);
+    --destructive: var(--brand-danger);
+    --destructive-foreground: var(--brand-neutral-50);
+    --border: var(--brand-neutral-200);
+    --input: var(--brand-neutral-200);
+    --ring: var(--brand-primary);
     --radius: 0.5rem;
-
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    
+    /* === PROVIDER COLORS === */
+    --provider-openai: var(--brand-success);
+    --provider-anthropic: var(--brand-accent);
+    --provider-google: var(--brand-primary);
+    --provider-default: var(--brand-neutral-500);
+    
+    /* === SIDEBAR COLORS === */
+    --sidebar-background: var(--brand-neutral-50);
+    --sidebar-foreground: var(--brand-neutral-600);
+    --sidebar-primary: var(--brand-neutral-900);
+    --sidebar-primary-foreground: var(--brand-neutral-50);
+    --sidebar-accent: var(--brand-neutral-100);
+    --sidebar-accent-foreground: var(--brand-neutral-900);
+    --sidebar-border: var(--brand-neutral-200);
+    --sidebar-ring: var(--brand-primary);
   }
 
 }

@@ -2,35 +2,37 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Development Commands
+## Development Workflow
 
-### Frontend Development
-- `npm run dev` - Start Vite development server (port 6756)
-- `npm run build` - Build for production
-- `npm run build:dev` - Build in development mode
-- `npm run preview` - Preview production build
-- `npm run lint` - Run ESLint
+**CRITICAL**: This project runs EXCLUSIVELY on Vercel. DO NOT attempt local development, installs, or builds.
 
-### Backend Development
-- `npm run start:backend` - Start Python FastAPI backend (cd backend && python main.py)
-- `npm run start:full` - Start both frontend and backend concurrently
+### Your Role
+- Edit code files only
+- Never run `npm install`, `npm run build`, or any other commands
+- Code changes are made locally only
+- All building, testing, and deployment happens on Vercel and Github
+- **Ask for build logs** when changes could impact functionality
 
-### Testing Commands
-- `npm run test` - Run Vitest unit tests in watch mode
-- `npm run test:ui` - Run Vitest with UI
-- `npm run test:run` - Run unit tests once
-- `npm run test:coverage` - Run unit tests with coverage (80% minimum required)
-- `npm run test:e2e` - Run Playwright end-to-end tests
-- `npm run test:e2e:ui` - Run Playwright with UI
-- `npm run test:all` - Run both unit and e2e tests
-- `npm run test:ci` - Run all tests with coverage (used in CI)
-- `npm run test -- <filename>` - Run specific unit test file
-- `npx playwright test <filename>` - Run specific e2e test file
+### Development Process
+1. **Code Changes**: Edit files as requested
+2. **Verification**: Request Vercel build logs for complex changes (see "When to Request Build Logs" below)
+3. **Vercel Handles**: All building, testing, and deployment automatically
 
-### Backend Commands
-```bash
-cd backend && python main.py  # Start FastAPI server on port 3298
-```
+### When to Request Build Logs
+**Always ask for build logs when:**
+- Adding new dependencies or imports
+- Modifying TypeScript interfaces or types
+- Changing API endpoints or data structures
+- Adding new components or pages
+- Modifying routing logic
+- Making changes to configuration files
+- Any changes that could break functionality
+
+**Build logs not needed for:**
+- Simple CSS/styling changes
+- Text content updates
+- Minor UI adjustments
+- Documentation updates
 
 ## Architecture Overview
 
@@ -42,12 +44,12 @@ cd backend && python main.py  # Start FastAPI server on port 3298
 - **Forms**: React Hook Form with Zod validation
 - **Testing**: Vitest + React Testing Library (unit), Playwright (e2e)
 
-### Backend Architecture
-- **Framework**: FastAPI (Python)
-- **Main Service**: Model recommendation API using OpenAI
-- **Port**: Backend runs on port 3298
+### Backend Architecture (Vercel Serverless)
+- **Framework**: Vercel Serverless Functions (no traditional backend)
+- **Main Service**: Model recommendation API using OpenAI (deployed as serverless function)
 - **API Endpoint**: `/api/model_search` - takes query, returns model recommendations
 - **Model Documentation**: Extensive collection of AI model specs in `model_docs/` and `public/model_docs/`
+- **Note**: No local backend development - all API functionality runs on Vercel
 
 ### Key Application Flow
 1. User submits query on ModelAdvisor page
@@ -65,36 +67,11 @@ cd backend && python main.py  # Start FastAPI server on port 3298
 - `lib/` - Utilities (utils.ts with cn helper)
 - `test/` - Unit test files
 
-### Backend (`backend/`)
-- `main.py` - FastAPI app with CORS, model search endpoint
-- `services/openai_service.py` - OpenAI integration service
-- `requirements.txt` - Python dependencies
-
-### Documentation
-- `model_docs/` - Source model documentation files
-- `public/model_docs/` - Public model documentation files
-- `TESTING.md` - Comprehensive testing guide
-
-### Configuration Files
-- `vite.config.ts` - Vite config with path aliases (@/ for src/), test setup
-- `playwright.config.ts` - E2E test configuration
-- `package.json` - Dependencies and scripts
-- `tailwind.config.ts` - Tailwind configuration
-- `components.json` - Shadcn UI configuration
-- `.cursor/rules/` - Extensive Cursor IDE rules for development standards
-
-## Development Workflow
-
-### Adding New Routes
-1. Create page component in `src/pages/`
-2. Add route in `App.tsx` using React Router
-3. Add navigation links if needed
-
-### API Integration
-- Use TanStack Query for data fetching
-- Backend API base URL varies by environment
-- Model search request format: `{ query: string }`
-- Response format: `{ recommendations: ModelRecommendation[] }`
+### API (`api/`)
+- Serverless functions for Vercel deployment
+- `model_search.py` - Model search endpoint implementation
+- OpenAI service integration for model recommendations
+- **Note**: No traditional backend structure - uses Vercel serverless functions
 
 ### Testing Requirements
 - **Unit Tests**: 80% coverage minimum (branches, functions, lines, statements)
@@ -102,12 +79,19 @@ cd backend && python main.py  # Start FastAPI server on port 3298
 - **Test on**: Chromium, Firefox (CI only), Mobile Chrome
 - **CI**: Tests must pass for deployment
 
-### Environment Setup
-- Node.js 18+
-- Python backend dependencies in `backend/requirements.txt`
-- OpenAI API key required in `.env` file
-- Development server runs on port 6756
-- Backend runs on port 3298
+### Configuration Files
+- `vite.config.ts` - Vite config with path aliases (@/ for src/), test setup
+- `playwright.config.ts` - E2E test configuration
+- `package.json` - Dependencies and scripts
+- `tailwind.config.ts` - Tailwind configuration
+- `components.json` - Shadcn UI configuration
+- `.cursor/rules/` - Extensive  rules for development standards. Make sure to follow these rules.
+
+### Testing Requirements
+- **Unit Tests**: 80% coverage minimum (branches, functions, lines, statements)
+- **E2E Tests**: Critical user journeys tested with Playwright
+- **Test on**: Chromium, Firefox (CI only), Mobile Chrome
+- **CI**: Tests must pass for deployment
 
 ## Important Notes
 
@@ -118,7 +102,6 @@ cd backend && python main.py  # Start FastAPI server on port 3298
 
 ### Deployment
 - Vercel integration with Speed Insights and Analytics
-- Build command includes test run: `npm run test:run && npm run build`
 - Only tested code reaches production
 
 ### Code Standards
@@ -127,3 +110,41 @@ cd backend && python main.py  # Start FastAPI server on port 3298
 - Shadcn UI components preferred
 - React 18 patterns with hooks
 - Path alias `@/` for `src/` directory
+
+## .scratchpad Usage Guide
+
+### Purpose
+The `.scratchpad/` folder serves as Claude Code's thinking space for:
+- Planning complex tasks
+- Breaking down problems  
+- Leaving notes between sessions
+- Reasoning through solutions
+- Documenting investigation findings
+
+### When to Use
+- **Complex multi-step tasks**: Break down implementation plans
+- **Code investigations**: Document findings while exploring codebase
+- **Problem solving**: Work through logic before implementing
+- **Session continuity**: Leave notes for future reference
+- **Planning**: Organize thoughts before starting work
+
+### How to Use
+1. Create files with descriptive names (e.g., `task_analysis.md`, `investigation_notes.md`)
+2. Use markdown for structure and readability
+3. Include timestamps for context
+4. Reference specific files/functions with `file:line` format
+5. Update files as understanding evolves
+
+### File Types
+- `*.md` - Main documentation and plans
+- `*.txt` - Quick notes and logs
+- `*.json` - Structured data if needed
+
+### Best Practices
+- Keep files focused on single topics
+- Use clear, descriptive filenames
+- Include context and rationale
+- Update TodoWrite tool alongside scratchpad usage
+- Clean up outdated files periodically
+
+*Note: The .scratchpad folder is for Claude Code's working memory*

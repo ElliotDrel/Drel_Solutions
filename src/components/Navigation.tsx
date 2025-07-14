@@ -4,7 +4,6 @@ import { Menu, X, ChevronDown } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import DropdownMenu from './ui/DropdownMenu';
 import MobileMenu from './MobileMenu';
-import ThemeToggle from './ThemeToggle';
 
 const Navigation: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -73,9 +72,6 @@ const Navigation: React.FC = () => {
               <Link to="/contact">
                 <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2">Let's Talk</Button>
               </Link>
-              <div className="ml-4">
-                <ThemeToggle />
-              </div>
             </div>
           </div>
 

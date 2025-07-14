@@ -28,7 +28,7 @@ const Blog = () => {
         
         // Get featured posts
         const featured = await BlogLoader.getFeaturedPosts(1);
-        const featuredPost = featured.length > 0 ? featured[0] : null;
+        const firstFeaturedPost = featured.length > 0 ? featured[0] : null;
         
         // Get all posts with filters
         const allPosts = await BlogLoader.getAllPosts({
@@ -45,8 +45,8 @@ const Blog = () => {
           sort: sortBy === 'date' ? 'date' : 'title'
         });
 
-        setFeaturedPost(featuredPost);
-        setPosts(allPosts.filter(post => post.slug !== featuredPost?.slug)); // Exclude featured post
+        setFeaturedPost(firstFeaturedPost);
+        setPosts(allPosts.filter(post => post.slug !== firstFeaturedPost?.slug)); // Exclude featured post
         setLoading(false);
       } catch (error) {
         console.error('Error loading posts:', error);

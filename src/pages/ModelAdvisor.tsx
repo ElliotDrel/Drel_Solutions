@@ -68,60 +68,60 @@ const LoadingAnimation = () => {
       aria-describedby="loading-description"
       aria-modal="true"
     >
-      <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 p-8 max-w-md w-full mx-4">
+      <div className="bg-background rounded-2xl shadow-2xl border border p-8 max-w-md w-full mx-4">
         <div className="text-center space-y-6">
           {/* Main AI thinking animation */}
           <div className="relative">
             <div className="flex justify-center">
               <div className="relative">
                 {/* Outer rotating ring */}
-                <div className="w-20 h-20 border-4 border-blue-100 rounded-full animate-spin border-t-blue-600"></div>
+                <div className="w-20 h-20 border-4 border-surface-blue rounded-full animate-spin border-t-primary"></div>
                 {/* Inner pulsing brain icon */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <Brain className="h-8 w-8 text-blue-600 animate-pulse" />
+                  <Brain className="h-8 w-8 text-primary animate-pulse" />
                 </div>
               </div>
             </div>
             
             {/* Floating icons animation */}
             <div className="absolute -top-2 -left-2 animate-bounce">
-              <Lightbulb className="h-5 w-5 text-yellow-500" style={{ animationDelay: '0.1s' }} />
+              <Lightbulb className="h-5 w-5 text-warning" style={{ animationDelay: '0.1s' }} />
             </div>
             <div className="absolute -top-2 -right-2 animate-bounce">
-              <Cpu className="h-5 w-5 text-green-500" style={{ animationDelay: '0.3s' }} />
+              <Cpu className="h-5 w-5 text-success" style={{ animationDelay: '0.3s' }} />
             </div>
             <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 animate-bounce">
-              <Sparkles className="h-5 w-5 text-purple-500" style={{ animationDelay: '0.5s' }} />
+              <Sparkles className="h-5 w-5 text-anthropic" style={{ animationDelay: '0.5s' }} />
             </div>
           </div>
 
           {/* AI thinking header */}
           <div>
-            <h3 id="loading-title" className="text-xl font-bold text-gray-900 mb-2">
+            <h3 id="loading-title" className="text-xl font-bold text-foreground mb-2">
               AI is Thinking{dots}
             </h3>
-            <p id="loading-description" className="text-gray-600 text-sm">
+            <p id="loading-description" className="text-foreground-secondary text-sm">
               Our advanced AI is analyzing your requirements to find the perfect model recommendations.
             </p>
           </div>
 
           {/* Cycling messages */}
           <div className="min-h-[24px] flex items-center justify-center">
-            <p className="text-blue-600 font-medium text-sm animate-fade-in">
+            <p className="text-primary font-medium text-sm animate-fade-in">
               {loadingMessages[currentMessage]}
             </p>
           </div>
 
           {/* Progress indicator */}
-          <div className="w-full bg-gray-200 rounded-full h-2">
+          <div className="w-full bg-border rounded-full h-2">
             <div 
-              className="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full transition-all duration-300 animate-pulse"
+              className="bg-gradient-to-r from-primary to-anthropic h-2 rounded-full transition-all duration-300 animate-pulse"
               style={{ width: `${((currentMessage + 1) / loadingMessages.length) * 100}%` }}
             ></div>
           </div>
 
           {/* Subtle tip */}
-          <p className="text-xs text-gray-500 italic">
+          <p className="text-xs text-foreground-muted italic">
             This usually takes 10-15 seconds...
           </p>
         </div>
@@ -133,10 +133,10 @@ const LoadingAnimation = () => {
 const ModelCard = ({ model }: { model: ModelInfo }) => {
   const getProviderColor = (provider: string) => {
     switch (provider.toLowerCase()) {
-      case 'openai': return 'bg-green-100 text-green-800';
-      case 'anthropic': return 'bg-purple-100 text-purple-800';
-      case 'google': return 'bg-blue-100 text-blue-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'openai': return 'bg-openai-light text-openai';
+      case 'anthropic': return 'bg-anthropic-light text-anthropic';
+      case 'google': return 'bg-google-light text-google';
+      default: return 'bg-surface text-foreground-secondary';
     }
   };
 
@@ -155,15 +155,15 @@ const ModelCard = ({ model }: { model: ModelInfo }) => {
         {/* Technical Specs */}
         <div className="grid grid-cols-2 gap-4 text-sm">
           <div className="flex items-center space-x-2">
-            <FileText className="h-4 w-4 text-blue-600" />
+            <FileText className="h-4 w-4 text-primary" />
             <span>Context: {model.contextWindow}</span>
           </div>
           <div className="flex items-center space-x-2">
-            <Clock className="h-4 w-4 text-green-600" />
+            <Clock className="h-4 w-4 text-success" />
             <span>Speed: {model.responseSpeed}</span>
           </div>
           <div className="flex items-center space-x-2 col-span-2">
-            <DollarSign className="h-4 w-4 text-red-600" />
+            <DollarSign className="h-4 w-4 text-error" />
             <span>Cost: {model.cost}</span>
           </div>
         </div>
@@ -186,10 +186,10 @@ const ModelCard = ({ model }: { model: ModelInfo }) => {
         {/* Best Use Cases */}
         <div>
           <h4 className="font-semibold text-sm mb-2">Best For</h4>
-          <ul className="text-sm text-gray-600 space-y-1">
+          <ul className="text-sm text-foreground-secondary space-y-1">
             {model.useCases.slice(0, 3).map((useCase, index) => (
               <li key={index} className="flex items-start">
-                <span className="text-blue-600 mr-2">•</span>
+                <span className="text-primary mr-2">•</span>
                 {useCase}
               </li>
             ))}
@@ -209,10 +209,10 @@ const ModelCard = ({ model }: { model: ModelInfo }) => {
 const RecommendationCard = ({ recommendation }: { recommendation: ModelRecommendation }) => {
   const getProviderColor = (provider: string) => {
     switch (provider.toLowerCase()) {
-      case 'openai': return 'bg-green-100 text-green-800';
-      case 'anthropic': return 'bg-purple-100 text-purple-800';
-      case 'google': return 'bg-blue-100 text-blue-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'openai': return 'bg-openai-light text-openai';
+      case 'anthropic': return 'bg-anthropic-light text-anthropic';
+      case 'google': return 'bg-google-light text-google';
+      default: return 'bg-surface text-foreground-secondary';
     }
   };
 
@@ -222,7 +222,7 @@ const RecommendationCard = ({ recommendation }: { recommendation: ModelRecommend
         <div className="flex justify-between items-start">
           <div>
             <div className="flex items-center space-x-2">
-              <span className="text-2xl font-bold text-blue-600">#{recommendation.rank}</span>
+              <span className="text-2xl font-bold text-primary">#{recommendation.rank}</span>
               <CardTitle className="text-xl font-bold">{recommendation.name}</CardTitle>
             </div>
             <Badge className={`mt-2 ${getProviderColor(recommendation.provider)}`}>
@@ -233,17 +233,17 @@ const RecommendationCard = ({ recommendation }: { recommendation: ModelRecommend
       </CardHeader>
       <CardContent className="space-y-4">
         <div>
-          <h4 className="font-semibold text-sm mb-2 text-green-700">Why This Model</h4>
-          <p className="text-sm text-gray-700">{recommendation.why}</p>
+          <h4 className="font-semibold text-sm mb-2 text-success">Why This Model</h4>
+          <p className="text-sm text-foreground-secondary">{recommendation.why}</p>
         </div>
         
         <div>
-          <h4 className="font-semibold text-sm mb-2 text-blue-700">When to Use</h4>
-          <p className="text-sm text-gray-700">{recommendation.when}</p>
+          <h4 className="font-semibold text-sm mb-2 text-primary">When to Use</h4>
+          <p className="text-sm text-foreground-secondary">{recommendation.when}</p>
         </div>
         
         <div>
-          <h4 className="font-semibold text-sm mb-2 text-purple-700">Why This Rank</h4>
+          <h4 className="font-semibold text-sm mb-2 text-anthropic">Why This Rank</h4>
           <p className="text-sm text-gray-700">{recommendation.rationale}</p>
         </div>
       </CardContent>
@@ -412,7 +412,7 @@ const ModelAdvisor = () => {
       <div className="min-h-screen">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="flex justify-center items-center h-64">
-            <div className="text-xl text-gray-600">Loading AI models...</div>
+            <div className="text-xl text-foreground-secondary">Loading AI models...</div>
           </div>
         </div>
       </div>
@@ -427,30 +427,30 @@ const ModelAdvisor = () => {
           <div className="space-y-8">
             {/* Header */}
             <div className="text-center space-y-4">
-              <h1 className="text-4xl lg:text-5xl font-bold text-gray-900">
-                AI Model <span className="text-blue-600">Advisor</span>
+              <h1 className="text-4xl lg:text-5xl font-bold text-foreground">
+                AI Model <span className="text-primary">Advisor</span>
               </h1>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              <p className="text-xl text-foreground-secondary max-w-3xl mx-auto">
                 Compare and select the perfect AI model for your business needs. Get expert insights on capabilities, costs, and use cases.
               </p>
             </div>
 
             {/* AI-Powered Search Section */}
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8">
+            <div className="bg-background rounded-2xl shadow-lg border border p-8">
               <div className="space-y-6">
                 <div className="text-center">
                   <div className="flex items-center justify-center space-x-2 mb-4">
-                    <Sparkles className="h-8 w-8 text-blue-600" />
-                    <h2 className="text-2xl font-bold text-gray-900">AI-Powered Model Recommendations</h2>
+                    <Sparkles className="h-8 w-8 text-primary" />
+                    <h2 className="text-2xl font-bold text-foreground">AI-Powered Model Recommendations</h2>
                   </div>
-                  <p className="text-gray-600">
+                  <p className="text-foreground-secondary">
                     Describe your project or task, and our AI will recommend the best models for your specific needs.
                   </p>
                 </div>
 
                 <div className="max-w-4xl mx-auto space-y-4">
                   <div>
-                    <label htmlFor="search-query" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="search-query" className="block text-sm font-medium text-foreground-secondary mb-2">
                       What do you want to build or accomplish?
                     </label>
                     <Textarea
@@ -464,7 +464,7 @@ const ModelAdvisor = () => {
                   </div>
 
                   {searchError && (
-                    <div className="text-red-600 text-sm bg-red-50 p-3 rounded-lg">
+                    <div className="text-error text-sm bg-surface-red p-3 rounded-lg">
                       {searchError}
                     </div>
                   )}
@@ -473,7 +473,7 @@ const ModelAdvisor = () => {
                     <Button 
                       onClick={handleSearch}
                       disabled={isSearching || !searchQuery.trim()}
-                      className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
+                      className="flex-1 bg-primary hover:bg-primary-hover text-background"
                     >
                       {isSearching ? (
                         <>
@@ -506,10 +506,10 @@ const ModelAdvisor = () => {
             {showRecommendations && recommendations.length > 0 && (
               <div className="space-y-6">
                 <div className="text-center">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                  <h3 className="text-2xl font-bold text-foreground mb-2">
                     Top 5 Recommended Models for Your Task
                   </h3>
-                  <p className="text-gray-600">
+                  <p className="text-foreground-secondary">
                     AI-analyzed recommendations based on your specific requirements
                   </p>
                 </div>
@@ -532,7 +532,7 @@ const ModelAdvisor = () => {
                     Browse All Models
                   </Button>
                   <Link to="/contact">
-                    <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+                    <Button className="bg-primary hover:bg-primary-hover text-background">
                       Get Expert Consultation
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
@@ -546,15 +546,15 @@ const ModelAdvisor = () => {
               <>
                 {/* Filter Controls */}
                 <div className="flex justify-center">
-                  <div className="flex space-x-2 bg-white rounded-lg p-1 shadow-sm border">
+                  <div className="flex space-x-2 bg-background rounded-lg p-1 shadow-sm border">
                     <button
                       onClick={() => setSelectedProvider('all')}
                       data-testid="filter-all"
                       aria-pressed={selectedProvider === 'all'}
                       className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                         selectedProvider === 'all' 
-                          ? 'bg-blue-600 text-white' 
-                          : 'text-gray-600 hover:text-blue-600'
+                          ? 'bg-primary text-background' 
+                          : 'text-foreground-secondary hover:text-primary'
                       }`}
                     >
                       All Models
@@ -565,8 +565,8 @@ const ModelAdvisor = () => {
                       aria-pressed={selectedProvider === 'openai'}
                       className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                         selectedProvider === 'openai' 
-                          ? 'bg-green-600 text-white' 
-                          : 'text-gray-600 hover:text-green-600'
+                          ? 'bg-openai text-background' 
+                          : 'text-foreground-secondary hover:text-openai'
                       }`}
                     >
                       OpenAI
@@ -577,8 +577,8 @@ const ModelAdvisor = () => {
                       aria-pressed={selectedProvider === 'anthropic'}
                       className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                         selectedProvider === 'anthropic' 
-                          ? 'bg-purple-600 text-white' 
-                          : 'text-gray-600 hover:text-purple-600'
+                          ? 'bg-anthropic text-background' 
+                          : 'text-foreground-secondary hover:text-anthropic'
                       }`}
                     >
                       Anthropic
@@ -589,8 +589,8 @@ const ModelAdvisor = () => {
                       aria-pressed={selectedProvider === 'google'}
                       className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                         selectedProvider === 'google' 
-                          ? 'bg-blue-600 text-white' 
-                          : 'text-gray-600 hover:text-blue-600'
+                          ? 'bg-primary text-background' 
+                          : 'text-foreground-secondary hover:text-primary'
                       }`}
                     >
                       Google
@@ -620,7 +620,7 @@ const ModelAdvisor = () => {
                         }
                       }}
                       variant="outline" 
-                      className="px-8 py-3 text-lg font-medium border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition-all duration-200"
+                      className="px-8 py-3 text-lg font-medium border-2 border-primary text-primary hover:bg-primary hover:text-background transition-all duration-200"
                     >
                       {showAllModels ? (
                         <>
@@ -639,24 +639,24 @@ const ModelAdvisor = () => {
 
                 {filteredModels.length === 0 && !loading && (
                   <div className="text-center py-12">
-                    <p className="text-gray-600">No models found for the selected provider.</p>
+                    <p className="text-foreground-secondary">No models found for the selected provider.</p>
                   </div>
                 )}
               </>
             )}
 
             {/* Contact CTA */}
-            <div className="bg-blue-600 text-white py-16 px-8 rounded-2xl text-center">
+            <div className="bg-primary text-background py-16 px-8 rounded-2xl text-center">
               <div className="space-y-6">
                 <h3 className="text-3xl lg:text-4xl font-bold">
                   Need Help Choosing the Right Model?
                 </h3>
-                <p className="text-xl text-blue-100 max-w-2xl mx-auto">
+                <p className="text-xl text-background/80 max-w-2xl mx-auto">
                   Our AI experts can help you select the perfect model for your specific use case and budget.
                 </p>
                 <div className="pt-4">
                   <Link to="/contact">
-                    <Button className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 text-lg rounded-lg shadow-lg hover:shadow-xl transition-all">
+                    <Button className="bg-background text-primary hover:bg-surface px-8 py-4 text-lg rounded-lg shadow-lg hover:shadow-xl transition-all">
                       Get Expert Consultation
                     </Button>
                   </Link>

@@ -8,7 +8,7 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children, useGradientBackground = false }) => {
   const backgroundClass = useGradientBackground 
-    ? "bg-gradient-to-br from-blue-50 via-white to-green-50 min-h-screen"
+    ? "bg-gradient-to-br from-gradient-from via-gradient-via to-gradient-to min-h-screen"
     : "bg-background min-h-screen";
 
   return (

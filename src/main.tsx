@@ -2,6 +2,7 @@ import { createRoot } from 'react-dom/client'
 import { SpeedInsights } from '@vercel/speed-insights/react'
 import App from './App.tsx'
 import './index.css'
+import './styles/theme.css'
 
 // Disable browser scroll restoration
 if ('scrollRestoration' in history) {

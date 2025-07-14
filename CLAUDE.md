@@ -38,11 +38,19 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Frontend Architecture
 - **Framework**: React 18 + TypeScript + Vite
-- **Styling**: Tailwind CSS with Shadcn UI components
+- **Styling**: Tailwind CSS with Shadcn UI components + centralized color tokens
 - **Routing**: React Router DOM with client-side routing
 - **State Management**: TanStack Query for server state, React hooks for local state
 - **Forms**: React Hook Form with Zod validation
 - **Testing**: Vitest + React Testing Library (unit), Playwright (e2e)
+
+### Color System & Design Tokens
+- **Token Definition**: All colors defined in `tokens/colors.json` as single source of truth
+- **Style Dictionary**: Generates CSS variables (`src/styles/theme.css`) and Tailwind utilities automatically
+- **Build Integration**: `npm run tokens` regenerates color utilities from token file
+- **Color Usage**: Use semantic color classes (e.g., `text-primary`, `bg-surface-blue`) instead of hex values
+- **Pre-commit Protection**: Git hooks prevent committing hex colors to maintain token system integrity
+- **Consistent Palette**: Site uses fixed brand colors, ignoring user theme preferences for consistency
 
 ### Backend Architecture (Vercel Serverless)
 - **Framework**: Vercel Serverless Functions (no traditional backend)
@@ -125,6 +133,17 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Extensive Cursor IDE rules in `.cursor/rules/` covering React, testing, security, and more
 - React Router DOM for client-side routing
 - Lazy loading with ErrorBoundary for performance optimization
+
+### Color Usage Guidelines
+- **NEVER use hex colors** directly in components (e.g., `#2563eb`, `#ffffff`)
+- **NEVER use numbered Tailwind colors** (e.g., `bg-blue-600`, `text-gray-500`)
+- **ALWAYS use semantic tokens** from the centralized system:
+  - `text-primary`, `text-secondary`, `text-foreground`
+  - `bg-background`, `bg-surface`, `bg-primary`
+  - `border`, `border-light`
+  - Provider-specific: `text-openai`, `bg-anthropic-light`, `text-google`
+- **Run `npm run tokens`** after editing `tokens/colors.json`
+- **Pre-commit hooks** will block commits containing hex colors
 
 ### Blog System
 - Blog pages use lazy loading for performance

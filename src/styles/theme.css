@@ -1,0 +1,42 @@
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+:root {
+  --brand-primary: #2563eb;
+  --brand-primary-hover: #1d4ed8;
+  --brand-secondary: #10b981;
+  --brand-accent: #f59e0b;
+  --brand-background: #ffffff;
+  --brand-surface: #f8fafc;
+  --brand-surface-blue: #eff6ff;
+  --brand-surface-green: #ecfdf5;
+  --brand-surface-purple: #faf5ff;
+  --brand-surface-yellow: #fffbeb;
+  --brand-surface-red: #fef2f2;
+  --brand-foreground: #111827;
+  --brand-foreground-secondary: #4b5563;
+  --brand-foreground-muted: #6b7280;
+  --brand-border: #d1d5db;
+  --brand-border-light: #e5e7eb;
+  --brand-focus-ring: #3b82f6;
+  --brand-success: #22c55e;
+  --brand-success-light: #16a34a;
+  --brand-warning: #f59e0b;
+  --brand-warning-light: #fbbf24;
+  --brand-error: #ef4444;
+  --brand-error-light: #dc2626;
+  --brand-info: #3b82f6;
+  --brand-gradient-from: #dbeafe;
+  --brand-gradient-via: #ffffff;
+  --brand-gradient-to: #dcfce7;
+  --brand-openai: #10b981;
+  --brand-openai-light: #d1fae5;
+  --brand-anthropic: #8b5cf6;
+  --brand-anthropic-light: #ede9fe;
+  --brand-google: #3b82f6;
+  --brand-google-light: #dbeafe;
+  --brand-dashboard-red: #f87171;
+  --brand-dashboard-yellow: #fbbf24;
+  --brand-dashboard-green: #34d399;
+}

@@ -1,0 +1,11 @@
+#!/bin/sh
+# Check for hex colors in source files (excluding generated files)
+if grep -R --exclude-dir={.git,node_modules,build} --exclude="theme.css" --exclude="*.generated.*" -nE "#[0-9a-fA-F]{3,6}" src; then
+  echo "❌ Commit blocked: Hex colors found in source files."
+  echo "Please use semantic color tokens from tokens/colors.json instead."
+  echo "Run 'npm run tokens' after updating colors."
+  exit 1
+fi
+
+echo "✅ No hex colors found in source files."
+npm test

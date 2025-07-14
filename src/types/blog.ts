@@ -3,8 +3,8 @@ import { z } from 'zod'
 // Zod schema for frontmatter validation
 export const BlogPostSchema = z.object({
   id: z.string(),
-  title: z.string().min(1).max(100),
-  subtitle: z.string().min(1).max(200),
+  title: z.string().min(1), // No character limit for display title
+  subtitle: z.string().min(1), // No character limit for display subtitle
   slug: z.string().regex(/^[a-z0-9-]+$/),
   author: z.object({
     name: z.string(),
@@ -16,7 +16,11 @@ export const BlogPostSchema = z.object({
   tags: z.array(z.string()).max(5),
   image: z.string().optional(),
   featured: z.boolean().default(false),
-  draft: z.boolean().default(false)
+  draft: z.boolean().default(false),
+  // SEO fields with character limits
+  metaTitle: z.string().min(1).max(100), // SEO title limit
+  metaDescription: z.string().min(1).max(200), // SEO description limit
+  canonicalUrl: z.string().url().optional()
 })
 
 export type BlogPost = z.infer<typeof BlogPostSchema>

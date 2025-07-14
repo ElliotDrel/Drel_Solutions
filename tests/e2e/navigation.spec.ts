@@ -136,7 +136,7 @@ test.describe('Navigation', () => {
     
     // Click main CTA button - use a more specific selector for the hero section button
     const heroSection = page.locator('#home, section').first();
-    const ctaButton = heroSection.locator('button:has-text("Start Saving TIME and MONEY"), a:has-text("Start Saving TIME and MONEY")').first();
+    const ctaButton = heroSection.locator('button:has-text("Start Saving TIME and MONEY!"), a:has-text("Start Saving TIME and MONEY!")').first();
     await ctaButton.click();
     await page.waitForURL('/contact');
     await expect(page.url()).toContain('/contact');

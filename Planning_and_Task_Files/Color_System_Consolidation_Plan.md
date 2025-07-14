@@ -195,9 +195,10 @@ cp tailwind.config.ts tailwind.config.ts.backup
 
 **Task 1.2: Environment Setup**
 ```bash
-# Install additional linting tools
-npm install --save-dev eslint-plugin-no-hardcoded-colors
-npm install --save-dev postcss-colormin
+# Note: Per CLAUDE.md, this project runs exclusively on Vercel
+# Do not run npm install locally - dependencies are managed through Vercel
+# Installation of additional tools would be handled through package.json updates
+# which are processed during Vercel deployment
 ```
 
 **Task 1.3: Create Color Migration Tracking**
@@ -223,10 +224,10 @@ touch color-migration-progress.md
 - [ ] Update CLAUDE.md to remove dark mode instructions
 
 **Task 2.4: Validation** (45 minutes)
-- [ ] Run `npm run dev` and verify no console errors
-- [ ] Run `npm run build` and verify successful build
-- [ ] Run `npm run test:run` and verify all tests pass
-- [ ] Manual smoke test of all major pages
+- [ ] Request Vercel build logs to verify no console errors
+- [ ] Request Vercel build logs to verify successful build
+- [ ] Request Vercel build logs to verify all tests pass
+- [ ] Manual smoke test of all major pages on Vercel preview
 
 ### Phase 2: Base Color System Implementation (2-3 hours)
 
@@ -260,10 +261,10 @@ export const getProviderBgClass = (provider: string): string => {
 ```
 
 **Task 3.4: Validation** (45 minutes)
-- [ ] Run development server and verify CSS loads correctly
-- [ ] Use browser dev tools to verify CSS custom properties are defined
+- [ ] Request Vercel build logs to verify CSS loads correctly
+- [ ] Use browser dev tools on Vercel preview to verify CSS custom properties are defined
 - [ ] Test color changes by temporarily modifying base colors
-- [ ] Verify no build errors
+- [ ] Request Vercel build logs to verify no build errors
 
 ### Phase 3: Component Migration (12-15 hours)
 
@@ -336,16 +337,16 @@ className="text-brand-neutral-500 border-brand-neutral-200"
 ### Phase 4: Testing and Validation (3-4 hours)
 
 **Task 5.1: Automated Testing** (1 hour)
-- [ ] Run full test suite: `npm run test:all`
-- [ ] Run e2e tests: `npm run test:e2e`
-- [ ] Run build test: `npm run build`
-- [ ] Verify coverage remains above 80%
+- [ ] Request Vercel build logs to verify full test suite passes
+- [ ] Request Vercel build logs to verify e2e tests pass
+- [ ] Request Vercel build logs to verify build succeeds
+- [ ] Verify coverage remains above 80% from build logs
 
 **Task 5.2: Visual Regression Testing** (1 hour)
-- [ ] Take screenshots of all major pages before and after
+- [ ] Take screenshots of all major pages before and after on Vercel preview
 - [ ] Compare visually to ensure no unintended changes
-- [ ] Test responsive design on mobile and desktop
-- [ ] Verify accessibility contrast ratios still meet standards
+- [ ] Test responsive design on mobile and desktop via Vercel preview
+- [ ] Verify accessibility contrast ratios still meet standards using browser tools
 
 **Task 5.3: Color Consistency Audit** (1 hour)
 ```bash
@@ -356,9 +357,9 @@ grep -r "border-.*-[0-9]" src/ || echo "✅ No hardcoded border colors found"
 ```
 
 **Task 5.4: Brand Color Flexibility Test** (1 hour)
-- [ ] Temporarily change base brand colors
-- [ ] Verify all UI elements update correctly
-- [ ] Test edge cases like hover states and focus states
+- [ ] Temporarily change base brand colors in local files
+- [ ] Verify all UI elements update correctly on Vercel preview
+- [ ] Test edge cases like hover states and focus states on Vercel preview
 - [ ] Restore original colors
 
 ### Phase 5: Governance and Automation (2-3 hours)
@@ -397,8 +398,8 @@ if grep -r "bg-.*-[0-9]\|text-.*-[0-9]\|border-.*-[0-9]" src/; then
   exit 1
 fi
 
-npm run lint
-npm run test:run
+# Note: Per CLAUDE.md, do not run npm commands locally
+# These validations happen automatically on Vercel during deployment
 ```
 
 **Task 6.3: CI/CD Integration** (30 minutes)
@@ -530,9 +531,9 @@ jobs:
 - [ ] Remove `darkMode: "class"` from `tailwind.config.ts`
 - [ ] Remove dark mode toggle components
 - [ ] Update documentation
-- [ ] Test: `npm run dev` - verify no errors
-- [ ] Test: `npm run build` - verify successful build
-- [ ] Test: Manual smoke test of all pages
+- [ ] Test: Request Vercel build logs to verify no errors
+- [ ] Test: Request Vercel build logs to verify successful build
+- [ ] Test: Manual smoke test of all pages on Vercel preview
 
 ### Phase 2: Base Color System
 - [ ] Define 9 base brand colors in `src/index.css`
@@ -540,8 +541,8 @@ jobs:
 - [ ] Add provider-specific color mappings
 - [ ] Update `tailwind.config.ts` with brand colors
 - [ ] Create color utility functions in `src/lib/colors.ts`
-- [ ] Test: Verify CSS custom properties in browser dev tools
-- [ ] Test: Temporarily change base colors to verify propagation
+- [ ] Test: Verify CSS custom properties in browser dev tools on Vercel preview
+- [ ] Test: Temporarily change base colors to verify propagation on Vercel preview
 
 ### Phase 3: Component Migration (Detailed File List)
 
@@ -606,14 +607,14 @@ jobs:
 - [ ] All remaining components with hardcoded colors
 
 ### Phase 4: Testing and Validation
-- [ ] Run full test suite: `npm run test:all`
-- [ ] Run e2e tests: `npm run test:e2e`
-- [ ] Run build test: `npm run build`
-- [ ] Visual regression testing: Compare before/after screenshots
-- [ ] Accessibility testing: Run axe-core audit
-- [ ] Performance testing: Lighthouse audit
+- [ ] Request Vercel build logs to verify full test suite passes
+- [ ] Request Vercel build logs to verify e2e tests pass
+- [ ] Request Vercel build logs to verify build succeeds
+- [ ] Visual regression testing: Compare before/after screenshots on Vercel preview
+- [ ] Accessibility testing: Run axe-core audit on Vercel preview
+- [ ] Performance testing: Lighthouse audit on Vercel preview
 - [ ] Color consistency audit: Run grep commands to verify no hardcoded colors
-- [ ] Brand flexibility test: Change base colors and verify propagation
+- [ ] Brand flexibility test: Change base colors and verify propagation on Vercel preview
 
 ### Phase 5: Governance and Automation
 - [ ] Implement ESLint rule for hardcoded colors
@@ -651,13 +652,13 @@ grep -r "bg-.*-[0-9]\|text-.*-[0-9]\|border-.*-[0-9]" src/
 # Count hardcoded color instances
 grep -r "bg-.*-[0-9]\|text-.*-[0-9]\|border-.*-[0-9]" src/ | wc -l
 
-# Test color system
-npm run dev
-npm run build
-npm run test:all
+# Test color system - Request Vercel build logs for:
+# - Development preview verification
+# - Build process validation  
+# - Test suite execution
 
-# Validate accessibility
-npx @axe-core/cli http://localhost:5173
+# Validate accessibility - Use browser tools or request Vercel preview URL
+# for accessibility validation instead of local development
 ```
 
 ### Emergency Rollback Plan
@@ -666,7 +667,7 @@ npx @axe-core/cli http://localhost:5173
 git checkout main
 cp src/index.css.backup src/index.css
 cp tailwind.config.ts.backup tailwind.config.ts
-npm run build
+# Request Vercel build logs to verify successful rollback
 ```
 
 ---

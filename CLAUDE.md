@@ -129,12 +129,31 @@ The `.scratchpad/` folder serves as Claude Code's thinking space for:
 - **Planning**: Organize thoughts before starting work
 
 ### How to Use
-1. Create files with date/time prefix and descriptive names (e.g., `07-14-25_14.30_task_analysis.md`, `07-14-25_14.45_investigation_notes.md`)
-2. Use format: `MM-DD-YY_HH.MM_descriptive_name.extension`
-3. Use markdown for structure and readability
-4. Include timestamps for context within content
-5. Reference specific files/functions with `file:line` format
-6. Update files as understanding, thinking and planning evolves
+1. **Organize by Specific Task, Project, or Topic:**
+   - For related scratchpad files, create a subfolder inside `.scratchpad/` named after the specific task, project, or topic (e.g., `.scratchpad/model-advisor-color-refactor/`, `.scratchpad/model-advisor-search-bugfix/`, `.scratchpad/blog-tag-filter/`).
+   - Avoid using broad feature names (like just `model-advisor/`). Instead, use granular, descriptive folder names that reflect the exact focus of the work.
+   - Place all related scratchpad files for that specific task, project, or topic inside the corresponding subfolder.
+   - **All scratchpad files must be placed inside a subfolder—do not place any files in the root of `.scratchpad/`.**
+2. **File Naming:**
+   - Use date/time prefix and descriptive names (e.g., `07-14-25_14.30_task_analysis.md`, `07-14-25_14.45_investigation_notes.md`).
+   - Format: `MM-DD-YY_HH.MM_descriptive_name.extension`
+3. **Markdown Structure:**
+   - Use markdown for structure and readability
+   - Include timestamps for context within content
+   - Reference specific files/functions with `file:line` format
+   - Update files as understanding, thinking and planning evolves
+
+#### Example Structure
+```
+.scratchpad/
+  model-advisor-color-refactor/
+    07-14-25_14.30_color_migration_plan.md
+    07-14-25_15.00_color_refactor_notes.md
+  model-advisor-search-bugfix/
+    07-14-25_16.00_search_bug_investigation.md
+  blog-tag-filter/
+    07-14-25_17.00_tag_filter_design.md
+```
 
 ### File Types
 - `*.md` - Main documentation and plans
@@ -142,10 +161,12 @@ The `.scratchpad/` folder serves as Claude Code's thinking space for:
 - `*.json` - Structured data if needed
 
 ### Best Practices
-- Keep files focused on single topics
-- Use clear, descriptive filenames
+- Keep files focused on single topics, tasks, or projects
+- **Group related files into subfolders by specific task, project, or topic—not just broad features**
+- **Do not place any files in the root of `.scratchpad/`; every file must be inside a subfolder**
+- Use clear, descriptive folder and file names
 - Include context and rationale
 - Update TodoWrite tool alongside scratchpad usage
-- Clean up outdated files periodically
+- Clean up outdated files and folders periodically
 
-*Note: The .scratchpad folder is for Claude Code's working memory*
+*Note: The .scratchpad folder is for Claude Code's working memory and should now use subfolders for better organization of related work, with a focus on specificity and granularity. All files must be inside a subfolder.*

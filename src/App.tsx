@@ -32,8 +32,6 @@ const ScrollToTop = () => {
 
 // Layout wrapper that applies gradient background to specific routes
 const LayoutWrapper = ({ children }: { children: ReactNode }) => {
-  const location = useLocation();
-  
   // All routes use gradient background based on original design
   const shouldUseGradient = true;
   

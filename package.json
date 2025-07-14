@@ -12,7 +12,7 @@
     "preview": "vite preview",
     "start:backend": "cd backend && python main.py",
     "start:full": "concurrently \"npm run start:backend\" \"npm run dev\" --names \"backend,frontend\" --prefix name",
-    "test": "vitest",
+    "test": "node node_modules/vitest/vitest.mjs",
     "test:ui": "vitest --ui",
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage",

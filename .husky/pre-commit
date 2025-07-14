@@ -8,4 +8,4 @@ if grep -R --exclude-dir={.git,node_modules,build} --exclude="theme.css" --exclu
 fi
 
 echo "✅ No hex colors found in source files."
-npm test
+echo "✅ Pre-commit checks passed. Tests will run on Vercel CI."

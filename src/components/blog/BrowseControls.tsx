@@ -23,7 +23,7 @@ export const BrowseControls = ({
 
   return (
     <div className="flex flex-col gap-2 py-4 border-b w-full">
-      <span className="text-4xl font-bold text-brand-neutral-700">Latest Posts</span>
+      <span className="text-4xl font-bold text-brand-neutral-700">All Posts</span>
       <div className="flex-1 flex items-center space-x-4">
         <div className="flex items-center space-x-2">
           <Filter className="h-4 w-4 text-muted-foreground" />

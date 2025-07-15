@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { Clock, User, ArrowLeft, Calendar } from 'lucide-react';
+import { Clock, User, ArrowLeft, Calendar, Share } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
@@ -111,7 +111,7 @@ const Article = () => {
             </p>
 
             {/* Meta Info */}
-            <div className="flex flex-wrap items-center gap-6 text-sm text-muted-foreground">
+            <div className="flex flex-wrap items-center w-full gap-6 text-sm text-muted-foreground">
               <div className="flex items-center">
                 <User className="h-4 w-4 mr-2" />
                 {post.author.name}
@@ -127,6 +127,28 @@ const Article = () => {
               <div className="flex items-center">
                 <Clock className="h-4 w-4 mr-2" />
                 {post.readingTime} min read
+              </div>
+              <div className="flex ml-auto">
+                <Button 
+                  variant="outline"
+                  size="lg"
+                  className="rounded-full shadow-card hover:shadow-card-hover transition-all duration-300"
+                  onClick={() => {
+                    navigator.clipboard.writeText(window.location.href)
+                      .then(() => {
+                        toast({
+                          title: "Link copied!",
+                          description: "Article link copied to clipboard.",
+                        });
+                      })
+                      .catch(err => {
+                        console.error("Failed to copy: ", err);
+                      });
+                  }}
+                >
+                  <Share className="h-4 w-4 mr-2" />
+                  Share
+                </Button>
               </div>
             </div>
           </header>

@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { Clock, User, ArrowLeft, Calendar, Share } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
@@ -68,9 +69,36 @@ const Article = () => {
   }
 
   const content = articleContent[slug!] || '<p>Content coming soon...</p>';
+  const currentUrl = `${window.location.origin}/blog/${post.slug}`;
 
   return (
-    <div className="flex">
+    <>
+      <Helmet>
+        <title>{post.title} - Drel Solutions</title>
+        <meta name="description" content={post.subtitle} />
+        
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={currentUrl} />
+        <meta property="og:title" content={post.title} />
+        <meta property="og:description" content={post.subtitle} />
+        <meta property="og:image" content={post.image} />
+        <meta property="og:site_name" content="Drel Solutions" />
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content={currentUrl} />
+        <meta name="twitter:title" content={post.title} />
+        <meta name="twitter:description" content={post.subtitle} />
+        <meta name="twitter:image" content={post.image} />
+        
+        {/* Article specific */}
+        <meta property="article:author" content={post.author.name} />
+        <meta property="article:published_time" content={post.publishedAt} />
+        <meta property="article:tag" content={post.tags.join(', ')} />
+      </Helmet>
+      
+      <div className="flex">
       <div className="w-80 p-4">
         <ArticleProgress content={content} />
       </div>
@@ -218,6 +246,7 @@ const Article = () => {
       </div>
     </div>
     </div>
+    </>
   );
 };
 

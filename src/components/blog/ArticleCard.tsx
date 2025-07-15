@@ -32,18 +32,14 @@ export const ArticleCard = ({ post, onAuthorClick, onTagClick }: ArticleCardProp
           <div className="space-y-3 flex-1">
             <div className="flex flex-wrap gap-2">
               {post.tags.slice(0, 2).map((tag) => (
-                <Link
+                <button
                   key={tag}
-                  to={`/blog/tag/${tag}`}
-                  className="text-xs cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors"
-                  onClick={e => {
-                    e.stopPropagation();
-                    onTagClick(tag);
-                  }}
-                  tabIndex={0}
+                  className="text-xs cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors rounded-md"
+                  onClick={() => onTagClick(tag)}
+                  type="button"
                 >
                   <Badge variant="secondary">{tag}</Badge>
-                </Link>
+                </button>
               ))}
             </div>
             <h3 className="text-xl font-semibold leading-tight group-hover:text-primary transition-colors">
@@ -54,18 +50,14 @@ export const ArticleCard = ({ post, onAuthorClick, onTagClick }: ArticleCardProp
             </p>
           </div>
           <div className="flex items-center justify-between text-sm text-muted-foreground border-t pt-4">
-            <Link
-              to={`/author/${post.author.slug}`}
-              className="flex items-center gap-1 hover:underline"
-              onClick={e => {
-                e.stopPropagation();
-                onAuthorClick(post.author.slug);
-              }}
-              tabIndex={0}
+            <button
+              className="flex items-center gap-1 hover:underline cursor-pointer bg-transparent border-none p-0 text-muted-foreground text-sm"
+              onClick={() => onAuthorClick(post.author.slug)}
+              type="button"
             >
               <User className="h-3 w-3 mr-1" />
               {post.author.name}
-            </Link>
+            </button>
             <div className="flex items-center">
               <Clock className="h-3 w-3 mr-1" />
               {post.readingTime} min read

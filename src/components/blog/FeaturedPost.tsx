@@ -31,18 +31,14 @@ export const FeaturedPost = ({ post, onAuthorClick, onTagClick }: FeaturedPostPr
             <div className="space-y-2">
               <div className="flex flex-wrap gap-2">
                 {post.tags.map((tag) => (
-                  <Link
+                  <button
                     key={tag}
-                    to={`/blog/tag/${tag}`}
-                    className="cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors"
-                    onClick={e => {
-                      e.stopPropagation();
-                      onTagClick(tag);
-                    }}
-                    tabIndex={0}
+                    className="cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors rounded-md"
+                    onClick={() => onTagClick(tag)}
+                    type="button"
                   >
                     <Badge variant="secondary">{tag}</Badge>
-                  </Link>
+                  </button>
                 ))}
               </div>
               <h2 className="text-3xl font-bold leading-tight">
@@ -54,18 +50,14 @@ export const FeaturedPost = ({ post, onAuthorClick, onTagClick }: FeaturedPostPr
             </div>
 
             <div className="flex items-center space-x-4 text-sm text-muted-foreground">
-              <Link
-                to={`/author/${post.author.slug}`}
-                className="flex items-center gap-1 hover:underline"
-                onClick={e => {
-                  e.stopPropagation();
-                  onAuthorClick(post.author.slug);
-                }}
-                tabIndex={0}
+              <button
+                className="flex items-center gap-1 hover:underline cursor-pointer bg-transparent border-none p-0 text-muted-foreground text-sm"
+                onClick={() => onAuthorClick(post.author.slug)}
+                type="button"
               >
                 <User className="h-4 w-4 mr-1" />
                 {post.author.name}
-              </Link>
+              </button>
               <div className="flex items-center">
                 <Clock className="h-4 w-4 mr-1" />
                 {post.readingTime} min read

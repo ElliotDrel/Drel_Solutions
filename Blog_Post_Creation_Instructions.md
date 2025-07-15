@@ -4,25 +4,27 @@ Follow these steps to add a new blog post with images to the website.
 
 ## Step-by-Step Process
 
-### 1. Format markdown file with proper frontmatter and image references
-- Create your `.md` file with required frontmatter structure
-- Include all required fields: id, title, subtitle, image, author, readingTime, tags, publishedAt, slug, featured, draft
-- Set hero image path: `/blog/images/posts/your-post-slug/hero.jpg`
+### 1. Format MDX file with proper frontmatter and SEO metadata
+- Create your `.mdx` file with required frontmatter structure
+- Include all required fields for SEO optimization and functionality
+- Set header image path: `/blog/images/headers/your-post-slug-header.webp`
 
 **Example frontmatter:**
 ```markdown
 ---
 id: "unique-number"
 title: "Your Post Title"
-subtitle: "Brief description"
-image: "/blog/images/posts/your-post-slug/hero.jpg"
-author:
-  name: "Author Name"
-  slug: "author-slug"
-  avatar: "/blog/images/authors/author-name.jpg"
-readingTime: 5
+excerpt: "Brief description for search engines and social sharing"
+category: "AI Solutions"
+seoTitle: "Custom SEO Title (60 chars max)"
+metaDescription: "Compelling meta description for search engines (120-160 chars)"
+keywords: ["keyword1", "keyword2", "keyword3"]
+focusKeyword: "primary-keyword"
+headerImage: "/blog/images/headers/your-post-slug-header.webp"
+author: "drel-solutions"
 tags: ["tag1", "tag2"]
 publishedAt: "2024-01-15"
+updatedAt: "2024-01-15"
 slug: "your-post-slug"
 featured: false
 draft: false
@@ -31,61 +33,70 @@ draft: false
 # Your content here
 ```
 
-### 2. Create image folder structure in public/blog/images/posts/
-- Navigate to `public/blog/images/posts/`
-- Create new folder named exactly like your post slug
-- Structure: `public/blog/images/posts/your-post-slug/`
-
-### 3. Add hero image to the post folder
-- Place your main header image as `hero.jpg` in the post folder
+### 2. Add header image to the headers directory
+- Place your main header image in `public/blog/images/headers/`
+- Name it: `your-post-slug-header.webp`
 - This image will appear at the top of your blog post
-- Recommended size: landscape format, high quality
+- Recommended: WebP format, landscape orientation, optimized for web
 
-### 4. Add inline images to the post folder
-- Add all your content images to the same folder
-- Use descriptive filenames: `chart1.png`, `screenshot.jpg`, `diagram.svg`
+### 3. Add inline images to the content directory
+- Add all your content images to `public/blog/images/content/`
+- Use descriptive filenames: `chart1.webp`, `screenshot.webp`, `diagram.webp`
+- Prefer WebP format for optimal performance
 - Keep images optimized for web (reasonable file sizes)
 
-### 5. Update markdown content with inline image references
-- Add image references in your markdown content using:
-  - `![Alt text](/blog/images/posts/your-post-slug/image.png)`
-  - Or HTML: `<img src="/blog/images/posts/your-post-slug/image.jpg" alt="Description" />`
+### 4. Update MDX content with inline image references
+- Add image references in your MDX content using:
+  - `![Alt text](/blog/images/content/image.webp)`
+  - Or use the OptimizedImage component: `<OptimizedImage src="/blog/images/content/image.webp" alt="Description" />`
 
-### 6. Add markdown file to src/content/blog/posts/
-- Place your completed `.md` file in `src/content/blog/posts/`
-- Filename should match your slug: `your-post-slug.md`
+### 5. Add MDX file to src/content/blog/
+- Place your completed `.mdx` file in `src/content/blog/`
+- Filename should match your slug: `your-post-slug.mdx`
 
-### 7. Verify all image paths are correct and accessible
-- Double-check all image paths start with `/blog/images/posts/your-post-slug/`
-- Ensure image files exist in the correct folder
-- Test that frontmatter image path matches your hero.jpg location
+### 6. Verify all image paths are correct and accessible
+- Double-check header image path matches: `/blog/images/headers/your-post-slug-header.webp`
+- Ensure content images use paths like: `/blog/images/content/image-name.webp`
+- Test that frontmatter headerImage path matches your actual file location
 
 ## Final File Structure
 
 After completion, you should have:
 
 ```
-src/content/blog/posts/
-└── your-post-slug.md
+src/content/blog/
+└── your-post-slug.mdx
 
-public/blog/images/posts/your-post-slug/
-├── hero.jpg
-├── inline-image1.png
-├── chart.svg
-└── screenshot.jpg
+public/blog/images/headers/
+└── your-post-slug-header.webp
+
+public/blog/images/content/
+├── inline-image1.webp
+├── chart.webp
+└── screenshot.webp
 ```
 
 ## Important Notes
 
-- The build system automatically processes new posts during Vercel deployment
-- No manual registration is required - just add the files
-- Build will fail if frontmatter is invalid (this is intentional)
-- All image paths must be absolute paths starting with `/blog/images/posts/`
+- The build system automatically processes MDX files at build time on Vercel
+- No manual registration is required - just add the files to src/content/blog/
+- Build will fail if frontmatter is missing required SEO fields (this is intentional)
+- All image paths must be absolute paths starting with `/blog/images/`
 - Use unique post IDs to avoid conflicts
+- Author field should reference existing author IDs from src/data/blog/authors.ts
+- SEO fields (metaDescription, keywords, category) are now required for optimization
+
+## Available Authors
+
+Use one of these author IDs in your frontmatter:
+- `"drel-solutions"` - Main company author with AI expertise
+- `"technical-team"` - Development team author for technical content
 
 ## Troubleshooting
 
-- If build fails, check frontmatter format against existing posts
-- Verify all image files exist at the specified paths
-- Ensure slug matches both folder name and filename
-- Check that all required frontmatter fields are present
+- If build fails, check frontmatter format includes all required SEO fields
+- Verify all image files exist at the specified paths (headers/ and content/ directories)
+- Ensure slug matches filename: `your-post-slug.mdx`
+- Check that metaDescription is between 120-160 characters
+- Verify author ID matches an existing author in authors.ts
+- Ensure all required frontmatter fields are present (see example above)

@@ -11,7 +11,7 @@ class ArticleSharingHelper {
 
   async clickFirstArticle() {
     // Click on the first article card in the blog list
-    const firstArticle = this.page.locator('.grid article, .grid .card, [data-testid="article-card"]').first();
+    const firstArticle = this.page.locator('[data-testid="article-card"]').first();
     await firstArticle.click();
     await this.page.waitForLoadState('networkidle');
   }
@@ -95,7 +95,7 @@ test.describe('Article Sharing Functionality', () => {
     const helper = new ArticleSharingHelper(page);
     
     // Navigate to a specific article directly
-    await page.goto('/blog/test-article'); // Assuming a test article exists
+    await page.goto('/blog/streamlining-team-workflows'); // Assuming a test article exists
     await page.waitForLoadState('networkidle');
     
     // Check Open Graph meta tags
@@ -117,7 +117,7 @@ test.describe('Article Sharing Functionality', () => {
   test('should verify Twitter meta tags are correctly generated', async ({ page }) => {
     const helper = new ArticleSharingHelper(page);
     
-    await page.goto('/blog/test-article');
+    await page.goto('/blog/streamlining-team-workflows');
     await page.waitForLoadState('networkidle');
     
     // Check Twitter meta tags
@@ -137,7 +137,7 @@ test.describe('Article Sharing Functionality', () => {
   test('should verify article-specific meta tags are generated', async ({ page }) => {
     const helper = new ArticleSharingHelper(page);
     
-    await page.goto('/blog/test-article');
+    await page.goto('/blog/streamlining-team-workflows');
     await page.waitForLoadState('networkidle');
     
     // Check article-specific meta tags
@@ -154,7 +154,7 @@ test.describe('Article Sharing Functionality', () => {
     const helper = new ArticleSharingHelper(page);
     
     // Navigate to an article that doesn't have an image (create test article or mock)
-    await page.goto('/blog/no-image-article');
+    await page.goto('/blog/test-no-image');
     await page.waitForLoadState('networkidle');
     
     // Check that default image is used in meta tags
@@ -172,7 +172,7 @@ test.describe('Article Sharing Functionality', () => {
     await page.setViewportSize({ width: 375, height: 667 });
     
     // Navigate to article
-    await page.goto('/blog/test-article');
+    await page.goto('/blog/streamlining-team-workflows');
     await page.waitForLoadState('networkidle');
     
     // Find share button (should be responsive)
@@ -192,7 +192,7 @@ test.describe('Article Sharing Functionality', () => {
     const helper = new ArticleSharingHelper(page);
     
     // Navigate to article
-    await page.goto('/blog/test-article');
+    await page.goto('/blog/streamlining-team-workflows');
     await page.waitForLoadState('networkidle');
     
     // Mock clipboard failure by overriding the clipboard API
@@ -217,7 +217,7 @@ test.describe('Article Sharing Functionality', () => {
     const helper = new ArticleSharingHelper(page);
     
     // Navigate to article
-    await page.goto('/blog/test-article');
+    await page.goto('/blog/streamlining-team-workflows');
     await page.waitForLoadState('networkidle');
     
     // Mock older browser environment (no clipboard API)
@@ -241,7 +241,7 @@ test.describe('Article Sharing Functionality', () => {
     const helper = new ArticleSharingHelper(page);
     
     // Test multiple articles to ensure consistency
-    const testArticles = ['/blog/test-article', '/blog/another-article'];
+    const testArticles = ['/blog/streamlining-team-workflows', '/blog/scalable-process-documentation'];
     
     for (const articleUrl of testArticles) {
       await page.goto(articleUrl);
@@ -263,7 +263,7 @@ test.describe('Article Sharing Functionality', () => {
   });
 
   test('should verify page title and meta description for SEO', async ({ page }) => {
-    await page.goto('/blog/test-article');
+    await page.goto('/blog/streamlining-team-workflows');
     await page.waitForLoadState('networkidle');
     
     // Verify page title includes article title and site name
@@ -306,7 +306,7 @@ test.describe('Article Sharing Functionality', () => {
   });
 
   test('should have accessible share button', async ({ page }) => {
-    await page.goto('/blog/test-article');
+    await page.goto('/blog/streamlining-team-workflows');
     await page.waitForLoadState('networkidle');
     
     const shareButton = await new ArticleSharingHelper(page).findShareButton();

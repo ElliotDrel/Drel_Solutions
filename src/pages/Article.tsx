@@ -31,12 +31,15 @@ const Article = () => {
       textArea.focus();
       textArea.select();
       return new Promise<void>((resolve, reject) => {
-        if (document.execCommand('copy')) {
-          resolve();
-        } else {
-          reject(new Error('Copy command failed'));
+        try {
+          if (document.execCommand('copy')) {
+            resolve();
+          } else {
+            reject(new Error('Copy command failed'));
+          }
+        } finally {
+          document.body.removeChild(textArea);
         }
-        document.body.removeChild(textArea);
       });
     }
   };

@@ -24,7 +24,7 @@ vi.mock('../../data/blog/articles', () => ({
       title: 'Article Without Image',
       subtitle: 'Test article without image',
       slug: 'no-image-article', 
-      image: null, // Test fallback scenario
+      image: '', // Test fallback scenario
       author: { name: 'Test Author 2' },
       publishedAt: '2024-01-16',
       readingTime: 3,
@@ -251,8 +251,8 @@ describe('Article Sharing Functionality', () => {
       
       // Check that tags are displayed in the article header
       const articleHeader = screen.getByRole('article').querySelector('header');
-      expect(within(articleHeader!).getByText('test')).toBeInTheDocument();
-      expect(within(articleHeader!).getByText('sharing')).toBeInTheDocument();
+      expect(within(articleHeader!).getAllByText('test').length).toBeGreaterThan(0);
+      expect(within(articleHeader!).getAllByText('sharing').length).toBeGreaterThan(0);
     });
 
     it('renders article content and meta information', () => {

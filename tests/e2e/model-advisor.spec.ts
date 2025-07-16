@@ -69,9 +69,15 @@ Limitations:
     // First, wait for initial loading to complete
     await expect(page.locator('text=Loading AI models...')).not.toBeVisible({ timeout: 15000 });
     
-    // Verify page loads with model grid (increased timeout for model loading)
+    // Wait for the model grid to be present in DOM and visible
+    // This ensures the component has fully rendered after loading
     await expect(page.locator('[data-testid="model-grid"]')).toBeVisible({ timeout: 15000 });
-    await expect(page.locator('[data-testid="model-card"]').first()).toBeVisible();
+    
+    // Verify that filter buttons are also loaded (additional confirmation)
+    await expect(page.locator('[data-testid="filter-all"]')).toBeVisible();
+    
+    // Additional verification that models have actually loaded
+    await expect(page.locator('[data-testid="model-card"]').first()).toBeVisible({ timeout: 5000 });
     
     // Test provider filtering - with mocked data we have 1 OpenAI model
     await page.click('[data-testid="filter-openai"]');
@@ -127,6 +133,9 @@ Limitations:
     // Wait for initial loading to complete
     await expect(page.locator('text=Loading AI models...')).not.toBeVisible({ timeout: 15000 });
     
+    // Ensure the page is fully loaded with model grid before starting test prompts
+    await expect(page.locator('[data-testid="model-grid"]')).toBeVisible({ timeout: 10000 });
+    
     const prompts = [
       'write an email',
       'create a Discord bot',
@@ -181,6 +190,9 @@ Limitations:
     
     // Wait for initial loading to complete
     await expect(page.locator('text=Loading AI models...')).not.toBeVisible({ timeout: 15000 });
+    
+    // Ensure the page is fully loaded with model grid before triggering API
+    await expect(page.locator('[data-testid="model-grid"]')).toBeVisible({ timeout: 10000 });
     
     // Trigger API call
     await page.fill('[data-testid="search-input"]', 'test query');

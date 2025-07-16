@@ -315,7 +315,20 @@ const ModelAdvisor = () => {
       }
     };
 
-    loadModels();
+    // Set up a maximum loading timeout to prevent infinite loading
+    const loadingTimeout = setTimeout(() => {
+      console.warn('ModelAdvisor: Loading timeout reached, setting loading to false');
+      setLoading(false);
+    }, 12000); // 12 second timeout
+
+    loadModels().finally(() => {
+      clearTimeout(loadingTimeout);
+    });
+
+    // Cleanup timeout on unmount
+    return () => {
+      clearTimeout(loadingTimeout);
+    };
   }, []);
 
   const parseModelFile = (content: string, provider: string): ModelInfo | null => {

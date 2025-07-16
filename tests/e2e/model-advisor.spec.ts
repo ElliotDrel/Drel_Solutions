@@ -41,7 +41,7 @@ test.describe('Model Advisor', () => {
 Provider: ${provider}
 Release: 2024
 
-Description: Test model description for E2E testing.
+Test model description for E2E testing purposes.
 
 Key Capabilities:
 - Text generation
@@ -65,6 +65,10 @@ Limitations:
     });
     
     await page.goto('/model-advisor');
+    
+    // Add debugging to see what's happening during loading
+    page.on('console', msg => console.log('PAGE LOG:', msg.text()));
+    page.on('pageerror', err => console.log('PAGE ERROR:', err.message));
     
     // First, wait for initial loading to complete
     await expect(page.locator('text=Loading AI models...')).not.toBeVisible({ timeout: 15000 });
@@ -109,7 +113,25 @@ Limitations:
       route.fulfill({
         status: 200,
         contentType: 'text/plain',
-        body: `Model: Test Model\nProvider: Test\nRelease: 2024\n\nDescription: Test model.\n\nKey Capabilities:\n- Testing\n\nContext window: 128K\nTraining cutoff: 2024\nResponse speed: Fast\nCost: $0.01\n\nBest Use Cases:\n- Testing\n\nLimitations:\n- Test only`
+        body: `Model: Test Model
+Provider: Test
+Release: 2024
+
+Test model description for E2E testing.
+
+Key Capabilities:
+- Testing
+
+Context window: 128K tokens
+Training cutoff: 2024
+Response speed: Fast
+Cost: $0.01 per 1K tokens
+
+Best Use Cases:
+- Testing
+
+Limitations:
+- Test only`
       });
     });
 

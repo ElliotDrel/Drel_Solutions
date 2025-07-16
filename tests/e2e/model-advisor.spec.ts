@@ -66,6 +66,9 @@ Limitations:
     
     await page.goto('/model-advisor');
     
+    // First, wait for initial loading to complete
+    await expect(page.locator('text=Loading AI models...')).not.toBeVisible({ timeout: 15000 });
+    
     // Verify page loads with model grid (increased timeout for model loading)
     await expect(page.locator('[data-testid="model-grid"]')).toBeVisible({ timeout: 15000 });
     await expect(page.locator('[data-testid="model-card"]').first()).toBeVisible();
@@ -121,6 +124,9 @@ Limitations:
     
     await page.goto('/model-advisor');
     
+    // Wait for initial loading to complete
+    await expect(page.locator('text=Loading AI models...')).not.toBeVisible({ timeout: 15000 });
+    
     const prompts = [
       'write an email',
       'create a Discord bot',
@@ -172,6 +178,9 @@ Limitations:
     });
     
     await page.goto('/model-advisor');
+    
+    // Wait for initial loading to complete
+    await expect(page.locator('text=Loading AI models...')).not.toBeVisible({ timeout: 15000 });
     
     // Trigger API call
     await page.fill('[data-testid="search-input"]', 'test query');

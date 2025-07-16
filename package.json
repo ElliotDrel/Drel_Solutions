@@ -17,7 +17,11 @@
     "test:e2e:ui": "playwright test --ui",
     "test:color-integrity": "vitest run src/test/color-system-integrity.test.ts",
     "test:all": "npm run test:run && npm run test:e2e",
-    "test:ci": "npm run test:coverage && npm run test:e2e"
+    "test:ci": "npm run test:coverage && npm run test:e2e",
+    "validate:test-alignment": "tsx scripts/validate-test-alignment.ts",
+    "validate:routes": "tsx scripts/validate-test-alignment.ts --routes-only",
+    "validate:content": "tsx scripts/validate-test-alignment.ts --content-only",
+    "validate:ci": "tsx scripts/validate-test-alignment.ts --ci-only"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",

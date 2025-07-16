@@ -208,6 +208,7 @@ const Article = () => {
                   size="lg"
                   className="rounded-full shadow-card hover:shadow-card-hover transition-all duration-300"
                   onClick={handleShare}
+                  aria-label="Share this article"
                 >
                   <Share className="h-4 w-4 mr-2" />
                   Share

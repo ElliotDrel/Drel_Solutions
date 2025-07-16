@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Clock, DollarSign, Zap, Target, BarChart3, CheckCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 const HeroSection = () => {
-  return <section id="home" className="pt-16 min-h-screen flex items-center bg-gradient-to-br from-brand-primary/10 via-white to-brand-success/10">
+  return <section id="home" className="pt-16 min-h-screen flex items-center bg-gradient-to-br from-brand-primary/10 via-white to-brand-success/10" data-testid="hero-section">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-8">
@@ -106,7 +106,7 @@ const AnimatedCounter = ({
     </span>;
 };
 const StatsSection = () => {
-  return <section className="py-20 bg-brand-neutral-900 text-white">
+  return <section className="py-20 bg-brand-neutral-900 text-white" data-testid="stats-section">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center space-y-12">
           <div className="space-y-4">

@@ -270,13 +270,18 @@ const ModelAdvisor = () => {
   useEffect(() => {
     const loadModels = async () => {
       try {
+        console.log('ModelAdvisor: Starting model load...');
         // Load the model index file
         const indexResponse = await fetch('/model_docs/index.json');
+        console.log('ModelAdvisor: Index response status:', indexResponse.ok, indexResponse.status);
+        
         if (!indexResponse.ok) {
+          console.error('ModelAdvisor: Index failed:', indexResponse.status, indexResponse.statusText);
           throw new Error('Failed to load model index');
         }
         
         const { models: modelFiles } = await indexResponse.json();
+        console.log('ModelAdvisor: Model files loaded:', modelFiles.length);
         const modelData: ModelInfo[] = [];
 
         for (const file of modelFiles) {
@@ -285,18 +290,27 @@ const ModelAdvisor = () => {
             if (response.ok) {
               const content = await response.text();
               const parsed = parseModelFile(content, file.provider);
-              if (parsed) modelData.push(parsed);
+              if (parsed) {
+                modelData.push(parsed);
+                console.log(`ModelAdvisor: Successfully loaded ${file.provider}/${parsed.name}`);
+              } else {
+                console.warn(`ModelAdvisor: Failed to parse ${file.path}`);
+              }
+            } else {
+              console.warn(`ModelAdvisor: Failed to fetch ${file.path}: ${response.status}`);
             }
           } catch (error) {
             console.warn(`Failed to load ${file.path}:`, error);
           }
         }
 
+        console.log('ModelAdvisor: Total models loaded:', modelData.length);
         setModels(modelData);
         setFilteredModels(modelData);
       } catch (error) {
         console.error('Error loading models:', error);
       } finally {
+        console.log('ModelAdvisor: Setting loading to false');
         setLoading(false);
       }
     };
@@ -604,9 +618,17 @@ const ModelAdvisor = () => {
 
                 {/* Models Grid */}
                 <div className="models-grid-section grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" data-testid="model-grid">
-                  {(showAllModels ? filteredModels : filteredModels.slice(0, 6)).map((model, index) => (
-                    <ModelCard key={`${model.provider}-${model.name}-${index}`} model={model} />
-                  ))}
+                  {filteredModels.length > 0 ? (
+                    (showAllModels ? filteredModels : filteredModels.slice(0, 6)).map((model, index) => (
+                      <ModelCard key={`${model.provider}-${model.name}-${index}`} model={model} />
+                    ))
+                  ) : (
+                    <div className="col-span-full text-center py-12">
+                      <div className="text-brand-neutral-500 text-lg">
+                        {loading ? 'Loading AI models...' : 'No models available. Please check your connection and try refreshing the page.'}
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Show More/Less Button */}

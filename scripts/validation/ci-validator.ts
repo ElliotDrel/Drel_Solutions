@@ -15,10 +15,19 @@ export interface CIValidationResult {
   }[];
 }
 
+interface CIConfigDetails {
+  path: string;
+  content: string;
+  hasE2ETests: boolean;
+  hasUnitTests: boolean;
+  runsOnPR: boolean;
+  runsOnPush: boolean;
+}
+
 /**
  * Check if CI configuration exists and is properly set up
  */
-function checkCIConfiguration(): { found: boolean; details: any } {
+function checkCIConfiguration(): { found: boolean; details: CIConfigDetails | null } {
   const ciPaths = [
     '.github/workflows/test.yml',
     '.github/workflows/tests.yml', 

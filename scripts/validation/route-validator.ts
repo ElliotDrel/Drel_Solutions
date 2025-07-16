@@ -89,7 +89,7 @@ export function extractTestRouteExpectations(): TestRouteExpectation[] {
       }
 
       // Match expect(page).toHaveURL(/\/path/)
-      const urlMatch = line.match(/expect\(page\)\.toHaveURL\(\/([^\/]+)\/\)/);
+      const urlMatch = line.match(/expect\(page\)\.toHaveURL\(\/([^/]+)\/\)/);
       if (urlMatch) {
         // Convert regex pattern back to route
         const route = '/' + urlMatch[1];

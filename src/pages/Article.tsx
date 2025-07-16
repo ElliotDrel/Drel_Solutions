@@ -219,7 +219,7 @@ const Article = () => {
           {/* Featured Image */}
           <div className="relative overflow-hidden rounded-lg">
             <img
-              src={post.image}
+              src={post.image || '/drel-logo.png'}
               alt={post.title}
               className="w-full h-64 md:h-96 object-cover"
               loading="eager"

@@ -9,7 +9,7 @@ import { Toaster } from '@/components/ui/toaster';
 vi.mock('../../data/blog/articles', () => ({
   mockPosts: [
     {
-      id: 1,
+      id: '1',
       title: 'Test Article',
       subtitle: 'Test subtitle for sharing',
       slug: 'test-article',
@@ -20,7 +20,7 @@ vi.mock('../../data/blog/articles', () => ({
       tags: ['test', 'sharing']
     },
     {
-      id: 2,
+      id: '2',
       title: 'Article Without Image',
       subtitle: 'Test article without image',
       slug: 'no-image-article', 

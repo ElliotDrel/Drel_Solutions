@@ -36,7 +36,7 @@ const Navigation: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
-            <Link to="/" className="flex items-center text-2xl font-bold text-brand-primary hover:text-brand-primary/80 transition-colors">
+            <Link to="/" className="flex items-center text-2xl font-bold text-brand-primary hover:text-brand-primary/80 transition-colors" data-testid="nav-logo">
               <img src="/drel-logo.png" alt="Drel Solutions Logo" className="h-10 w-10 rounded-lg" />
               <span>Drel Solutions</span>
             </Link>
@@ -48,10 +48,10 @@ const Navigation: React.FC = () => {
               <Link to="/" className={getLinkClassName('/')}>
                 Home
               </Link>
-              <Link to="/about" className={getLinkClassName('/about')}>
+              <Link to="/about" className={getLinkClassName('/about')} data-testid="nav-about">
                 About
               </Link>
-              <Link to="/blog" className={getLinkClassName('/blog')}>
+              <Link to="/blog" className={getLinkClassName('/blog')} data-testid="nav-blog">
                 Blog
               </Link>
               <DropdownMenu
@@ -62,6 +62,7 @@ const Navigation: React.FC = () => {
                   <button 
                     onClick={() => setIsDropdownOpen(!isDropdownOpen)} 
                     className={`${getLinkClassName('/modeladvisor')} flex items-center`}
+                    data-testid="nav-model-advisor"
                   >
                     Solutions <ChevronDown className="ml-1 h-4 w-4" />
                   </button>
@@ -70,7 +71,7 @@ const Navigation: React.FC = () => {
                   { href: '/modeladvisor', label: 'Model Advisor', isActive: isActive('/modeladvisor') }
                 ]}
               />
-              <Link to="/contact">
+              <Link to="/contact" data-testid="nav-contact">
                 <Button className="bg-brand-primary hover:bg-brand-primary/90 text-white px-6 py-2">Let's Talk</Button>
               </Link>
             </div>

@@ -223,7 +223,7 @@ test.describe('Article Sharing Functionality', () => {
     // Mock older browser environment (no clipboard API)
     await page.addInitScript(() => {
       // Remove modern clipboard API to trigger fallback
-      delete (navigator as any).clipboard;
+      delete (navigator as Navigator & { clipboard?: Clipboard }).clipboard;
       
       // Mock document.execCommand to succeed
       document.execCommand = () => true;

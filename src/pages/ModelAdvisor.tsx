@@ -455,6 +455,7 @@ const ModelAdvisor = () => {
                     </label>
                     <Textarea
                       id="search-query"
+                      data-testid="search-input"
                       placeholder="e.g., I need to build a customer service chatbot that can handle complex technical questions and integrate with our existing CRM system..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
@@ -464,7 +465,7 @@ const ModelAdvisor = () => {
                   </div>
 
                   {searchError && (
-                    <div className="text-brand-danger text-sm bg-brand-danger/10 p-3 rounded-lg">
+                    <div className="text-brand-danger text-sm bg-brand-danger/10 p-3 rounded-lg" data-testid="error-message">
                       {searchError}
                     </div>
                   )}
@@ -474,6 +475,7 @@ const ModelAdvisor = () => {
                       onClick={handleSearch}
                       disabled={isSearching || !searchQuery.trim()}
                       className="flex-1 bg-brand-primary hover:bg-brand-primary/90 text-white"
+                      data-testid="search-button"
                     >
                       {isSearching ? (
                         <>
@@ -493,6 +495,7 @@ const ModelAdvisor = () => {
                         onClick={clearSearch}
                         variant="outline"
                         className="px-6"
+                        data-testid="clear-button"
                       >
                         Clear
                       </Button>
@@ -516,10 +519,11 @@ const ModelAdvisor = () => {
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {recommendations.map((recommendation, index) => (
-                    <RecommendationCard 
-                      key={`rec-${recommendation.rank}-${index}`} 
-                      recommendation={recommendation} 
-                    />
+                    <div key={`rec-${recommendation.rank}-${index}`} data-testid="recommendation">
+                      <RecommendationCard 
+                        recommendation={recommendation} 
+                      />
+                    </div>
                   ))}
                 </div>
 
@@ -621,6 +625,7 @@ const ModelAdvisor = () => {
                       }}
                       variant="outline" 
                       className="px-8 py-3 text-lg font-medium border-2 border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white transition-all duration-200"
+                      data-testid={showAllModels ? "show-less" : "show-more"}
                     >
                       {showAllModels ? (
                         <>

@@ -10,11 +10,11 @@ test.describe('Article Sharing Functionality', () => {
     await page.locator('[data-testid="article-card"]').first().click();
     await expect(page.locator('h1')).toBeVisible();
     
-    // Verify essential meta tags are present
-    await expect(page.locator('meta[property="og:title"]')).toBeAttached();
-    await expect(page.locator('meta[property="og:description"]')).toBeAttached();
-    await expect(page.locator('meta[property="og:image"]')).toBeAttached();
-    await expect(page.locator('meta[name="twitter:card"]')).toBeAttached();
+    // Verify essential meta tags are present (using .first() to handle duplicates)
+    await expect(page.locator('meta[property="og:title"]').first()).toBeAttached();
+    await expect(page.locator('meta[property="og:description"]').first()).toBeAttached();
+    await expect(page.locator('meta[property="og:image"]').first()).toBeAttached();
+    await expect(page.locator('meta[name="twitter:card"]').first()).toBeAttached();
     
     // Test share functionality
     const shareButton = page.locator('button:has(svg):has-text("Share")');

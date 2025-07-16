@@ -4,11 +4,11 @@ test.describe('Navigation', () => {
   test('should navigate between pages with browser controls', async ({ page }) => {
     // Start at homepage
     await page.goto('/');
-    await expect(page.locator('h1')).toContainText('AI Model Advisor');
+    await expect(page.locator('h1')).toContainText('AI Consulting That Pays for Itself');
     
     // Navigate to Model Advisor
     await page.click('[data-testid="nav-model-advisor"]');
-    await expect(page).toHaveURL(/\/model-advisor/);
+    await expect(page).toHaveURL(/\/modeladvisor/);
     await expect(page.locator('[data-testid="model-grid"]')).toBeVisible();
     
     // Navigate to Blog

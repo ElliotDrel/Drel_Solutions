@@ -16,17 +16,17 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   
   /* More workers for faster execution */
-  workers: process.env.CI ? 2 : undefined,
+  workers: process.env.CI ? 4 : 6,
   
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: process.env.CI ? 'github' : 'html',
   
   /* Global timeout for all tests */
-  timeout: 30 * 1000,
+  timeout: 15 * 1000,
   
   /* Expect timeout for assertions */
   expect: {
-    timeout: 5 * 1000,
+    timeout: 3 * 1000,
   },
   
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
@@ -44,10 +44,10 @@ export default defineConfig({
     video: 'retain-on-failure',
     
     /* Navigation timeout */
-    navigationTimeout: 15 * 1000,
+    navigationTimeout: 8 * 1000,
     
     /* Action timeout */
-    actionTimeout: 10 * 1000,
+    actionTimeout: 5 * 1000,
   },
 
   /* Configure projects for major browsers - REDUCED for faster CI */

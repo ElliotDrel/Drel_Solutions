@@ -16,6 +16,7 @@ export const ArticleCard = ({ post, onAuthorClick, onTagClick }: ArticleCardProp
       to={`/blog/${post.slug}`}
       className="block group h-full"
       aria-label={`Read blog post: ${post.title}`}
+      data-testid="article-card"
     >
       <Card className="overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-300 bg-gradient-card h-full flex flex-col">
         <CardHeader className="p-0">

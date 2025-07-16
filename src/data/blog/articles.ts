@@ -99,6 +99,17 @@ export const mockPosts: BlogPost[] = [
     tags: ['customer-feedback', 'integration', 'improvement'],
     publishedAt: '2023-12-28',
     slug: 'customer-feedback-integration'
+  },
+  {
+    id: 'test-no-image',
+    title: 'Testing Default Image Fallback',
+    subtitle: 'This article has no image to test fallback behavior',
+    image: null,
+    author: { name: 'Test Author', slug: 'test-author' },
+    readingTime: 2,
+    tags: ['testing'],
+    publishedAt: '2023-12-25',
+    slug: 'test-no-image'
   }
 ];
 
@@ -252,5 +263,15 @@ export const articleContent: Record<string, string> = {
     
     <h2>Communication and Follow-up</h2>
     <p>Close the loop with customers by communicating how their feedback has driven improvements. This builds loyalty and encourages continued engagement.</p>
+  `,
+  'test-no-image': `
+    <h2>Testing Default Image Fallback</h2>
+    <p>This is a test article specifically designed to test the default image fallback functionality in our sharing system.</p>
+    
+    <h2>Purpose</h2>
+    <p>When articles don't have featured images, our system should automatically use a default sharing image to ensure social media previews look professional.</p>
+    
+    <h2>Implementation</h2>
+    <p>The fallback is implemented in the Article component using a conditional check for the post.image property.</p>
   `
 };

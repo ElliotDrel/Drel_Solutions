@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, act, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import Article from '../../pages/Article';
@@ -240,17 +240,19 @@ describe('Article Sharing Functionality', () => {
       expect(screen.getByText('Test Article')).toBeInTheDocument();
       expect(screen.getByText('Test subtitle for sharing')).toBeInTheDocument();
       
-      // Verify author and publication info
-      expect(screen.getByText('Test Author')).toBeInTheDocument();
+      // Verify author and publication info in article header
+      const articleHeader = screen.getByRole('article').querySelector('header');
+      expect(within(articleHeader!).getByText('Test Author')).toBeInTheDocument();
       expect(screen.getByText('January 15, 2024')).toBeInTheDocument();
     });
 
     it('displays article tags correctly', () => {
       render(<Article />, { wrapper: TestWrapper });
       
-      // Check that tags are displayed in the UI
-      expect(screen.getByText('test')).toBeInTheDocument();
-      expect(screen.getByText('sharing')).toBeInTheDocument();
+      // Check that tags are displayed in the article header
+      const articleHeader = screen.getByRole('article').querySelector('header');
+      expect(within(articleHeader!).getByText('test')).toBeInTheDocument();
+      expect(within(articleHeader!).getByText('sharing')).toBeInTheDocument();
     });
 
     it('renders article content and meta information', () => {
@@ -284,7 +286,10 @@ describe('Article Sharing Functionality', () => {
       
       // Verify core content is displayed
       expect(screen.getByText('Test Article')).toBeInTheDocument();
-      expect(screen.getByText('Test Author')).toBeInTheDocument();
+      
+      // Verify author in article header specifically
+      const articleHeader = screen.getByRole('article').querySelector('header');
+      expect(within(articleHeader!).getByText('Test Author')).toBeInTheDocument();
       expect(screen.getByText('5 min read')).toBeInTheDocument();
     });
   });
@@ -297,7 +302,10 @@ describe('Article Sharing Functionality', () => {
       // Verify the article renders successfully
       expect(screen.getByText('Test Article')).toBeInTheDocument();
       expect(screen.getByText('Test subtitle for sharing')).toBeInTheDocument();
-      expect(screen.getByText('Test Author')).toBeInTheDocument();
+      
+      // Verify author in article header specifically
+      const articleHeader = screen.getByRole('article').querySelector('header');
+      expect(within(articleHeader!).getByText('Test Author')).toBeInTheDocument();
       
       // Verify navigation elements
       expect(screen.getByRole('button', { name: /back to blog/i })).toBeInTheDocument();

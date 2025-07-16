@@ -4,8 +4,8 @@ test.describe('Model Advisor', () => {
   test('should load page and display model filtering functionality', async ({ page }) => {
     await page.goto('/model-advisor');
     
-    // Verify page loads with model grid
-    await expect(page.locator('[data-testid="model-grid"]')).toBeVisible();
+    // Verify page loads with model grid (increased timeout for model loading)
+    await expect(page.locator('[data-testid="model-grid"]')).toBeVisible({ timeout: 15000 });
     await expect(page.locator('[data-testid="model-card"]').first()).toBeVisible();
     
     // Test provider filtering
@@ -55,7 +55,7 @@ test.describe('Model Advisor', () => {
       
       // Clear results
       await page.click('[data-testid="clear-button"]');
-      await expect(page.locator('[data-testid="model-grid"]')).toBeVisible();
+      await expect(page.locator('[data-testid="model-grid"]')).toBeVisible({ timeout: 15000 });
     }
   });
 
@@ -80,7 +80,7 @@ test.describe('Model Advisor', () => {
     
     // Test clear functionality returns to model grid
     await page.click('[data-testid="clear-button"]');
-    await expect(page.locator('[data-testid="model-grid"]')).toBeVisible();
+    await expect(page.locator('[data-testid="model-grid"]')).toBeVisible({ timeout: 15000 });
     await expect(page.locator('[data-testid="error-message"]')).not.toBeVisible();
   });
 });

@@ -98,6 +98,9 @@ const Article = () => {
   // Find the post by slug
   const post = mockPosts.find(p => p.slug === slug);
 
+  // Declare URL variables after post is found but before potential early return
+  const currentUrl = post ? `${window.location.origin}/blog/${post.slug}` : '';
+
   if (!post) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -114,7 +117,6 @@ const Article = () => {
   }
 
   const content = articleContent[slug!] || '<p>Content coming soon...</p>';
-  const currentUrl = `${window.location.origin}/blog/${post.slug}`;
   const shareImage = post.image || `${window.location.origin}/drel-logo.png`;
 
   return (

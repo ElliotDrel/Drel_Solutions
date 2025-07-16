@@ -603,7 +603,7 @@ const ModelAdvisor = () => {
                 </div>
 
                 {/* Models Grid */}
-                <div className="models-grid-section grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" data-testid="models-grid">
+                <div className="models-grid-section grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" data-testid="model-grid">
                   {(showAllModels ? filteredModels : filteredModels.slice(0, 6)).map((model, index) => (
                     <ModelCard key={`${model.provider}-${model.name}-${index}`} model={model} />
                   ))}

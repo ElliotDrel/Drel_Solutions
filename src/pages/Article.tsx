@@ -16,12 +16,54 @@ const Article = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
+  const copyToClipboard = async (text: string): Promise<void> => {
+    if (navigator.clipboard && window.isSecureContext) {
+      // Modern Clipboard API
+      return navigator.clipboard.writeText(text);
+    } else {
+      // Fallback for older browsers or non-secure contexts
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-999999px';
+      textArea.style.top = '-999999px';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      return new Promise<void>((resolve, reject) => {
+        if (document.execCommand('copy')) {
+          resolve();
+        } else {
+          reject(new Error('Copy command failed'));
+        }
+        document.body.removeChild(textArea);
+      });
+    }
+  };
+
   const handleAuthorFilter = (authorSlug: string) => {
     navigate(`/blog?author=${authorSlug}`);
   };
 
   const handleTagFilter = (tag: string) => {
     navigate(`/blog?tag=${tag}`);
+  };
+
+  const handleShare = async () => {
+    try {
+      await copyToClipboard(window.location.href);
+      toast({
+        title: "Link copied!",
+        description: "Article link copied to clipboard.",
+      });
+    } catch (err) {
+      console.error("Failed to copy: ", err);
+      toast({
+        title: "Copy failed",
+        description: "Could not copy link to clipboard.",
+        variant: "destructive"
+      });
+    }
   };
 
   const handleNewsletterSignup = async (email: string) => {
@@ -70,6 +112,7 @@ const Article = () => {
 
   const content = articleContent[slug!] || '<p>Content coming soon...</p>';
   const currentUrl = `${window.location.origin}/blog/${post.slug}`;
+  const shareImage = post.image || `${window.location.origin}/default-share-image.jpg`;
 
   return (
     <>
@@ -82,7 +125,7 @@ const Article = () => {
         <meta property="og:url" content={currentUrl} />
         <meta property="og:title" content={post.title} />
         <meta property="og:description" content={post.subtitle} />
-        <meta property="og:image" content={post.image} />
+        <meta property="og:image" content={shareImage} />
         <meta property="og:site_name" content="Drel Solutions" />
         
         {/* Twitter */}
@@ -90,7 +133,7 @@ const Article = () => {
         <meta name="twitter:url" content={currentUrl} />
         <meta name="twitter:title" content={post.title} />
         <meta name="twitter:description" content={post.subtitle} />
-        <meta name="twitter:image" content={post.image} />
+        <meta name="twitter:image" content={shareImage} />
         
         {/* Article specific */}
         <meta property="article:author" content={post.author.name} />
@@ -161,18 +204,7 @@ const Article = () => {
                   variant="outline"
                   size="lg"
                   className="rounded-full shadow-card hover:shadow-card-hover transition-all duration-300"
-                  onClick={() => {
-                    navigator.clipboard.writeText(window.location.href)
-                      .then(() => {
-                        toast({
-                          title: "Link copied!",
-                          description: "Article link copied to clipboard.",
-                        });
-                      })
-                      .catch(err => {
-                        console.error("Failed to copy: ", err);
-                      });
-                  }}
+                  onClick={handleShare}
                 >
                   <Share className="h-4 w-4 mr-2" />
                   Share

@@ -54,7 +54,7 @@ const Article = () => {
 
   const handleShare = async () => {
     try {
-      await copyToClipboard(window.location.href);
+      await copyToClipboard(currentUrl);
       toast({
         title: "Link copied!",
         description: "Article link copied to clipboard.",
@@ -115,7 +115,7 @@ const Article = () => {
 
   const content = articleContent[slug!] || '<p>Content coming soon...</p>';
   const currentUrl = `${window.location.origin}/blog/${post.slug}`;
-  const shareImage = post.image || `${window.location.origin}/default-share-image.jpg`;
+  const shareImage = post.image || `${window.location.origin}/drel-logo.png`;
 
   return (
     <>

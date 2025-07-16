@@ -14,7 +14,7 @@ vi.mock('../../data/blog/articles', () => ({
       subtitle: 'Test subtitle for sharing',
       slug: 'test-article',
       image: 'https://example.com/test-image.jpg',
-      author: { name: 'Test Author' },
+      author: { name: 'Test Author 1' },
       publishedAt: '2024-01-15',
       readingTime: 5,
       tags: ['test', 'sharing']
@@ -25,7 +25,7 @@ vi.mock('../../data/blog/articles', () => ({
       subtitle: 'Test article without image',
       slug: 'no-image-article', 
       image: null, // Test fallback scenario
-      author: { name: 'Test Author' },
+      author: { name: 'Test Author 2' },
       publishedAt: '2024-01-16',
       readingTime: 3,
       tags: ['test']
@@ -242,7 +242,7 @@ describe('Article Sharing Functionality', () => {
       
       // Verify author and publication info in article header
       const articleHeader = screen.getByRole('article').querySelector('header');
-      expect(within(articleHeader!).getByText('Test Author')).toBeInTheDocument();
+      expect(within(articleHeader!).getByText('Test Author 1')).toBeInTheDocument();
       expect(screen.getByText('January 15, 2024')).toBeInTheDocument();
     });
 
@@ -289,7 +289,7 @@ describe('Article Sharing Functionality', () => {
       
       // Verify author in article header specifically
       const articleHeader = screen.getByRole('article').querySelector('header');
-      expect(within(articleHeader!).getByText('Test Author')).toBeInTheDocument();
+      expect(within(articleHeader!).getByText('Test Author 1')).toBeInTheDocument();
       expect(screen.getByText('5 min read')).toBeInTheDocument();
     });
   });
@@ -305,7 +305,7 @@ describe('Article Sharing Functionality', () => {
       
       // Verify author in article header specifically
       const articleHeader = screen.getByRole('article').querySelector('header');
-      expect(within(articleHeader!).getByText('Test Author')).toBeInTheDocument();
+      expect(within(articleHeader!).getByText('Test Author 1')).toBeInTheDocument();
       
       // Verify navigation elements
       expect(screen.getByRole('button', { name: /back to blog/i })).toBeInTheDocument();

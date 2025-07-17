@@ -270,53 +270,47 @@ const ModelAdvisor = () => {
   useEffect(() => {
     const loadModels = async () => {
       try {
-        console.log('ModelAdvisor: Starting model load...');
         // Load the model index file
         const indexResponse = await fetch('/model_docs/index.json');
-        console.log('ModelAdvisor: Index response status:', indexResponse.ok, indexResponse.status);
         
         if (!indexResponse.ok) {
-          console.error('ModelAdvisor: Index failed:', indexResponse.status, indexResponse.statusText);
           throw new Error('Failed to load model index');
         }
         
         const { models: modelFiles } = await indexResponse.json();
-        console.log('ModelAdvisor: Model files loaded:', modelFiles.length);
         const modelData: ModelInfo[] = [];
 
         for (const file of modelFiles) {
+          let timeoutId: NodeJS.Timeout | null = null;
           try {
             // Add timeout to individual fetch calls
             const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 second timeout per file
+            timeoutId = setTimeout(() => controller.abort(), 8000); // 8 second timeout per file
             
             const response = await fetch(file.path, { signal: controller.signal });
             clearTimeout(timeoutId);
+            timeoutId = null;
             
             if (response.ok) {
               const content = await response.text();
               const parsed = parseModelFile(content, file.provider);
               if (parsed) {
                 modelData.push(parsed);
-                console.log(`ModelAdvisor: Successfully loaded ${file.provider}/${parsed.name}`);
-              } else {
-                console.warn(`ModelAdvisor: Failed to parse ${file.path}`);
               }
-            } else {
-              console.warn(`ModelAdvisor: Failed to fetch ${file.path}: ${response.status}`);
             }
           } catch (error) {
-            console.warn(`Failed to load ${file.path}:`, error);
+            // Ensure timeout is always cleared, even on error
+            if (timeoutId) {
+              clearTimeout(timeoutId);
+            }
           }
         }
 
-        console.log('ModelAdvisor: Total models loaded:', modelData.length);
         setModels(modelData);
         setFilteredModels(modelData);
       } catch (error) {
         console.error('Error loading models:', error);
       } finally {
-        console.log('ModelAdvisor: Setting loading to false');
         setLoading(false);
       }
     };

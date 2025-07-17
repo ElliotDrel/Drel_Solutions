@@ -6,15 +6,15 @@ import { join } from 'path';
 // When adding new owners to CODEOWNERS, these tests will still pass as long as @ElliotDrel remains
 // The CODEOWNERS file itself contains additional guidance for editors
 
+const CODEOWNERS_PATH = join(process.cwd(), '.github', 'CODEOWNERS');
+
 describe('CODEOWNERS Tests', () => {
   it('should have CODEOWNERS file in .github directory', () => {
-    const codeownersPath = join(process.cwd(), '.github', 'CODEOWNERS');
-    expect(existsSync(codeownersPath)).toBe(true);
+    expect(existsSync(CODEOWNERS_PATH)).toBe(true);
   });
 
   it('should have @ElliotDrel as owner', () => {
-    const codeownersPath = join(process.cwd(), '.github', 'CODEOWNERS');
-    const content = readFileSync(codeownersPath, 'utf8');
+    const content = readFileSync(CODEOWNERS_PATH, 'utf8');
     expect(content).toContain('@ElliotDrel');
   });
 });

@@ -16,7 +16,7 @@ test.describe('Navigation', () => {
       await page.click('text=Model Advisor');
     } else {
       // Desktop navigation: click dropdown then menu item
-      await page.click('[data-testid="nav-model-advisor"]');
+      await page.click('[data-testid="nav-modeladvisor"]');
       await page.click('text=Model Advisor');
     }
     

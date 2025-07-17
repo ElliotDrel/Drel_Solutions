@@ -286,7 +286,13 @@ const ModelAdvisor = () => {
 
         for (const file of modelFiles) {
           try {
-            const response = await fetch(file.path);
+            // Add timeout to individual fetch calls
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 3000); // 3 second timeout per file
+            
+            const response = await fetch(file.path, { signal: controller.signal });
+            clearTimeout(timeoutId);
+            
             if (response.ok) {
               const content = await response.text();
               const parsed = parseModelFile(content, file.provider);

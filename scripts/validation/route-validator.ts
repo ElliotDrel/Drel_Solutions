@@ -149,7 +149,7 @@ export function validateRoutes(): RouteValidationResult {
         expectedRoute: testRoute,
         actualRoutes: similarRoutes.length > 0 ? similarRoutes : appRoutePaths,
         testFiles,
-        severity: similarRoutes.length > 0 ? 'critical' : 'warning'
+        severity: similarRoutes.length > 0 ? 'warning' : 'critical'
       });
     }
   });

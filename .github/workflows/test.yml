@@ -25,10 +25,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
       
       - name: 📥 Install dependencies
-        run: npm ci
+        run: npm install
       
       - name: 🎨 Run color system integrity test
         run: npm run test:color-integrity
@@ -47,10 +46,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
       
       - name: 📥 Install dependencies
-        run: npm ci
+        run: npm install
       
       - name: 🛡️ Run CODEOWNERS validation
         run: npm run test:codeowners
@@ -69,10 +67,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
       
       - name: 📥 Install dependencies
-        run: npm ci
+        run: npm install
       
       - name: 🔍 Run linting
         run: npm run lint
@@ -98,10 +95,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
       
       - name: 📥 Install dependencies
-        run: npm ci
+        run: npm install
       
       - name: 🎭 Get installed Playwright version
         id: playwright-version

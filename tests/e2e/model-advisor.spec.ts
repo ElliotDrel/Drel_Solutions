@@ -64,7 +64,7 @@ Limitations:
       });
     });
     
-    await page.goto('/model-advisor');
+    await page.goto('/modeladvisor');
     
     // Add debugging to see what's happening during loading
     page.on('console', msg => console.log('PAGE LOG:', msg.text()));
@@ -150,7 +150,7 @@ Limitations:
       });
     });
     
-    await page.goto('/model-advisor');
+    await page.goto('/modeladvisor');
     
     // Wait for initial loading to complete
     await expect(page.locator('text=Loading AI models...')).not.toBeVisible({ timeout: 15000 });
@@ -208,7 +208,7 @@ Limitations:
       });
     });
     
-    await page.goto('/model-advisor');
+    await page.goto('/modeladvisor');
     
     // Wait for initial loading to complete
     await expect(page.locator('text=Loading AI models...')).not.toBeVisible({ timeout: 15000 });

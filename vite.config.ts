@@ -7,8 +7,11 @@ import path from "path";
 export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
-    port: 6756,
+    port: 6757,
     allowedHosts: ["drelsolutions.com"],
+    hmr: {
+      overlay: false
+    }
   },
   plugins: [
     react(),
@@ -17,6 +20,29 @@ export default defineConfig(({ mode }) => ({
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
+  },
+  optimizeDeps: {
+    include: [
+      '@radix-ui/react-label',
+      '@radix-ui/react-slot', 
+      '@radix-ui/react-toast',
+      '@radix-ui/react-tooltip',
+      'react',
+      'react-dom',
+      'react-router-dom',
+      'lucide-react'
+    ]
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'radix-ui': ['@radix-ui/react-label', '@radix-ui/react-slot', '@radix-ui/react-toast', '@radix-ui/react-tooltip'],
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'ui-vendor': ['lucide-react', 'class-variance-authority', 'clsx']
+        }
+      }
+    }
   },
   test: {
     globals: true,

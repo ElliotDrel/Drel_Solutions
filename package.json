@@ -16,6 +16,7 @@
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:color-integrity": "vitest run src/test/color-system-integrity.test.ts",
+    "test:codeowners": "vitest run src/test/codeowners.test.ts",
     "test:all": "npm run test:run && npm run test:e2e",
     "test:ci": "npm run test:coverage && npm run test:e2e",
     "validate:test-alignment": "tsx scripts/validate-test-alignment.ts",

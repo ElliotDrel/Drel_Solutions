@@ -16,8 +16,9 @@ test.describe('Homepage', () => {
     await expect(page.locator('[data-testid="stats-section"]')).toBeVisible();
     await expect(page.locator('footer')).toBeVisible();
     
-    // Test navigation menu functionality
+    // Test navigation menu functionality with dropdown
     await page.click('[data-testid="nav-model-advisor"]');
+    await page.click('text=Model Advisor');
     await expect(page).toHaveURL(/\/modeladvisor/);
     
     // Return to homepage

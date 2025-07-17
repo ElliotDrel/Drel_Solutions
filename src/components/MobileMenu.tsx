@@ -54,7 +54,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
         })}
         
         <div className="pt-2">
-          <Link to="/contact" onClick={onClose}>
+          <Link to="/contact" onClick={onClose} data-testid="mobile-nav-contact">
             <Button className="w-full bg-brand-primary hover:bg-brand-primary/90 text-white">
               Let's Talk
             </Button>

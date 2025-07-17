@@ -55,5 +55,8 @@ playwright/.cache/
 *.lcov
 coverage.data
 
+# Lockfiles (platform-specific)
+package-lock.json
+
 # Claude settings
 .claude/settings.local.json

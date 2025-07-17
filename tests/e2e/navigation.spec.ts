@@ -7,8 +7,19 @@ test.describe('Navigation', () => {
     await expect(page.locator('h1')).toContainText('AI Consulting That Pays for Itself');
     
     // Navigate to Model Advisor via dropdown
-    await page.click('[data-testid="nav-model-advisor"]');
-    await page.click('text=Model Advisor');
+    // Handle mobile vs desktop navigation
+    const isMobile = page.viewportSize()?.width && page.viewportSize()!.width < 768;
+    
+    if (isMobile) {
+      // Mobile navigation: open mobile menu first, then click link
+      await page.click('[data-testid="mobile-menu-button"]');
+      await page.click('text=Model Advisor');
+    } else {
+      // Desktop navigation: click dropdown then menu item
+      await page.click('[data-testid="nav-model-advisor"]');
+      await page.click('text=Model Advisor');
+    }
+    
     await expect(page).toHaveURL(/\/modeladvisor/);
     await expect(page.locator('[data-testid="model-grid"]')).toBeVisible();
     

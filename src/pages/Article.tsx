@@ -197,7 +197,8 @@ const Article = () => {
                 {new Date(post.publishedAt).toLocaleDateString('en-US', {
                   year: 'numeric',
                   month: 'long',
-                  day: 'numeric'
+                  day: 'numeric',
+                  timeZone: 'America/New_York'
                 })}
               </div>
               <div className="flex items-center">

@@ -50,7 +50,7 @@ test.describe('Navigation', () => {
     if (isMobile) {
       // Mobile navigation: open mobile menu first, then click link
       await page.click('[data-testid="mobile-menu-button"]');
-      await page.getByRole('link', { name: 'Contact' }).click();
+      await page.click('[data-testid="nav-contact"]');
     } else {
       // Desktop navigation: click link directly
       await page.click('[data-testid="nav-contact"]');

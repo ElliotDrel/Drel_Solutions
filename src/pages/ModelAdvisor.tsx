@@ -288,7 +288,7 @@ const ModelAdvisor = () => {
           try {
             // Add timeout to individual fetch calls
             const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 3000); // 3 second timeout per file
+            const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 second timeout per file
             
             const response = await fetch(file.path, { signal: controller.signal });
             clearTimeout(timeoutId);
@@ -325,7 +325,7 @@ const ModelAdvisor = () => {
     const loadingTimeout = setTimeout(() => {
       console.warn('ModelAdvisor: Loading timeout reached, setting loading to false');
       setLoading(false);
-    }, 12000); // 12 second timeout
+    }, 20000); // 20 second timeout
 
     loadModels().finally(() => {
       clearTimeout(loadingTimeout);

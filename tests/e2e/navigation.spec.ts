@@ -24,16 +24,37 @@ test.describe('Navigation', () => {
     await expect(page.locator('[data-testid="model-grid"]')).toBeVisible();
     
     // Navigate to Blog
-    await page.click('[data-testid="nav-blog"]');
+    if (isMobile) {
+      // Mobile navigation: open mobile menu first, then click link
+      await page.click('[data-testid="mobile-menu-button"]');
+      await page.click('text=Blog');
+    } else {
+      // Desktop navigation: click link directly
+      await page.click('[data-testid="nav-blog"]');
+    }
     await expect(page).toHaveURL(/\/blog/);
     await expect(page.locator('[data-testid="article-card"]').first()).toBeVisible();
     
     // Navigate to About
-    await page.click('[data-testid="nav-about"]');
+    if (isMobile) {
+      // Mobile navigation: open mobile menu first, then click link
+      await page.click('[data-testid="mobile-menu-button"]');
+      await page.click('text=About');
+    } else {
+      // Desktop navigation: click link directly
+      await page.click('[data-testid="nav-about"]');
+    }
     await expect(page).toHaveURL(/\/about/);
     
     // Navigate to Contact
-    await page.click('[data-testid="nav-contact"]');
+    if (isMobile) {
+      // Mobile navigation: open mobile menu first, then click link
+      await page.click('[data-testid="mobile-menu-button"]');
+      await page.click('text=Contact');
+    } else {
+      // Desktop navigation: click link directly
+      await page.click('[data-testid="nav-contact"]');
+    }
     await expect(page).toHaveURL(/\/contact/);
     
     // Test browser back button

@@ -38,7 +38,6 @@ jobs:
   codeowners-check:
     name: 🛡️ CODEOWNERS Validation
     runs-on: ubuntu-latest
-    needs: color-system-integrity
     
     steps:
       - name: 📋 Checkout code
@@ -61,7 +60,6 @@ jobs:
   unit-tests:
     name: 🔬 Unit & Integration Tests
     runs-on: ubuntu-latest
-    needs: codeowners-check
     
     steps:
       - name: 📋 Checkout code
@@ -91,7 +89,6 @@ jobs:
   e2e-tests:
     name: 🌐 End-to-End Tests
     runs-on: ubuntu-latest
-    needs: unit-tests
     
     steps:
       - name: 📋 Checkout code

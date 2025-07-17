@@ -6,8 +6,9 @@ test.describe('Navigation', () => {
     await page.goto('/');
     await expect(page.locator('h1')).toContainText('AI Consulting That Pays for Itself');
     
-    // Navigate to Model Advisor
+    // Navigate to Model Advisor via dropdown
     await page.click('[data-testid="nav-model-advisor"]');
+    await page.click('text=Model Advisor');
     await expect(page).toHaveURL(/\/modeladvisor/);
     await expect(page.locator('[data-testid="model-grid"]')).toBeVisible();
     

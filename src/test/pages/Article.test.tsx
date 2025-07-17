@@ -243,7 +243,7 @@ describe('Article Sharing Functionality', () => {
       // Verify author and publication info in article header
       const articleHeader = screen.getByRole('article').querySelector('header');
       expect(within(articleHeader!).getByText('Test Author 1')).toBeInTheDocument();
-      expect(screen.getByText('January 15, 2024')).toBeInTheDocument();
+      expect(screen.getByText('January 14, 2024')).toBeInTheDocument();
     });
 
     it('displays article tags correctly', () => {

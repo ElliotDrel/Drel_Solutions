@@ -13,7 +13,7 @@ test.describe('Navigation', () => {
     if (isMobile) {
       // Mobile navigation: open mobile menu first, then click link
       await page.click('[data-testid="mobile-menu-button"]');
-      await page.click('text=Model Advisor');
+      await page.getByRole('link', { name: 'Model Advisor' }).click();
     } else {
       // Desktop navigation: click dropdown then menu item
       await page.click('[data-testid="nav-modeladvisor"]');
@@ -27,7 +27,7 @@ test.describe('Navigation', () => {
     if (isMobile) {
       // Mobile navigation: open mobile menu first, then click link
       await page.click('[data-testid="mobile-menu-button"]');
-      await page.click('text=Blog');
+      await page.getByRole('link', { name: 'Blog' }).click();
     } else {
       // Desktop navigation: click link directly
       await page.click('[data-testid="nav-blog"]');
@@ -39,7 +39,7 @@ test.describe('Navigation', () => {
     if (isMobile) {
       // Mobile navigation: open mobile menu first, then click link
       await page.click('[data-testid="mobile-menu-button"]');
-      await page.click('text=About');
+      await page.getByRole('link', { name: 'About' }).click();
     } else {
       // Desktop navigation: click link directly
       await page.click('[data-testid="nav-about"]');
@@ -50,7 +50,7 @@ test.describe('Navigation', () => {
     if (isMobile) {
       // Mobile navigation: open mobile menu first, then click link
       await page.click('[data-testid="mobile-menu-button"]');
-      await page.click('text=Contact');
+      await page.getByRole('link', { name: 'Contact' }).click();
     } else {
       // Desktop navigation: click link directly
       await page.click('[data-testid="nav-contact"]');

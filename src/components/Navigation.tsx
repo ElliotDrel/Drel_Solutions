@@ -62,7 +62,7 @@ const Navigation: React.FC = () => {
                   <button 
                     onClick={() => setIsDropdownOpen(!isDropdownOpen)} 
                     className={`${getLinkClassName('/modeladvisor')} flex items-center`}
-                    data-testid="nav-model-advisor"
+                    data-testid="nav-modeladvisor"
                   >
                     Solutions <ChevronDown className="ml-1 h-4 w-4" />
                   </button>

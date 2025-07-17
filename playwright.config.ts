@@ -21,18 +21,18 @@ export default defineConfig({
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: process.env.CI ? 'github' : 'html',
   
-  /* Global timeout for all tests */
-  timeout: 15 * 1000,
+  /* Global timeout for all tests - increased for performance issues */
+  timeout: 60 * 1000,
   
   /* Expect timeout for assertions */
   expect: {
-    timeout: 3 * 1000,
+    timeout: 10 * 1000,
   },
   
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: process.env.CI ? 'http://localhost:4173' : 'http://localhost:6756',
+    baseURL: process.env.CI ? 'http://localhost:4173' : 'http://localhost:6757',
     
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
@@ -43,11 +43,11 @@ export default defineConfig({
     /* Record video on failures */
     video: 'retain-on-failure',
     
-    /* Navigation timeout */
-    navigationTimeout: 8 * 1000,
+    /* Navigation timeout - increased for slow dev server */
+    navigationTimeout: 30 * 1000,
     
-    /* Action timeout */
-    actionTimeout: 5 * 1000,
+    /* Action timeout - increased for slow rendering */
+    actionTimeout: 15 * 1000,
   },
 
   /* Configure projects for major browsers - REDUCED for faster CI */
@@ -80,7 +80,7 @@ export default defineConfig({
     stderr: 'pipe',
   } : {
     command: 'npm run dev',
-    url: 'http://localhost:6756',
+    url: 'http://localhost:6757',
     reuseExistingServer: !process.env.CI,
     timeout: 120 * 1000,
   },

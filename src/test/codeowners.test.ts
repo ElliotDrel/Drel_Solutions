@@ -14,7 +14,11 @@ describe('CODEOWNERS Tests', () => {
   });
 
   it('should have @ElliotDrel as owner', () => {
-    const content = readFileSync(CODEOWNERS_PATH, 'utf8');
-    expect(content).toContain('@ElliotDrel');
+    try {
+      const content = readFileSync(CODEOWNERS_PATH, 'utf8');
+      expect(content).toContain('@ElliotDrel');
+    } catch (error) {
+      throw new Error(`Failed to read CODEOWNERS file at ${CODEOWNERS_PATH}: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
   });
 });

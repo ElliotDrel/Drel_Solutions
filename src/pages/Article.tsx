@@ -98,7 +98,7 @@ const Article = () => {
   // Find the post by slug
   const post = mockPosts.find(p => p.slug === slug);
 
-  // Declare URL variables after post is found but before potential early return
+  // Declare URL variables after post is found but before functions that use it
   const currentUrl = post ? `${window.location.origin}/blog/${post.slug}` : '';
 
   if (!post) {

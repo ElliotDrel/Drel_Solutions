@@ -86,7 +86,7 @@ export const articleContent: Record<string, string> = {
     <h2>Case Study Results</h2>
     <p>Our analysis of 50 small to medium businesses revealed that manual processes were costing an average of $45,000 per year in hidden expenses - far more than the cost of automation solutions.</p>
   `,
-  '[SLUG_PLACEHOLDER]': `
+  'ai-search-confesses-to-the-murder-of-seo': `
     <h3>SEO's Obituary - The End of the Era of Search Engine Optimization (SEO)</h3>
     
     <p>SEO stands for Search Engine optimization.</p>
@@ -240,7 +240,7 @@ export const articleContent: Record<string, string> = {
       <li><strong>Daily "Google-style" searches in ChatGPT:</strong> exactly 37,500,000, the upper bound given by Similarweb and cited in The Washington Post on 8 July 2025 (<a href="https://www.washingtonpost.com/technology/2025/07/08/ai-chatbots-google-search-myth-busting/">The Washington Post</a>).</li>
     </ul>
   `,
-  '[SLUG_PLACEHOLDER_2]': `
+  'turns-out-you-dont-actually-need-to-modelnap-an-ai-to-get-more-visibility': `
     <h2>SECTION 1: The Heist - What These Researchers Actually Pulled Off</h2>
     
     <p>Here's what went down, and why it should TERRIFY every traditional SEO "expert" out there:</p>

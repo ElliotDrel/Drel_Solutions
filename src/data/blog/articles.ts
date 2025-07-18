@@ -38,7 +38,7 @@ export const mockPosts: BlogPost[] = [
     id: '4',
     title: 'Turns Out You Don\'t Actually Need to Modelnap An AI to Get 30.95% More Visibility (London Researchers Found the Polite Method)',
     subtitle: 'London School of Economics researchers just published a study that PROVES you can boost your visibility in AI search results by 30.95% with just a Macbook and a few free online tools. Here\'s how!',
-    image: '/blog/Cover Image - Turns Out You Don\'t Actually Need to Modelnap An AI to Get 30.95% More Visibility (London Researchers Found the Polite Method).png',
+    image: 'blog/Cover Image - AI Nerds Trying to Modelnap A AI Search Engine.png',
     author: { name: 'Elliot Drel', slug: 'elliot-drel' },
     readingTime: 9,
     tags: ['AI-optimization', 'visibility', 'research', 'GEO'],
@@ -87,7 +87,7 @@ export const articleContent: Record<string, string> = {
     <p>Our analysis of 50 small to medium businesses revealed that manual processes were costing an average of $45,000 per year in hidden expenses - far more than the cost of automation solutions.</p>
   `,
   'ai-search-confesses-to-the-murder-of-seo': `
-    <h3>SEO's Obituary - The End of the Era of Search Engine Optimization (SEO)</h3>
+    <h2>SEO's Obituary - The End of the Era of Search Engine Optimization (SEO)</h2>
     
     <p>SEO stands for Search Engine optimization.</p>
     
@@ -101,7 +101,7 @@ export const articleContent: Record<string, string> = {
     
     <p>That is a GROUND BREAKING change. Just being the first result on Google is NO LONGER ENOUGH.</p>
     
-    <h3>The Autopsy Report - What is Generative Engine Optimization (GEO)?</h3>
+    <h2>The Autopsy Report - What is Generative Engine Optimization (GEO)?</h2>
     
     <p>GEO stands for Generative Engine Optimization, or can be referred to as AI search.</p>
     
@@ -121,7 +121,7 @@ export const articleContent: Record<string, string> = {
     
     <p>At this point the question is HOW are you going to make sure your website is included in these AI generated answers?</p>
     
-    <h3>The Crime Scene - Using EEAT to Optimize for AI Search</h3>
+    <h2>The Crime Scene - Using EEAT to Optimize for AI Search</h2>
     
     <p>I am sure you have heard of EEAT before. EEAT has been around for a few years already.</p>
     
@@ -181,7 +181,7 @@ export const articleContent: Record<string, string> = {
     
     <p><strong>Secret Sauce:</strong> The easiest way I found to present both sides of an argument is to use a simple table, or a pros and cons list.</p>
     
-    <h3>Wait, the Corpse Still Breathes - What is Still Working in SEO?</h3>
+    <h2>Wait, the Corpse Still Breathes - What is Still Working in SEO?</h2>
     
     <p>Before you start digging SEO's grave, let me be CRYSTAL CLEAR about something important.</p>
     
@@ -229,7 +229,7 @@ export const articleContent: Record<string, string> = {
     
     <hr />
     
-    <h3>Other Sources</h3>
+    <h2>Other Sources</h2>
     
     <p>- [1]: <a href="https://drelsolutions.com">How the 57.11 percent figure was calculated, with exact sources and math</a></p>
     

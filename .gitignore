@@ -57,6 +57,7 @@ coverage.data
 
 # Lockfiles (platform-specific)
 package-lock.json
+yarn.lock
 
 # Claude settings
 .claude/settings.local.json

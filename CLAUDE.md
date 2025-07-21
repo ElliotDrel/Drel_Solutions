@@ -18,21 +18,76 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 2. **Verification**: Request Vercel build logs for complex changes (see "When to Request Build Logs" below)
 3. **Vercel Handles**: All building, testing, and deployment automatically
 
-### When to Request Build Logs
-**Always ask for build logs when:**
-- Adding new dependencies or imports
-- Modifying TypeScript interfaces or types
-- Changing API endpoints or data structures
-- Adding new components or pages
-- Modifying routing logic
-- Making changes to configuration files
-- Any changes that could break functionality
+### Package Management
+**IMPORTANT**: When package.json is modified:
+- **Yarn is preferred** over npm for this project (better Windows compatibility)
+- If npm fails with corrupted tarballs or missing optional dependencies:
+  1. Delete `package-lock.json` and `node_modules`
+  2. Use `yarn install` instead
 
-**Build logs not needed for:**
-- Simple CSS/styling changes
-- Text content updates
-- Minor UI adjustments
-- Documentation updates
+#### Testing Commands
+```bash
+# Run unit tests with coverage
+npm test
+
+# Run unit tests in watch mode
+npm run test:watch
+
+# Run E2E tests
+npm run test:e2e
+
+# Run all tests
+npm run test:all
+
+# Build project locally
+npm run build
+
+# Run dev server for manual testing
+npm run dev
+
+# Run linting
+npm run lint
+
+# Run type checking
+npm run type-check
+```
+
+#### Test Coverage Requirements
+- **Minimum 80% coverage** (branches, functions, lines, statements)
+- **Unit tests required** for all new components, hooks, utilities
+- **E2E tests required** for new pages and critical user flows
+- Tests must pass locally before requesting Vercel logs
+
+### When to Request Vercel Build Logs
+**Only request Vercel build logs AFTER local testing passes and when:**
+- Deploying new features that integrate with Vercel serverless functions
+- Making changes that could affect production environment specifically
+- Verifying edge cases that only occur in production environment
+- Final deployment validation after all local tests pass
+
+**Local testing should catch:**
+- TypeScript errors and build failures
+- Unit and E2E test failures
+- Linting and formatting issues
+- Basic functionality and integration issues
+- Coverage requirements
+
+### Test Creation Requirements
+**ALWAYS create tests when adding:**
+- New React components (unit tests)
+- New pages or routes (E2E tests)
+- New utility functions (unit tests)
+- New hooks (unit tests)
+- New API integrations (integration tests)
+- New features or functionality (both unit and E2E tests)
+
+**Test files must be placed in:**
+- Unit tests: `src/test/` or co-located with components
+- E2E tests: `playwright/` directory
+- Test utilities: `src/test/utils/`
+
+**Important Note for Test Directory:**
+- **In test folder, always use 'npm install' not 'npm ci' or code will break**
 
 ## Architecture Overview
 

@@ -4,22 +4,26 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Development Workflow
 
-**CRITICAL**: This project runs EXCLUSIVELY on Vercel. DO NOT attempt local development, installs, or builds.
+**CRITICAL**: Always test locally FIRST, then use Vercel for deployment. Local testing is MANDATORY before finishing any task.
 
 ### Your Role
-- Edit code files only
-- Never run `npm install`, `npm run build`, or any other commands
-- Code changes are made locally only
-- All building, testing, and deployment happens on Vercel and Github
-- **Ask for build logs** when changes could impact functionality
+- Edit code files as requested
+- **ALWAYS run local tests** before completing any task
+- **ALWAYS install dependencies** when package.json changes
+- Request Vercel build logs only AFTER local testing passes
+- Ensure all code meets quality standards locally
 
 ### Development Process
 1. **Code Changes**: Edit files as requested
-2. **Verification**: Request Vercel build logs for complex changes (see "When to Request Build Logs" below)
-3. **Vercel Handles**: All building, testing, and deployment automatically
+2. **Install Dependencies**: Run `yarn install` immediately after any package.json changes
+3. **Local Testing**: Run full test suite locally (MANDATORY)
+4. **Quality Checks**: Run linting, type checking, and coverage analysis
+5. **Verification**: Request Vercel build logs only if local tests pass and feature impacts production
+6. **Vercel Handles**: Final deployment after local validation
 
 ### Package Management
-**IMPORTANT**: When package.json is modified:
+**CRITICAL**: When package.json is modified:
+- **IMMEDIATELY run `yarn install`** after any package.json changes
 - **Yarn is preferred** over npm for this project (better Windows compatibility)
 - If npm fails with corrupted tarballs or missing optional dependencies:
   1. Delete `package-lock.json` and `node_modules`
@@ -52,42 +56,57 @@ npm run lint
 npm run type-check
 ```
 
-#### Test Coverage Requirements
+#### Local Testing Requirements (MANDATORY)
+- **ALWAYS run local tests before completing any task**
 - **Minimum 80% coverage** (branches, functions, lines, statements)
 - **Unit tests required** for all new components, hooks, utilities
 - **E2E tests required** for new pages and critical user flows
-- Tests must pass locally before requesting Vercel logs
+- **All tests must pass locally** before task completion
+- **Run full test suite**: `npm run test:all`
 
-### When to Request Vercel Build Logs
-**Only request Vercel build logs AFTER local testing passes and when:**
-- Deploying new features that integrate with Vercel serverless functions
-- Making changes that could affect production environment specifically
-- Verifying edge cases that only occur in production environment
-- Final deployment validation after all local tests pass
+### Local Testing Workflow (MANDATORY)
+**ALWAYS complete these steps locally BEFORE finishing any task:**
 
-**Local testing should catch:**
+1. **Install Dependencies** (if package.json changed): `yarn install`
+2. **Run All Tests**: `npm run test:all`
+3. **Check Coverage**: Ensure 80% minimum coverage
+4. **Run Linting**: `npm run lint`
+5. **Run Type Check**: `npm run type-check`
+6. **Verify Build**: `npm run build` (if needed)
+
+**Local testing MUST catch:**
 - TypeScript errors and build failures
 - Unit and E2E test failures
 - Linting and formatting issues
-- Basic functionality and integration issues
 - Coverage requirements
+- Brand color system compliance
 
-### Test Creation Requirements
-**ALWAYS create tests when adding:**
-- New React components (unit tests)
-- New pages or routes (E2E tests)
-- New utility functions (unit tests)
-- New hooks (unit tests)
+### When to Request Vercel Build Logs
+**Only request Vercel build logs AFTER all local testing passes and when:**
+- Feature integrates with Vercel serverless functions
+- Changes could affect production environment specifically
+- Need to verify production-only edge cases
+- Final deployment validation required
+
+### Test Creation Requirements (MANDATORY)
+**ALWAYS create comprehensive tests when adding:**
+- New React components (unit tests with 80%+ coverage)
+- New pages or routes (E2E tests for critical flows)
+- New utility functions (unit tests with edge cases)
+- New hooks (unit tests with all states)
 - New API integrations (integration tests)
 - New features or functionality (both unit and E2E tests)
+- Any new file or component (appropriate test type)
 
 **Test files must be placed in:**
 - Unit tests: `src/test/` or co-located with components
-- E2E tests: `playwright/` directory
+- E2E tests: `tests/e2e/` directory
 - Test utilities: `src/test/utils/`
 
-**Important Note for Test Directory:**
+**CRITICAL Test Directory Notes:**
 - **In test folder, always use 'npm install' not 'npm ci' or code will break**
+- **Run tests locally before finishing any task**
+- **Ensure 80% minimum coverage on all new code**
 
 ## Architecture Overview
 

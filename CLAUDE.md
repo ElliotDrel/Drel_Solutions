@@ -71,8 +71,9 @@ npm run type-check
 2. **Run All Tests**: `npm run test:all`
 3. **Check Coverage**: Ensure 80% minimum coverage
 4. **Run Linting**: `npm run lint`
-5. **Run Type Check**: `npm run type-check`
+5. **Run Type Check**: `npx tsc --noEmit`
 6. **Verify Build**: `npm run build` (if needed)
+7. **Test Dev Server**: `npm run dev` (verify application starts successfully)
 
 **Local testing MUST catch:**
 - TypeScript errors and build failures

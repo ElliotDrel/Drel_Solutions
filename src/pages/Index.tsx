@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const HeroSection = () => {
   return <section id="home" className="pt-16 min-h-screen flex items-center bg-gradient-to-br from-brand-primary/10 via-white to-brand-success/10" data-testid="hero-section">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center -mt-10">
           <div className="space-y-8">
             <div className="space-y-4">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-tight">
@@ -13,18 +13,18 @@ const HeroSection = () => {
                 <span className="block"><span className="text-brand-primary">FULL&nbsp;Potential</span></span>
                 <span className="block">with&nbsp;AI</span>
               </h1>              <p className="text-xl text-brand-neutral-600 leading-relaxed">
-                We help businesses automate the repetitive, optimize the chaotic, and reclaim hours of lost time. 
+              Helping <span className="font-bold">YOU</span> Work Smarter, Not Harder, By Leveraging the <span className="font-bold">FULL</span> capabilities of AI. 
                 <span className="block mt-2 font-semibold text-brand-neutral-800">Spend less. Do more. Breathe easier.</span>
               </p>
             </div>
             <div className="pt-8">
               <Link to="/contact">
-                <Button className="bg-brand-primary hover:bg-brand-primary/90 text-white px-8 py-4 text-lg rounded-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105">Start Saving TIME and MONEY!</Button>
+                <Button className="bg-brand-primary hover:bg-brand-primary/90 text-white px-8 py-4 text-lg rounded-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105">Start Working Smarter!</Button>
               </Link>
             </div>
           </div>
           
-          <div className="relative ml-8">
+          <div className="relative transform translate translate-y-9">
             <div className="bg-white rounded-2xl shadow-2xl p-8 transform rotate-3 hover:rotate-0 transition-transform duration-300">
               <div className="space-y-6">
                 <div className="flex items-center justify-between">

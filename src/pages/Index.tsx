@@ -8,9 +8,10 @@ const HeroSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-8">
             <div className="space-y-4">
-              <h1 className="text-5xl lg:text-6xl font-bold text-foreground leading-tight">
-                AI Consulting That 
-                <span className="text-brand-primary"> Pays for Itself</span>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-tight">
+                <span className="block">Unlock&nbsp;Your&nbsp;Business</span>
+                <span className="block"><span className="text-brand-primary">FULL&nbsp;Potential</span></span>
+                <span className="block">with&nbsp;AI</span>
               </h1>              <p className="text-xl text-brand-neutral-600 leading-relaxed">
                 We help businesses automate the repetitive, optimize the chaotic, and reclaim hours of lost time. 
                 <span className="block mt-2 font-semibold text-brand-neutral-800">Spend less. Do more. Breathe easier.</span>
@@ -23,7 +24,7 @@ const HeroSection = () => {
             </div>
           </div>
           
-          <div className="relative">
+          <div className="relative ml-8">
             <div className="bg-white rounded-2xl shadow-2xl p-8 transform rotate-3 hover:rotate-0 transition-transform duration-300">
               <div className="space-y-6">
                 <div className="flex items-center justify-between">

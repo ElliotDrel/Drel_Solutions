@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { Menu, X, ChevronDown, User, LogOut, BookOpen } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import DropdownMenu from './ui/DropdownMenu';
 import MobileMenu from './MobileMenu';
-import { getBrandColorClass, getNeutralColorClass } from '@/lib/colors';
+import { useAuth } from '@/contexts/AuthContext';
+import { isSupabaseAvailable } from '@/integrations/supabase/client';
 
 const Navigation: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const location = useLocation();
+  const { user, available, signOut } = useAuth();
 
   const isActive = (path: string) => {
     if (path === '/' && location.pathname === '/') return true;
@@ -29,6 +32,15 @@ const Navigation: React.FC = () => {
     return isActive(path)
       ? `${baseClasses} text-brand-primary bg-brand-primary/10`
       : `${baseClasses} text-brand-neutral-700 hover:text-brand-primary`;
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      setIsUserMenuOpen(false);
+    } catch (error) {
+      console.error('Sign out error:', error);
+    }
   };
 
   return (
@@ -71,9 +83,61 @@ const Navigation: React.FC = () => {
                   { href: '/modeladvisor', label: 'Model Advisor', isActive: isActive('/modeladvisor') }
                 ]}
               />
-              <Link to="/contact" data-testid="nav-contact">
-                <Button className="bg-brand-primary hover:bg-brand-primary/90 text-white px-6 py-2">Let's Talk</Button>
-              </Link>
+              
+              {/* AI Fundamentals Survey Link - show if available */}
+              {isSupabaseAvailable() && (
+                <Link 
+                  to="/ai-fundamentals" 
+                  className={getLinkClassName('/ai-fundamentals')}
+                  data-testid="nav-ai-fundamentals"
+                >
+                  <BookOpen className="mr-1 h-4 w-4" />
+                  AI Fundamentals
+                </Link>
+              )}
+              
+              {/* User Menu or Auth Links */}
+              {user ? (
+                <DropdownMenu
+                  isOpen={isUserMenuOpen}
+                  onToggle={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                  onClose={() => setIsUserMenuOpen(false)}
+                  trigger={
+                    <button 
+                      onClick={() => setIsUserMenuOpen(!isUserMenuOpen)} 
+                      className={`${getLinkClassName('')} flex items-center`}
+                      data-testid="nav-user-menu"
+                    >
+                      <User className="mr-1 h-4 w-4" />
+                      Account <ChevronDown className="ml-1 h-4 w-4" />
+                    </button>
+                  }
+                  items={[
+                    { 
+                      href: '/ai-fundamentals', 
+                      label: 'AI Fundamentals', 
+                      isActive: isActive('/ai-fundamentals'),
+                      icon: <BookOpen className="w-4 h-4" />
+                    },
+                    { 
+                      href: '#', 
+                      label: 'Sign Out', 
+                      isActive: false,
+                      icon: <LogOut className="w-4 h-4" />,
+                      onClick: handleSignOut
+                    }
+                  ]}
+                />
+              ) : (
+                <div className="flex items-center space-x-4">
+                  <Link to="/signin" className={getLinkClassName('')} data-testid="nav-signin">
+                    Sign In
+                  </Link>
+                  <Link to="/contact" data-testid="nav-contact">
+                    <Button className="bg-brand-primary hover:bg-brand-primary/90 text-white px-6 py-2">Let's Talk</Button>
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
 
@@ -97,7 +161,14 @@ const Navigation: React.FC = () => {
             { href: '/', label: 'Home', className: getMobileLinkClassName('/') },
             { href: '/about', label: 'About', className: getMobileLinkClassName('/about') },
             { href: '/blog', label: 'Blog', className: getMobileLinkClassName('/blog') },
-            { href: '/modeladvisor', label: 'Model Advisor', className: getMobileLinkClassName('/modeladvisor') }
+            { href: '/modeladvisor', label: 'Model Advisor', className: getMobileLinkClassName('/modeladvisor') },
+            ...(isSupabaseAvailable() ? [{ href: '/ai-fundamentals', label: 'AI Fundamentals', className: getMobileLinkClassName('/ai-fundamentals') }] : []),
+            ...(user ? [
+              { href: '/ai-fundamentals', label: 'My Progress', className: getMobileLinkClassName('/ai-fundamentals') },
+              { href: '#', label: 'Sign Out', className: 'block px-3 py-2 text-base font-medium text-brand-danger hover:bg-brand-danger/10', onClick: handleSignOut }
+            ] : [
+              { href: '/signin', label: 'Sign In', className: getMobileLinkClassName('/signin') }
+            ])
           ]}
         />
       </div>

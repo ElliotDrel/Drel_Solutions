@@ -11,10 +11,24 @@ import Contact from "./pages/Contact";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 import ModelAdvisor from "./pages/ModelAdvisor";
+import { AuthProvider } from "./contexts/AuthContext";
+import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 
 // Lazy load blog components for performance
 const Blog = lazy(() => import("./pages/Blog"));
 const Article = lazy(() => import("./pages/Article"));
+
+// Lazy load auth pages for performance
+const SignInPage = lazy(() => import("./pages/auth/SignInPage"));
+const SignUpPage = lazy(() => import("./pages/auth/SignUpPage"));
+const ForgotPasswordPage = lazy(() => import("./pages/auth/ForgotPasswordPage"));
+
+// Lazy load survey pages for performance
+const AIFundamentalsLanding = lazy(() => import("./pages/surveys/AIFundamentalsLanding"));
+// Note: PreSurvey, PostSurvey, Lesson will be added when implemented
+// const PreSurvey = lazy(() => import("./pages/surveys/PreSurvey"));
+// const PostSurvey = lazy(() => import("./pages/surveys/PostSurvey"));
+// const Lesson = lazy(() => import("./pages/surveys/Lesson"));
 
 const queryClient = new QueryClient();
 
@@ -69,44 +83,120 @@ const App = () => (
       <Toaster />
       <Sonner />
       <Analytics />
-      <BrowserRouter 
-        future={{
-          v7_startTransition: true,
-        }}
-        basename={undefined}
-      >
-        <ScrollToTop />
-        <Layout>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/modeladvisor" element={<ModelAdvisor />} />
-            <Route 
-              path="/blog" 
-              element={
-                <ErrorBoundary>
-                  <Suspense fallback={<div className="container mx-auto px-4 py-8 text-center">Loading blog...</div>}>
-                    <Blog />
+      <AuthProvider>
+        <BrowserRouter 
+          future={{
+            v7_startTransition: true,
+          }}
+          basename={undefined}
+        >
+          <ScrollToTop />
+          <Layout>
+            <Routes>
+              {/* Public routes - no authentication required */}
+              <Route path="/" element={<Index />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/modeladvisor" element={<ModelAdvisor />} />
+              
+              {/* Blog routes with error boundaries */}
+              <Route 
+                path="/blog" 
+                element={
+                  <ErrorBoundary>
+                    <Suspense fallback={<div className="container mx-auto px-4 py-8 text-center">Loading blog...</div>}>
+                      <Blog />
+                    </Suspense>
+                  </ErrorBoundary>
+                } 
+              />
+              <Route 
+                path="/blog/:slug" 
+                element={
+                  <ErrorBoundary>
+                    <Suspense fallback={<div className="container mx-auto px-4 py-8 text-center">Loading article...</div>}>
+                      <Article />
+                    </Suspense>
+                  </ErrorBoundary>
+                } 
+              />
+
+              {/* Authentication routes - public access */}
+              <Route 
+                path="/signin" 
+                element={
+                  <Suspense fallback={<div className="min-h-screen bg-brand-neutral-50 flex items-center justify-center">Loading...</div>}>
+                    <SignInPage />
                   </Suspense>
-                </ErrorBoundary>
-              } 
-            />
-            <Route 
-              path="/blog/:slug" 
-              element={
-                <ErrorBoundary>
-                  <Suspense fallback={<div className="container mx-auto px-4 py-8 text-center">Loading article...</div>}>
-                    <Article />
+                } 
+              />
+              <Route 
+                path="/signup" 
+                element={
+                  <Suspense fallback={<div className="min-h-screen bg-brand-neutral-50 flex items-center justify-center">Loading...</div>}>
+                    <SignUpPage />
                   </Suspense>
-                </ErrorBoundary>
-              } 
-            />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Layout>
-      </BrowserRouter>
+                } 
+              />
+              <Route 
+                path="/forgot-password" 
+                element={
+                  <Suspense fallback={<div className="min-h-screen bg-brand-neutral-50 flex items-center justify-center">Loading...</div>}>
+                    <ForgotPasswordPage />
+                  </Suspense>
+                } 
+              />
+
+              {/* AI Fundamentals Survey routes */}
+              <Route 
+                path="/ai-fundamentals" 
+                element={
+                  <Suspense fallback={<div className="min-h-screen bg-brand-neutral-50 flex items-center justify-center">Loading...</div>}>
+                    <AIFundamentalsLanding />
+                  </Suspense>
+                } 
+              />
+              
+              {/* Protected survey routes - require authentication */}
+              {/* TODO: Uncomment when survey pages are implemented
+              <Route 
+                path="/ai-fundamentals/pre-survey" 
+                element={
+                  <ProtectedRoute>
+                    <Suspense fallback={<div className="min-h-screen bg-brand-neutral-50 flex items-center justify-center">Loading...</div>}>
+                      <PreSurvey />
+                    </Suspense>
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/ai-fundamentals/post-survey" 
+                element={
+                  <ProtectedRoute>
+                    <Suspense fallback={<div className="min-h-screen bg-brand-neutral-50 flex items-center justify-center">Loading...</div>}>
+                      <PostSurvey />
+                    </Suspense>
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/ai-fundamentals/lesson" 
+                element={
+                  <ProtectedRoute>
+                    <Suspense fallback={<div className="min-h-screen bg-brand-neutral-50 flex items-center justify-center">Loading...</div>}>
+                      <Lesson />
+                    </Suspense>
+                  </ProtectedRoute>
+                } 
+              />
+              */}
+
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Layout>
+        </BrowserRouter>
+      </AuthProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );

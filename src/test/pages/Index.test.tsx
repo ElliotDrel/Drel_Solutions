@@ -3,6 +3,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import Index from '../../pages/Index';
 import Layout from '../../components/Layout';
+import { AuthProvider } from '../../contexts/AuthContext';
 
 // Mock react-router-dom Link component
 vi.mock('react-router-dom', async () => {
@@ -17,11 +18,13 @@ vi.mock('react-router-dom', async () => {
   };
 });
 
-// Wrapper component for Router context with Layout to match production
+// Wrapper component for Router context with Layout and Auth to match production
 const RouterWrapper = ({ children }: { children: React.ReactNode }) => (
-  <MemoryRouter>
-    <Layout>{children}</Layout>
-  </MemoryRouter>
+  <AuthProvider>
+    <MemoryRouter>
+      <Layout>{children}</Layout>
+    </MemoryRouter>
+  </AuthProvider>
 );
 
 describe('Index Page', () => {

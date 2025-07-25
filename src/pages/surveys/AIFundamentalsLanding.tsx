@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { useAuth } from "@/contexts/AuthContext";
-import { CheckCircle, Circle, Play, BookOpen, TrendingUp, Award, ArrowRight, Users, Clock, Target } from "lucide-react";
+import { isAppSubdomain } from "@/lib/domain-check";
+import { CheckCircle, Circle, Play, BookOpen, TrendingUp, Award, ArrowRight, Users, Clock, Target, AlertTriangle } from "lucide-react";
 
 // Mock hook for user progress - would be implemented with actual API calls
 const useUserProgress = (surveyType: string) => {
@@ -34,6 +35,36 @@ const AIFundamentalsLanding = () => {
   const navigate = useNavigate();
   const { user, available, initialized } = useAuth();
   const { data: progress, loading: progressLoading } = useUserProgress('ai-fundamentals');
+
+  // Check if accessing from correct subdomain
+  if (!isAppSubdomain()) {
+    return (
+      <div className="min-h-screen bg-brand-neutral-50">
+        <div className="container mx-auto px-4 py-8">
+          <Card className="max-w-2xl mx-auto">
+            <CardHeader className="text-center">
+              <div className="w-16 h-16 bg-brand-warning/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <AlertTriangle className="w-8 h-8 text-brand-warning" />
+              </div>
+              <CardTitle className="text-2xl text-brand-neutral-700">
+                Access Restricted
+              </CardTitle>
+              <p className="text-brand-neutral-500">
+                AI Fundamentals Assessment is only available on the Drel Solutions app platform.
+              </p>
+            </CardHeader>
+            <CardContent className="text-center">
+              <Link to="/">
+                <Button className="bg-brand-primary hover:bg-brand-primary/90 text-brand-neutral-50">
+                  Return Home
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
+  }
 
   // Show loading state while auth initializes
   if (!initialized) {
@@ -71,8 +102,42 @@ const AIFundamentalsLanding = () => {
     );
   }
 
+  // Require user to be signed in
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-brand-neutral-50">
+        <div className="container mx-auto px-4 py-8">
+          <Card className="max-w-2xl mx-auto">
+            <CardHeader className="text-center">
+              <div className="w-16 h-16 bg-brand-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Users className="w-8 h-8 text-brand-primary" />
+              </div>
+              <CardTitle className="text-2xl text-brand-neutral-700">
+                Sign In Required
+              </CardTitle>
+              <p className="text-brand-neutral-500">
+                Please sign in to access the AI Fundamentals Assessment and track your progress.
+              </p>
+            </CardHeader>
+            <CardContent className="text-center space-y-4">
+              <Link to="/signin?returnTo=/ai-fundamentals">
+                <Button className="bg-brand-primary hover:bg-brand-primary/90 text-brand-neutral-50 w-full">
+                  Sign In to Continue
+                </Button>
+              </Link>
+              <Link to="/">
+                <Button variant="outline" className="w-full">
+                  Return Home
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
+  }
+
   const getNextStep = () => {
-    if (!user) return { action: 'Sign In to Start', href: '/signin?returnTo=/ai-fundamentals', variant: 'default' as const };
     if (!progress?.pre_survey_completed_at) return { action: 'Take Pre-Assessment', href: '/ai-fundamentals/pre-survey', variant: 'default' as const };
     if (!progress?.lesson_completed_at) return { action: 'Continue to Lesson', href: '/ai-fundamentals/lesson', variant: 'default' as const };
     if (!progress?.post_survey_completed_at) return { action: 'Take Post-Assessment', href: '/ai-fundamentals/post-survey', variant: 'default' as const };
@@ -106,41 +171,27 @@ const AIFundamentalsLanding = () => {
             </p>
             
             {/* User Status Integration */}
-            {user ? (
-              <div className="bg-white rounded-lg p-6 shadow-sm max-w-md mx-auto mb-8">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 bg-brand-primary/10 rounded-full flex items-center justify-center">
-                    <Users className="w-5 h-5 text-brand-primary" />
-                  </div>
-                  <div className="text-left">
-                    <p className="font-medium text-brand-neutral-700">Welcome back!</p>
-                    <p className="text-sm text-brand-neutral-500">{user.email}</p>
-                  </div>
+            <div className="bg-white rounded-lg p-6 shadow-sm max-w-md mx-auto mb-8">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 bg-brand-primary/10 rounded-full flex items-center justify-center">
+                  <Users className="w-5 h-5 text-brand-primary" />
                 </div>
-                
-                {progressPercentage > 0 && (
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span className="text-brand-neutral-600">Progress</span>
-                      <span className="text-brand-neutral-600">{progressPercentage}%</span>
-                    </div>
-                    <Progress value={progressPercentage} className="h-2" />
-                  </div>
-                )}
-              </div>
-            ) : (
-              <div className="bg-white rounded-lg p-6 shadow-sm max-w-md mx-auto mb-8">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 bg-brand-warning/10 rounded-full flex items-center justify-center">
-                    <Target className="w-5 h-5 text-brand-warning" />
-                  </div>
-                  <div className="text-left">
-                    <p className="font-medium text-brand-neutral-700">Ready to start?</p>
-                    <p className="text-sm text-brand-neutral-500">Sign in to track your progress</p>
-                  </div>
+                <div className="text-left">
+                  <p className="font-medium text-brand-neutral-700">Welcome back!</p>
+                  <p className="text-sm text-brand-neutral-500">{user.email}</p>
                 </div>
               </div>
-            )}
+              
+              {progressPercentage > 0 && (
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-brand-neutral-600">Progress</span>
+                    <span className="text-brand-neutral-600">{progressPercentage}%</span>
+                  </div>
+                  <Progress value={progressPercentage} className="h-2" />
+                </div>
+              )}
+            </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to={nextStep.href}>
@@ -153,11 +204,9 @@ const AIFundamentalsLanding = () => {
                   <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
               </Link>
-              {user && (
-                <Button variant="outline" size="lg" className="min-w-[200px]">
-                  View Sample Questions
-                </Button>
-              )}
+              <Button variant="outline" size="lg" className="min-w-[200px]">
+                View Sample Questions
+              </Button>
             </div>
           </div>
         </div>

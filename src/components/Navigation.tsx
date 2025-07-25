@@ -105,7 +105,7 @@ const Navigation: React.FC = () => {
                   trigger={
                     <button 
                       onClick={() => setIsUserMenuOpen(!isUserMenuOpen)} 
-                      className={`${getLinkClassName('')} flex items-center`}
+                      className="px-3 py-2 text-sm font-medium transition-colors text-brand-neutral-700 hover:text-brand-primary flex items-center"
                       data-testid="nav-user-menu"
                     >
                       <User className="mr-1 h-4 w-4" />
@@ -130,7 +130,7 @@ const Navigation: React.FC = () => {
                 />
               ) : (
                 <div className="flex items-center space-x-4">
-                  <Link to="/signin" className={getLinkClassName('')} data-testid="nav-signin">
+                  <Link to="/signin" className="px-3 py-2 text-sm font-medium transition-colors text-brand-neutral-700 hover:text-brand-primary" data-testid="nav-signin">
                     Sign In
                   </Link>
                   <Link to="/contact" data-testid="nav-contact">

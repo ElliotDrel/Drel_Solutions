@@ -6,6 +6,7 @@ import DropdownMenu from './ui/DropdownMenu';
 import MobileMenu from './MobileMenu';
 import { useAuth } from '@/contexts/AuthContext';
 import { isSupabaseAvailable } from '@/integrations/supabase/client';
+import { isAppSubdomain } from '@/lib/domain-check';
 
 const Navigation: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -84,8 +85,8 @@ const Navigation: React.FC = () => {
                 ]}
               />
               
-              {/* AI Fundamentals Survey Link - show if available and user not authenticated */}
-              {isSupabaseAvailable() && !user && (
+              {/* AI Fundamentals Survey Link - show only when on app subdomain and user is authenticated */}
+              {isAppSubdomain() && isSupabaseAvailable() && user && (
                 <Link 
                   to="/ai-fundamentals" 
                   className={getLinkClassName('/ai-fundamentals')}
@@ -96,8 +97,8 @@ const Navigation: React.FC = () => {
                 </Link>
               )}
               
-              {/* User Menu or Auth Links */}
-              {user ? (
+              {/* User Menu or Auth Links - only show auth on app subdomain */}
+              {isAppSubdomain() && user ? (
                 <DropdownMenu
                   isOpen={isUserMenuOpen}
                   onToggle={() => setIsUserMenuOpen(!isUserMenuOpen)}
@@ -127,11 +128,17 @@ const Navigation: React.FC = () => {
                     }
                   ]}
                 />
-              ) : (
+              ) : isAppSubdomain() && !user ? (
                 <div className="flex items-center space-x-4">
                   <Link to="/signin" className="px-3 py-2 text-sm font-medium transition-colors text-brand-neutral-700 hover:text-brand-primary" data-testid="nav-signin">
                     Sign In
                   </Link>
+                  <Link to="/contact" data-testid="nav-contact">
+                    <Button className="bg-brand-primary hover:bg-brand-primary/90 text-white px-6 py-2">Let's Talk</Button>
+                  </Link>
+                </div>
+              ) : (
+                <div className="flex items-center space-x-4">
                   <Link to="/contact" data-testid="nav-contact">
                     <Button className="bg-brand-primary hover:bg-brand-primary/90 text-white px-6 py-2">Let's Talk</Button>
                   </Link>
@@ -161,16 +168,16 @@ const Navigation: React.FC = () => {
             { href: '/about', label: 'About', className: getMobileLinkClassName('/about') },
             { href: '/blog', label: 'Blog', className: getMobileLinkClassName('/blog') },
             { href: '/modeladvisor', label: 'Model Advisor', className: getMobileLinkClassName('/modeladvisor') },
-            ...(isSupabaseAvailable() ? [{ 
+            ...(isAppSubdomain() && isSupabaseAvailable() && user ? [{ 
               href: '/ai-fundamentals', 
-              label: user ? 'My Progress' : 'AI Fundamentals', 
+              label: 'My Progress', 
               className: getMobileLinkClassName('/ai-fundamentals') 
             }] : []),
-            ...(user ? [
+            ...(isAppSubdomain() && user ? [
               { label: 'Sign Out', className: 'block px-3 py-2 text-base font-medium text-brand-danger hover:bg-brand-danger/10', onClick: handleSignOut }
-            ] : [
+            ] : isAppSubdomain() && !user ? [
               { href: '/signin', label: 'Sign In', className: getMobileLinkClassName('/signin') }
-            ])
+            ] : [])
           ]}
         />
       </div>

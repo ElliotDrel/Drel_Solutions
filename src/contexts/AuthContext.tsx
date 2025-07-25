@@ -107,7 +107,7 @@ const SupabaseAuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     if (!supabase) return;
 
-    // Set up auth state listener FIRST
+    // Single source of truth for auth state - onAuthStateChange fires immediately with current session
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
         setSession(session);
@@ -123,17 +123,6 @@ const SupabaseAuthProvider = ({ children }: { children: ReactNode }) => {
         }
       }
     );
-
-    // THEN check for existing session
-    supabase.auth.getSession().then(({ data: { session }, error }) => {
-      if (error) {
-        console.error('Error getting session:', error);
-      }
-      setSession(session);
-      setUser(session?.user ?? null);
-      setLoading(false);
-      setInitialized(true);
-    });
 
     return () => subscription.unsubscribe();
   }, []);

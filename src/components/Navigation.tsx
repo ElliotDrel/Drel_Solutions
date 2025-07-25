@@ -84,8 +84,8 @@ const Navigation: React.FC = () => {
                 ]}
               />
               
-              {/* AI Fundamentals Survey Link - show if available */}
-              {isSupabaseAvailable() && (
+              {/* AI Fundamentals Survey Link - show if available and user not authenticated */}
+              {isSupabaseAvailable() && !user && (
                 <Link 
                   to="/ai-fundamentals" 
                   className={getLinkClassName('/ai-fundamentals')}
@@ -115,12 +115,11 @@ const Navigation: React.FC = () => {
                   items={[
                     { 
                       href: '/ai-fundamentals', 
-                      label: 'AI Fundamentals', 
+                      label: 'My Progress', 
                       isActive: isActive('/ai-fundamentals'),
                       icon: <BookOpen className="w-4 h-4" />
                     },
                     { 
-                      href: '#', 
                       label: 'Sign Out', 
                       isActive: false,
                       icon: <LogOut className="w-4 h-4" />,
@@ -162,10 +161,13 @@ const Navigation: React.FC = () => {
             { href: '/about', label: 'About', className: getMobileLinkClassName('/about') },
             { href: '/blog', label: 'Blog', className: getMobileLinkClassName('/blog') },
             { href: '/modeladvisor', label: 'Model Advisor', className: getMobileLinkClassName('/modeladvisor') },
-            ...(isSupabaseAvailable() ? [{ href: '/ai-fundamentals', label: 'AI Fundamentals', className: getMobileLinkClassName('/ai-fundamentals') }] : []),
+            ...(isSupabaseAvailable() ? [{ 
+              href: '/ai-fundamentals', 
+              label: user ? 'My Progress' : 'AI Fundamentals', 
+              className: getMobileLinkClassName('/ai-fundamentals') 
+            }] : []),
             ...(user ? [
-              { href: '/ai-fundamentals', label: 'My Progress', className: getMobileLinkClassName('/ai-fundamentals') },
-              { href: '#', label: 'Sign Out', className: 'block px-3 py-2 text-base font-medium text-brand-danger hover:bg-brand-danger/10', onClick: handleSignOut }
+              { label: 'Sign Out', className: 'block px-3 py-2 text-base font-medium text-brand-danger hover:bg-brand-danger/10', onClick: handleSignOut }
             ] : [
               { href: '/signin', label: 'Sign In', className: getMobileLinkClassName('/signin') }
             ])

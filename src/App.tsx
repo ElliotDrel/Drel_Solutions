@@ -13,6 +13,7 @@ import NotFound from "./pages/NotFound";
 import ModelAdvisor from "./pages/ModelAdvisor";
 import { AuthProvider } from "./contexts/AuthContext";
 import { ProtectedRoute } from "./components/auth/ProtectedRoute";
+import { DomainProtectedRoute } from "./components/auth/DomainProtectedRoute";
 
 // Lazy load blog components for performance
 const Blog = lazy(() => import("./pages/Blog"));
@@ -121,72 +122,88 @@ const App = () => (
                 } 
               />
 
-              {/* Authentication routes - public access */}
+              {/* Authentication routes - restricted to app subdomain */}
               <Route 
                 path="/signin" 
                 element={
-                  <Suspense fallback={<div className="min-h-screen bg-brand-neutral-50 flex items-center justify-center">Loading...</div>}>
-                    <SignInPage />
-                  </Suspense>
+                  <DomainProtectedRoute>
+                    <Suspense fallback={<div className="min-h-screen bg-brand-neutral-50 flex items-center justify-center">Loading...</div>}>
+                      <SignInPage />
+                    </Suspense>
+                  </DomainProtectedRoute>
                 } 
               />
               <Route 
                 path="/signup" 
                 element={
-                  <Suspense fallback={<div className="min-h-screen bg-brand-neutral-50 flex items-center justify-center">Loading...</div>}>
-                    <SignUpPage />
-                  </Suspense>
+                  <DomainProtectedRoute>
+                    <Suspense fallback={<div className="min-h-screen bg-brand-neutral-50 flex items-center justify-center">Loading...</div>}>
+                      <SignUpPage />
+                    </Suspense>
+                  </DomainProtectedRoute>
                 } 
               />
               <Route 
                 path="/forgot-password" 
                 element={
-                  <Suspense fallback={<div className="min-h-screen bg-brand-neutral-50 flex items-center justify-center">Loading...</div>}>
-                    <ForgotPasswordPage />
-                  </Suspense>
+                  <DomainProtectedRoute>
+                    <Suspense fallback={<div className="min-h-screen bg-brand-neutral-50 flex items-center justify-center">Loading...</div>}>
+                      <ForgotPasswordPage />
+                    </Suspense>
+                  </DomainProtectedRoute>
                 } 
               />
 
-              {/* AI Fundamentals Survey routes */}
+              {/* AI Fundamentals Survey routes - requires domain and auth */}
               <Route 
                 path="/ai-fundamentals" 
                 element={
-                  <Suspense fallback={<div className="min-h-screen bg-brand-neutral-50 flex items-center justify-center">Loading...</div>}>
-                    <AIFundamentalsLanding />
-                  </Suspense>
+                  <DomainProtectedRoute>
+                    <ProtectedRoute>
+                      <Suspense fallback={<div className="min-h-screen bg-brand-neutral-50 flex items-center justify-center">Loading...</div>}>
+                        <AIFundamentalsLanding />
+                      </Suspense>
+                    </ProtectedRoute>
+                  </DomainProtectedRoute>
                 } 
               />
               
-              {/* Protected survey routes - require authentication */}
+              {/* Protected survey routes - require domain and authentication */}
               {/* TODO: Uncomment when survey pages are implemented
               <Route 
                 path="/ai-fundamentals/pre-survey" 
                 element={
-                  <ProtectedRoute>
-                    <Suspense fallback={<div className="min-h-screen bg-brand-neutral-50 flex items-center justify-center">Loading...</div>}>
-                      <PreSurvey />
-                    </Suspense>
-                  </ProtectedRoute>
+                  <DomainProtectedRoute>
+                    <ProtectedRoute>
+                      <Suspense fallback={<div className="min-h-screen bg-brand-neutral-50 flex items-center justify-center">Loading...</div>}>
+                        <PreSurvey />
+                      </Suspense>
+                    </ProtectedRoute>
+                  </DomainProtectedRoute>
                 } 
               />
               <Route 
                 path="/ai-fundamentals/post-survey" 
                 element={
-                  <ProtectedRoute>
-                    <Suspense fallback={<div className="min-h-screen bg-brand-neutral-50 flex items-center justify-center">Loading...</div>}>
-                      <PostSurvey />
-                    </Suspense>
-                  </ProtectedRoute>
+                  <DomainProtectedRoute>
+                    <ProtectedRoute>
+                      <Suspense fallback={<div className="min-h-screen bg-brand-neutral-50 flex items-center justify-center">Loading...</div>}>
+                        <PostSurvey />
+                      </Suspense>
+                    </ProtectedRoute>
+                  </DomainProtectedRoute>
                 } 
               />
               <Route 
                 path="/ai-fundamentals/lesson" 
                 element={
-                  <ProtectedRoute>
-                    <Suspense fallback={<div className="min-h-screen bg-brand-neutral-50 flex items-center justify-center">Loading...</div>}>
-                      <Lesson />
-                    </Suspense>
-                  </ProtectedRoute>
+                  <DomainProtectedRoute>
+                    <ProtectedRoute>
+                      <Suspense fallback={<div className="min-h-screen bg-brand-neutral-50 flex items-center justify-center">Loading...</div>}>
+                        <Lesson />
+                      </Suspense>
+                    </ProtectedRoute>
+                  </DomainProtectedRoute>
                 } 
               />
               */}

@@ -6,6 +6,8 @@ interface DropdownItem {
   label: string;
   isActive?: boolean;
   external?: boolean;
+  icon?: React.ReactNode;
+  onClick?: () => void;
 }
 
 interface DropdownMenuProps {
@@ -123,11 +125,36 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
         >
           <div className="py-1">
             {items.map((item, index) => {
-              const linkClasses = `block px-4 py-2 text-sm transition-colors ${
+              const linkClasses = `flex items-center px-4 py-2 text-sm transition-colors ${
                 item.isActive 
                   ? 'text-brand-primary bg-brand-primary/10' 
                   : 'text-brand-neutral-700 hover:bg-brand-neutral-100 hover:text-brand-neutral-900'
               }`;
+
+              // Handle onClick items (like Sign Out)
+              if (item.onClick) {
+                return (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      item.onClick?.();
+                      onClose();
+                    }}
+                    className={`${linkClasses} w-full text-left`}
+                    role="menuitem"
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        item.onClick?.();
+                        onClose();
+                      }
+                    }}
+                  >
+                    {item.icon && <span className="mr-2">{item.icon}</span>}
+                    {item.label}
+                  </button>
+                );
+              }
 
               if (item.external) {
                 return (
@@ -147,6 +174,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
                       }
                     }}
                   >
+                    {item.icon && <span className="mr-2">{item.icon}</span>}
                     {item.label}
                   </a>
                 );
@@ -166,6 +194,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
                     }
                   }}
                 >
+                  {item.icon && <span className="mr-2">{item.icon}</span>}
                   {item.label}
                 </Link>
               );

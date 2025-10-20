@@ -11,6 +11,8 @@ import Contact from "./pages/Contact";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 import ModelAdvisor from "./pages/ModelAdvisor";
+import Download from "./pages/Download";
+import SevenHabitsBundle from "./pages/SevenHabitsBundle";
 
 // Lazy load blog components for performance
 const Blog = lazy(() => import("./pages/Blog"));
@@ -82,6 +84,8 @@ const App = () => (
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/modeladvisor" element={<ModelAdvisor />} />
+            <Route path="/download" element={<Download />} />
+            <Route path="/7-habits-bundle" element={<SevenHabitsBundle />} />
             <Route 
               path="/blog" 
               element={

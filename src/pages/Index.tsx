@@ -3,27 +3,28 @@ import { Button } from "@/components/ui/button";
 import { Clock, DollarSign, Zap, Target, BarChart3, CheckCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 const HeroSection = () => {
-  return <section id="home" className="pt-16 min-h-screen flex items-center bg-gradient-to-br from-brand-primary/10 via-white to-brand-success/10" data-testid="hero-section">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+  return <section id="home" className="pt-16 flex items-center bg-gradient-to-br from-brand-primary/10 via-white to-brand-success/10" data-testid="hero-section">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-32">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-8">
             <div className="space-y-4">
-              <h1 className="text-5xl lg:text-6xl font-bold text-foreground leading-tight">
-                AI Consulting That 
-                <span className="text-brand-primary"> Pays for Itself</span>
-              </h1>              <p className="text-xl text-brand-neutral-600 leading-relaxed">
-                We help businesses automate the repetitive, optimize the chaotic, and reclaim hours of lost time. 
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-tight">
+                <span className="block">Unlock&nbsp;Your&nbsp;Business</span>
+                <span className="block"><span className="text-brand-primary">FULL&nbsp;Potential</span></span>
+                <span className="block">with&nbsp;AI</span>
+              </h1>              <p className="text-xl text-brand-neutral-600 leading-relaxed pt-4">
+              Helping <span className="font-bold">YOU</span> Work Smarter, Not Harder, By Leveraging the <span className="font-bold">FULL</span> capabilities of AI. 
                 <span className="block mt-2 font-semibold text-brand-neutral-800">Spend less. Do more. Breathe easier.</span>
               </p>
             </div>
             <div className="pt-8">
               <Link to="/contact">
-                <Button className="bg-brand-primary hover:bg-brand-primary/90 text-white px-8 py-4 text-lg rounded-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105">Start Saving TIME and MONEY!</Button>
+                <Button className="bg-brand-primary hover:bg-brand-primary/90 text-white px-8 py-4 text-lg rounded-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105">Start Working Smarter!</Button>
               </Link>
             </div>
           </div>
           
-          <div className="relative">
+          <div className="relative transform">
             <div className="bg-white rounded-2xl shadow-2xl p-8 transform rotate-3 hover:rotate-0 transition-transform duration-300">
               <div className="space-y-6">
                 <div className="flex items-center justify-between">
@@ -106,16 +107,16 @@ const AnimatedCounter = ({
     </span>;
 };
 const StatsSection = () => {
-  return <section className="py-20 bg-brand-neutral-900 text-white" data-testid="stats-section">
+  return <section className="py-22 bg-brand-neutral-900 text-white" data-testid="stats-section">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center space-y-12">
           <div className="space-y-4">
-            <h2 className="text-4xl lg:text-5xl font-bold">Real Impact. Measured in Time and Money.</h2>
+            <h2 className="text-4xl lg:text-5xl font-bold text-white py-4">Real Impact. Measured in Time and Money.</h2>
             <p className="text-xl text-brand-neutral-300">Since launching, my AI systems have helped clients:</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <div className="text-center space-y-4">
+            <div className="text-center space-y-4 pb-8">
               <div className="flex justify-center">
                 <DollarSign className="h-12 w-12 text-brand-success/60" />
               </div>
@@ -176,10 +177,10 @@ const CoreValuesSection = () => {
                 <p className="text-brand-neutral-600">{value.description}</p>
               </div>)}          </div>
             <div className="pt-20">            <div className="bg-brand-primary text-white py-16 px-8 rounded-2xl">              <div className="text-center space-y-8">
-                <h3 className="text-3xl lg:text-4xl font-bold">Ready to offload the busywork and focus on what REALLY matters?</h3>
+                <h3 className="text-3xl lg:text-4xl font-bold text-white">Ready to offload the busywork and focus on what REALLY matters?</h3>
                 <div className="pt-4">
                   <Link to="/contact">
-                    <Button className="bg-white text-brand-primary hover:bg-brand-neutral-100 px-8 py-4 text-lg rounded-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105">Start Saving TIME and MONEY!</Button>
+                    <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-10 bg-brand-primary hover:bg-brand-primary/90 text-white px-8 py-4 text-lg rounded-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105">Start Working Smarter!</button>
                   </Link>
                 </div>
               </div>

@@ -1,19 +1,15 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { Menu, X, ChevronDown, User, LogOut, BookOpen } from 'lucide-react';
+import { Menu, X, ChevronDown } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import DropdownMenu from './ui/DropdownMenu';
 import MobileMenu from './MobileMenu';
-import { useAuth } from '@/contexts/AuthContext';
-import { isSupabaseAvailable } from '@/integrations/supabase/client';
-import { isAppSubdomain } from '@/lib/domain-check';
+import { getBrandColorClass, getNeutralColorClass } from '@/lib/colors';
 
 const Navigation: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const location = useLocation();
-  const { user, available, signOut } = useAuth();
 
   const isActive = (path: string) => {
     if (path === '/' && location.pathname === '/') return true;
@@ -33,15 +29,6 @@ const Navigation: React.FC = () => {
     return isActive(path)
       ? `${baseClasses} text-brand-primary bg-brand-primary/10`
       : `${baseClasses} text-brand-neutral-700 hover:text-brand-primary`;
-  };
-
-  const handleSignOut = async () => {
-    try {
-      await signOut();
-      setIsUserMenuOpen(false);
-    } catch (error) {
-      console.error('Sign out error:', error);
-    }
   };
 
   return (
@@ -84,66 +71,9 @@ const Navigation: React.FC = () => {
                   { href: '/modeladvisor', label: 'Model Advisor', isActive: isActive('/modeladvisor') }
                 ]}
               />
-              
-              {/* AI Fundamentals Survey Link - show only when on app subdomain and user is authenticated */}
-              {isAppSubdomain() && isSupabaseAvailable() && user && (
-                <Link 
-                  to="/ai-fundamentals" 
-                  className={getLinkClassName('/ai-fundamentals')}
-                  data-testid="nav-ai-fundamentals"
-                >
-                  <BookOpen className="mr-1 h-4 w-4" />
-                  AI Fundamentals
-                </Link>
-              )}
-              
-              {/* User Menu or Auth Links - only show auth on app subdomain */}
-              {isAppSubdomain() && user ? (
-                <DropdownMenu
-                  isOpen={isUserMenuOpen}
-                  onToggle={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                  onClose={() => setIsUserMenuOpen(false)}
-                  trigger={
-                    <button 
-                      onClick={() => setIsUserMenuOpen(!isUserMenuOpen)} 
-                      className="px-3 py-2 text-sm font-medium transition-colors text-brand-neutral-700 hover:text-brand-primary flex items-center"
-                      data-testid="nav-user-menu"
-                    >
-                      <User className="mr-1 h-4 w-4" />
-                      Account <ChevronDown className="ml-1 h-4 w-4" />
-                    </button>
-                  }
-                  items={[
-                    { 
-                      href: '/ai-fundamentals', 
-                      label: 'My Progress', 
-                      isActive: isActive('/ai-fundamentals'),
-                      icon: <BookOpen className="w-4 h-4" />
-                    },
-                    { 
-                      label: 'Sign Out', 
-                      isActive: false,
-                      icon: <LogOut className="w-4 h-4" />,
-                      onClick: handleSignOut
-                    }
-                  ]}
-                />
-              ) : isAppSubdomain() && !user ? (
-                <div className="flex items-center space-x-4">
-                  <Link to="/signin" className="px-3 py-2 text-sm font-medium transition-colors text-brand-neutral-700 hover:text-brand-primary" data-testid="nav-signin">
-                    Sign In
-                  </Link>
-                  <Link to="/contact" data-testid="nav-contact">
-                    <Button className="bg-brand-primary hover:bg-brand-primary/90 text-white px-6 py-2">Let's Talk</Button>
-                  </Link>
-                </div>
-              ) : (
-                <div className="flex items-center space-x-4">
-                  <Link to="/contact" data-testid="nav-contact">
-                    <Button className="bg-brand-primary hover:bg-brand-primary/90 text-white px-6 py-2">Let's Talk</Button>
-                  </Link>
-                </div>
-              )}
+              <Link to="/contact" data-testid="nav-contact">
+                <Button className="bg-brand-primary hover:bg-brand-primary/90 text-white px-6 py-2">Let's Talk</Button>
+              </Link>
             </div>
           </div>
 
@@ -167,17 +97,7 @@ const Navigation: React.FC = () => {
             { href: '/', label: 'Home', className: getMobileLinkClassName('/') },
             { href: '/about', label: 'About', className: getMobileLinkClassName('/about') },
             { href: '/blog', label: 'Blog', className: getMobileLinkClassName('/blog') },
-            { href: '/modeladvisor', label: 'Model Advisor', className: getMobileLinkClassName('/modeladvisor') },
-            ...(isAppSubdomain() && isSupabaseAvailable() && user ? [{ 
-              href: '/ai-fundamentals', 
-              label: 'My Progress', 
-              className: getMobileLinkClassName('/ai-fundamentals') 
-            }] : []),
-            ...(isAppSubdomain() && user ? [
-              { label: 'Sign Out', className: 'block px-3 py-2 text-base font-medium text-brand-danger hover:bg-brand-danger/10', onClick: handleSignOut }
-            ] : isAppSubdomain() && !user ? [
-              { href: '/signin', label: 'Sign In', className: getMobileLinkClassName('/signin') }
-            ] : [])
+            { href: '/modeladvisor', label: 'Model Advisor', className: getMobileLinkClassName('/modeladvisor') }
           ]}
         />
       </div>

@@ -7,7 +7,6 @@ interface MobileLink {
   label: string;
   className: string;
   external?: boolean;
-  onClick?: () => void;
 }
 
 interface MobileMenuProps {
@@ -27,22 +26,6 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
     <div className="md:hidden">
       <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-brand-neutral-200">
         {links.map((link, index) => {
-          // Handle onClick items (like Sign Out)
-          if (link.onClick) {
-            return (
-              <button
-                key={index}
-                onClick={() => {
-                  link.onClick?.();
-                  onClose();
-                }}
-                className={`${link.className} w-full text-left`}
-              >
-                {link.label}
-              </button>
-            );
-          }
-
           if (link.external) {
             return (
               <a
